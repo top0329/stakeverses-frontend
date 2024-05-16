@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { WagmiProvider, cookieToInitialState } from "wagmi";
-import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { WagmiProvider, cookieToInitialState } from 'wagmi';
+import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { config } from "@/lib/config";
+import { config } from '@/lib/config';
 
 const queryClient = new QueryClient();
 
@@ -21,11 +21,11 @@ export default function Providers({ children, cookie }: Props) {
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           theme={darkTheme({
-            accentColor: "#0E76FD",
-            accentColorForeground: "white",
-            borderRadius: "large",
-            fontStack: "system",
-            overlayBlur: "small",
+            accentColor: '#0E76FD',
+            accentColorForeground: 'white',
+            borderRadius: 'large',
+            fontStack: 'system',
+            overlayBlur: 'small',
           })}
         >
           {children}

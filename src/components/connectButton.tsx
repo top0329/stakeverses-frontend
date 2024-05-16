@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   useConnectModal,
   useAccountModal,
@@ -9,7 +9,7 @@ import {
 import { useAccount, useDisconnect } from "wagmi";
 import { emojiAvatarForAddress } from "@/lib/emojiAvatarForAddress";
 
-export const ConnectBtn = () => {
+export const ConnectWallet = () => {
   const { isConnecting, address, isConnected, chain } = useAccount();
   const { color: backgroundColor, emoji } = emojiAvatarForAddress(
     address ?? ""
@@ -39,7 +39,7 @@ export const ConnectBtn = () => {
         }}
         disabled={isConnecting}
       >
-        { isConnecting ? 'Connecting...' : 'Connect your wallet' }
+        { isConnecting ? 'Connecting...' : 'Connect Wallet' }
       </button>
     );
   }
@@ -53,7 +53,7 @@ export const ConnectBtn = () => {
   }
 
   return (
-    <div className="max-w-5xl w-full flex items-center justify-between">
+    <React.Fragment>
       <div
         className="flex justify-center items-center px-4 py-2 border border-neutral-700 bg-neutral-800/30 rounded-xl font-mono font-bold gap-x-2 cursor-pointer"
         onClick={async () => openAccountModal?.()}
@@ -74,6 +74,6 @@ export const ConnectBtn = () => {
       <button className="btn" onClick={openChainModal}>
         Switch Networks
       </button>
-    </div>
+    </React.Fragment>
   );
 };
