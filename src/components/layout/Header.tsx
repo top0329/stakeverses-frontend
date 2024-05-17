@@ -7,7 +7,7 @@ import { ConnectWallet } from '../connectButton';
 
 function Header() {
   return (
-    <div className="flex justify-between items-center h-[98px] mx-[147px] my-[51px] bg-white bg-opacity-15 rounded-full border border-white border-opacity-30">
+    <div className="flex justify-between items-center h-[98px] mx-[130px] my-[51px] bg-white bg-opacity-15 rounded-full border border-white border-opacity-30">
       <Link href="/">
         <Image
           src={StakeversesLogo}

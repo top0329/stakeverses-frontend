@@ -6,7 +6,7 @@ import StakeversesLogo from '@/assets/images/Stakeverses-logo.png';
 
 function Footer() {
   return (
-    <div className="relative h-[477px] px-[136px] bg-gradient-custom">
+    <div className="relative h-[477px] px-[136px] bg-gradient-footer">
       <Link className='' href="/">
         <Image
           src={StakeversesLogo}
