@@ -15,17 +15,13 @@ export default function Home() {
   return (
     <main className="px-[130px] overflow-hidden">
       <Image
-        className="absolute -right-60 -top-60"
+        className="absolute -right-60 -top-60 -z-10"
         src={EllipseImage}
         alt="ellipse"
       />
-      <div className="grid grid-cols-12 h-[900px]">
+      <div className="grid grid-cols-12 h-full">
         <div className="relative grid col-span-6 items-center -ml-32 mr-20">
-          <Image
-            className="absolute"
-            src={EllipseImage}
-            alt="ellipse"
-          />
+          <Image className="absolute -z-10" src={EllipseImage} alt="ellipse" />
           <Image
             className="w-full"
             src={HeroImage}
@@ -91,8 +87,8 @@ export default function Home() {
           audience like never before.
         </p>
       </div>
-      <div className="flex justify-center -mx-[500px]">
-        <Image className="" src={LandingImages} alt="landing-imgaes" />
+      <div className="flex justify-center items-center -mx-[500px]">
+        <Image src={LandingImages} alt="landing-imgaes" />
       </div>
     </main>
   );
