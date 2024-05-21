@@ -10,6 +10,8 @@ import WhitepaperIcon from '@/assets/images/whitepaper.svg';
 import LandingImages from '@/assets/images/landing-images.svg';
 import EllipseImage from '@/assets/images/ellipse.svg';
 import PurpleJewelImage from '@/assets/images/purple-jewel.svg';
+import SilverImage from '@/assets/images/silver.svg';
+import SpearImage from '@/assets/images/spear-dragoon-holy-lance-ranged-weapon.svg';
 
 export default function Home() {
   return (
@@ -89,6 +91,19 @@ export default function Home() {
       </div>
       <div className="flex justify-center items-center -mx-[500px]">
         <Image src={LandingImages} alt="landing-imgaes" />
+      </div>
+      <div className="flex flex-row justify-between -mx-[130px]">
+        <Image className="-mt-[300px]" src={SilverImage} alt="silver-image" />
+        <Image src={SpearImage} alt="spear-image" />
+      </div>
+      <div className="flex flex-col justify-center items-center text-center -mt-[200px]">
+        <h1 className="text-[70px]">30 Million Users Worldwide</h1>
+        <h6 className="text-2xl w-3/4 mt-8">
+          There are many variations of passages of Lorem Ipsum available, but
+          the majority have suffered alteration in some form, by injected
+          humour, or randomised words which don&apos;t look even slightly
+          believable.
+        </h6>
       </div>
     </main>
   );
