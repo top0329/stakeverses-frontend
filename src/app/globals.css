@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gradient-to-r from-[#000309] to-[#000D0D] text-white;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .btn {
+    @apply h-[70px] w-[251px] font-mono font-semibold bg-gradient-to-r from-[#192F3A] to-[#06C2C4] text-white text-2xl rounded-full border-2 border-white;
+  }
+}
