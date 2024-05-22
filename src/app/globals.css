@@ -14,4 +14,14 @@ body {
   .btn {
     @apply h-[70px] w-[251px] font-mono font-semibold bg-gradient-to-r from-[#192F3A] to-[#06C2C4] text-white text-2xl rounded-full border-2 border-white;
   }
+
+  .swiper-button-next::after {
+    --swiper-navigation-size: 20px;
+    @apply text-white font-bold
+  }
+
+  .swiper-button-prev::after {
+    --swiper-navigation-size: 20px;
+    @apply text-white font-bold
+  }
 }
