@@ -4,8 +4,8 @@ import { Inter } from 'next/font/google';
 
 import Providers from './providers';
 
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Header from '@/components/Layout/Header';
+import Footer from '@/components/Layout/Footer';
 import '@rainbow-me/rainbowkit/styles.css';
 
 import './globals.css';
@@ -26,10 +26,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} overflow-x-hidden`} suppressHydrationWarning={true}>
+      <body
+        className={`${inter.className} overflow-x-hidden`}
+        suppressHydrationWarning={true}
+      >
         <Providers>
           <Header />
-          {children}
+          <main className="px-[130px]">{children}</main>
           <Footer />
         </Providers>
       </body>

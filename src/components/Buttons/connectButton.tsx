@@ -1,18 +1,19 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 import {
   useConnectModal,
   useAccountModal,
   useChainModal,
-} from "@rainbow-me/rainbowkit";
-import { useAccount, useDisconnect } from "wagmi";
-import { emojiAvatarForAddress } from "@/lib/emojiAvatarForAddress";
+} from '@rainbow-me/rainbowkit';
+import { useAccount, useDisconnect } from 'wagmi';
+import { emojiAvatarForAddress } from '@/lib/emojiAvatarForAddress';
+import Button from '.';
 
 export const ConnectWallet = () => {
   const { isConnecting, address, isConnected, chain } = useAccount();
   const { color: backgroundColor, emoji } = emojiAvatarForAddress(
-    address ?? ""
+    address ?? ''
   );
 
   const { openConnectModal } = useConnectModal();
@@ -28,8 +29,9 @@ export const ConnectWallet = () => {
 
   if (!isConnected) {
     return (
-      <button
-        className="btn"
+      <Button
+        text={isConnecting ? 'Connecting...' : 'Connect Wallet'}
+        variant="primary"
         onClick={async () => {
           // Disconnecting wallet first because sometimes when is connected but the user is not connected
           if (isConnected) {
@@ -38,17 +40,13 @@ export const ConnectWallet = () => {
           openConnectModal?.();
         }}
         disabled={isConnecting}
-      >
-        { isConnecting ? 'Connecting...' : 'Connect Wallet' }
-      </button>
+      />
     );
   }
 
   if (isConnected && !chain) {
     return (
-      <button className="btn" onClick={openChainModal}>
-        Wrong network
-      </button>
+      <Button text="Wrong network" variant="primary" onClick={openChainModal} />
     );
   }
 
@@ -64,16 +62,18 @@ export const ConnectWallet = () => {
           className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
           style={{
             backgroundColor,
-            boxShadow: "0px 2px 2px 0px rgba(81, 98, 255, 0.20)",
+            boxShadow: '0px 2px 2px 0px rgba(81, 98, 255, 0.20)',
           }}
         >
           {emoji}
         </div>
         <p>Account</p>
       </div>
-      <button className="btn" onClick={openChainModal}>
-        Switch Networks
-      </button>
+      <Button
+        text="Switch Networks"
+        variant="primary"
+        onClick={openChainModal}
+      />
     </React.Fragment>
   );
 };

@@ -12,7 +12,7 @@ body {
   }
 
   .btn {
-    @apply h-[70px] w-[251px] font-mono font-semibold bg-gradient-to-r from-[#192F3A] to-[#06C2C4] text-white text-2xl rounded-full border-2 border-white;
+    @apply h-[70px] w-[251px] font-mono font-semibold text-white text-2xl rounded-full border-2 border-white;
   }
 
   .swiper-button-next::after {
@@ -24,4 +24,42 @@ body {
     --swiper-navigation-size: 20px;
     @apply text-white font-bold
   }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #7a7a7a;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-clip: content-box;
+  background-color: #464646;
+}
+
+.custom-scrollbar {
+  overflow-y: auto;
+}
+
+/* Custom scroll bar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }

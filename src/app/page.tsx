@@ -1,9 +1,11 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 
+import Button from '@/components/Buttons';
 import HeroImage from '@/assets/images/hero.svg';
 import DiscordIcon from '@/assets/images/discord.svg';
 import TwitterIcon from '@/assets/images/twitter.svg';
@@ -28,7 +30,7 @@ import 'swiper/css/navigation';
 
 export default function Home() {
   return (
-    <main className="px-[130px]">
+    <React.Fragment>
       <Image
         className="absolute -right-60 -top-60 -z-10"
         src={EllipseImage}
@@ -55,8 +57,8 @@ export default function Home() {
             their audience like never before.
           </h3>
           <div className="flex gap-14">
-            <button className="btn">Stake</button>
-            <button className="btn">Create Instance</button>
+            <Button text="Stake" variant="primary" />
+            <Button text="Create Instance" variant="primary" />
           </div>
           <div className="flex gap-4">
             <Image
@@ -234,10 +236,18 @@ export default function Home() {
         <div className="swiper-button-prev absolute -left-10 bg-[#02F5FF]/10 text-white rounded-full p-10"></div>
         <div className="swiper-button-next bg-[#02F5FF]/10 text-white rounded-full p-10"></div>
       </div>
-      <div className='relative'>
-        <Image className='absolute -ml-[130px] -bottom-64' src={SwordImage} alt="sword" />
-        <Image className='absolute z-10 right-0 -mr-[130px] -top-[400px]' src={GoldImage} alt="gold" />
+      <div className="relative">
+        <Image
+          className="absolute -ml-[130px] -bottom-64"
+          src={SwordImage}
+          alt="sword"
+        />
+        <Image
+          className="absolute z-10 right-0 -mr-[130px] -top-[400px]"
+          src={GoldImage}
+          alt="gold"
+        />
       </div>
-    </main>
+    </React.Fragment>
   );
 }
