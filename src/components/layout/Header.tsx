@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import StakeversesLogo from '@/assets/images/Stakeverses-logo.png';
-import { ConnectWallet } from '../Buttons/connectButton';
+import { ConnectWallet } from '@/components/Buttons/ConnectButton';
 
 function Header() {
   return (
