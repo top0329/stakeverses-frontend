@@ -8,7 +8,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { useAccount, useDisconnect } from 'wagmi';
 import { emojiAvatarForAddress } from '@/lib/emojiAvatarForAddress';
-import Button from '.';
+import Button from '@/components/Buttons';
 
 export const ConnectWallet = () => {
   const { isConnecting, address, isConnected, chain } = useAccount();
