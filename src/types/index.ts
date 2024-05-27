@@ -16,3 +16,10 @@ export interface StakingPoolListProps {
   creatorAddress: string;
   remainingTime: string;
 }
+
+export interface ProductTokenInfo {
+  address: string;
+  id: string;
+  ratio: string;
+  consumable: boolean;
+}
