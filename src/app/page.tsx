@@ -31,12 +31,12 @@ import 'swiper/css/navigation';
 export default function Home() {
   return (
     <React.Fragment>
-      <Image
-        className="absolute -right-60 -top-60 -z-10"
-        src={EllipseImage}
-        alt="ellipse"
-      />
       <div className="grid grid-cols-12 h-full">
+        <Image
+          className="absolute -right-60 -top-60 -z-10"
+          src={EllipseImage}
+          alt="ellipse"
+        />
         <div className="relative grid col-span-6 items-center -ml-32 mr-20">
           <Image className="absolute -z-10" src={EllipseImage} alt="ellipse" />
           <Image
@@ -104,7 +104,7 @@ export default function Home() {
           audience like never before.
         </p>
       </div>
-      <div className="flex justify-center items-center -mx-[500px]">
+      <div className="flex justify-center items-center -mx-[500px] overflow-x-hidden">
         <Image src={LandingImages} alt="landing-imgaes" />
       </div>
       <div className="flex flex-row justify-between -mx-[130px]">

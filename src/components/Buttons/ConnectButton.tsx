@@ -1,20 +1,18 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import {
   useConnectModal,
   useAccountModal,
   useChainModal,
 } from '@rainbow-me/rainbowkit';
 import { useAccount, useDisconnect } from 'wagmi';
-import { emojiAvatarForAddress } from '@/lib/emojiAvatarForAddress';
 import Button from '@/components/Buttons';
+import { truncateAddress } from '@/lib/utils';
 
 export const ConnectWallet = () => {
   const { isConnecting, address, isConnected, chain } = useAccount();
-  const { color: backgroundColor, emoji } = emojiAvatarForAddress(
-    address ?? ''
-  );
 
   const { openConnectModal } = useConnectModal();
   const { openAccountModal } = useAccountModal();
@@ -33,7 +31,6 @@ export const ConnectWallet = () => {
         text={isConnecting ? 'Connecting...' : 'Connect Wallet'}
         variant="primary"
         onClick={async () => {
-          // Disconnecting wallet first because sometimes when is connected but the user is not connected
           if (isConnected) {
             disconnect();
           }
@@ -52,27 +49,42 @@ export const ConnectWallet = () => {
 
   return (
     <React.Fragment>
-      <div
+      {/* <div
         className="flex justify-center items-center px-4 py-2 border border-neutral-700 bg-neutral-800/30 rounded-xl font-mono font-bold gap-x-2 cursor-pointer"
-        onClick={async () => openAccountModal?.()}
+        onClick={openChainModal}
       >
         <div
           role="button"
           tabIndex={1}
           className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
-          style={{
-            backgroundColor,
-            boxShadow: '0px 2px 2px 0px rgba(81, 98, 255, 0.20)',
-          }}
         >
-          {emoji}
+          {chain?.hasIcon && (
+            <div
+              className="text-white text-lg"
+              style={{
+                background: chain.iconBackground,
+                width: 24,
+                height: 24,
+                borderRadius: 999,
+                overflow: 'hidden',
+                marginRight: 4,
+              }}
+            >
+              {chain.iconUrl && (
+                <Image
+                  alt={chain.name ?? 'Chain icon'}
+                  src={chain.iconUrl}
+                  style={{ width: 24, height: 24 }}
+                />
+              )}
+            </div>
+          )}
         </div>
-        <p>Account</p>
-      </div>
+      </div> */}
       <Button
-        text="Switch Networks"
+        text={`${truncateAddress(address ?? '')}`}
         variant="primary"
-        onClick={openChainModal}
+        onClick={async () => openAccountModal?.()}
       />
     </React.Fragment>
   );

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import Subtitle from '@/components/Subtitle';
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
@@ -13,6 +14,8 @@ import IronImage from '@/assets/images/iron.svg';
 import Button from '@/components/Buttons';
 
 function PoolDetails({ params }: { params: { id: string } }) {
+  const router = useRouter();
+
   return (
     <React.Fragment>
       <h1 className="mt-[203px] text-[62px] text-center font-semibold">
@@ -22,16 +25,16 @@ function PoolDetails({ params }: { params: { id: string } }) {
         <Subtitle text="Pool Detail" />
         <div className="px-[54px] mb-12">
           <div className="flex items-center justify-between">
+            <ProductTokenForStakeList imageUri={FarmerImage} text="Farmer" />
+            <p className="text-[35px] font-medium -mt-16 px-1">+</p>
+            <ProductTokenForStakeList imageUri={PickAxeImage} text="PickAxe" />
+            <p className="text-[35px] font-medium -mt-16 px-1">+</p>
             <p className="text-[50px] font-medium -mt-16 px-1">&#40;</p>
             <ProductTokenForStakeList
               imageUri={BreadImage}
               text="Bread"
               consumable
             />
-            <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-            <ProductTokenForStakeList imageUri={FarmerImage} text="Farmer" />
-            <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-            <ProductTokenForStakeList imageUri={PickAxeImage} text="PickAxe" />
             <p className="text-[35px] font-medium -mt-16 px-1">+</p>
             <ProductTokenForStakeList
               imageUri={WaterImage}
@@ -54,7 +57,7 @@ function PoolDetails({ params }: { params: { id: string } }) {
             <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
               <p className="text-[22px]">Creator Address</p>
               <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                0xb317......6e5f
+                0xb317...6e5f
               </div>
             </div>
             <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
@@ -72,7 +75,7 @@ function PoolDetails({ params }: { params: { id: string } }) {
           </div>
           <div className="w-full h-[34px] bg-[#141D2D] rounded-full border border-white mt-2">
             <div
-              className={`h-[32px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] rounded-full text-center text-[22px] w-[${76}%]`}
+              className={`h-[32px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] rounded-full text-center text-[22px] w-[76%]`}
             >
               76%
             </div>
@@ -90,7 +93,7 @@ function PoolDetails({ params }: { params: { id: string } }) {
               <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
                 <p className="text-[22px] truncate">Number of Stakers</p>
                 <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 text-xl font-medium">
-                  0xb317......6e5f
+                  0xb317...6e5f
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
@@ -241,7 +244,11 @@ function PoolDetails({ params }: { params: { id: string } }) {
           </div>
         </div>
         <div className="flex justify-center py-10">
-          <Button className='!w-[200px]' text="Stake" />
+          <Button
+            className="!w-[200px]"
+            text="Stake"
+            onClick={() => router.push('/stakes/932/stake')}
+          />
         </div>
       </div>
     </React.Fragment>
