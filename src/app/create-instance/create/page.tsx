@@ -25,7 +25,7 @@ function CreateInstanceCreatePage() {
 
   const handleCreateInstance = async () => {
     try {
-      const tx = await productStakingInstance.methods
+      await productStakingInstance.methods
         .createStakingInstance(
           productTokenInfo,
           rewardTokenInfo,
@@ -34,7 +34,7 @@ function CreateInstanceCreatePage() {
           'stk'
         )
         .send({ from: account });
-      console.log('Tx: ', tx);
+        router.push('/stakes');
     } catch (err) {
       console.log(err);
     }
