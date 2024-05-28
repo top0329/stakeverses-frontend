@@ -14,11 +14,6 @@ import {
   productTokenInfoAtom,
   rewardTokenInfoAtom,
 } from '@/jotai/atoms';
-import BreadImage from '@/assets/images/bread.svg';
-import FarmerImage from '@/assets/images/farmer.svg';
-import PickAxeImage from '@/assets/images/pickaxe.svg';
-import WaterImage from '@/assets/images/water.svg';
-import IronImage from '@/assets/images/iron.svg';
 
 function CreateInstanceCreatePage() {
   const { account, productStakingInstance } = useWeb3();
@@ -30,19 +25,11 @@ function CreateInstanceCreatePage() {
 
   const handleCreateInstance = async () => {
     try {
-      console.log(
-        'parameter=>>>>>',
-        productTokenInfo,
-        rewardTokenInfo,
-        5,
-        'Stakeverse Token',
-        'stk'
-      );
       const tx = await productStakingInstance.methods
         .createStakingInstance(
           productTokenInfo,
           rewardTokenInfo,
-          5000000,
+          baseAmount,
           'Stakeverse Token',
           'stk'
         )
