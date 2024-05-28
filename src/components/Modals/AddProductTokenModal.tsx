@@ -8,7 +8,7 @@ import {
 } from '@/jotai/atoms';
 import PickAxeImage from '@/assets/images/pickaxe.svg';
 import Button from '../Buttons';
-import { ProductTokenInfo } from '@/types';
+import { IProductTokenInfo } from '@/types';
 
 function AddProductTokenModal() {
   const [isAddProductTokenModalOpen, setIsAddProductTokenModalOpen] = useAtom(
@@ -17,10 +17,10 @@ function AddProductTokenModal() {
   const [, setProductTokenInfo] = useAtom(productTokenInfoAtom);
 
   const [addProductTokenInfo, setAddProductTokenInfo] =
-    useState<ProductTokenInfo>({
+    useState<IProductTokenInfo>({
       productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-      productId: '',
-      ratio: '',
+      productId: 0,
+      ratio: 0,
       consumable: false,
     });
 
@@ -28,15 +28,21 @@ function AddProductTokenModal() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    setAddProductTokenInfo((prevState) => ({
-      ...prevState!,
-      [name]: value,
-    }));
+    if (name === 'ratio' || name === 'productId') {
+      setAddProductTokenInfo((prevState) => ({
+        ...prevState!,
+        [name]: parseInt(value),
+      }));
+    } else {
+      setAddProductTokenInfo((prevState) => ({
+        ...prevState!,
+        [name]: value,
+      }));
+    }
   };
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    console.log(value);
     setAddProductTokenInfo((prevState) => ({
       ...prevState!,
       consumable: value === 'on',
@@ -48,12 +54,12 @@ function AddProductTokenModal() {
       (prev) =>
         [...prev, addProductTokenInfo].filter(
           Boolean as any
-        ) as ProductTokenInfo[]
+        ) as IProductTokenInfo[]
     );
     setAddProductTokenInfo({
       productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-      productId: '',
-      ratio: '',
+      productId: 0,
+      ratio: 0,
       consumable: false,
     });
     setIsAddProductTokenModalOpen(false);

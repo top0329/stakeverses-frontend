@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
 import Button from '@/components/Buttons';
-import { StakingPoolListProps } from '@/types';
+import { IStakingPoolListProps } from '@/types';
 import { truncateAddress } from '@/lib/utils';
 
 import BreadImage from '@/assets/images/bread.svg';
@@ -17,7 +17,7 @@ function StakingPoolList({
   instanceId,
   creatorAddress,
   remainingTime,
-}: StakingPoolListProps) {
+}: IStakingPoolListProps) {
   const router = useRouter();
 
   return (
@@ -44,13 +44,6 @@ function StakingPoolList({
         <ProductTokenForStakeList imageUri={IronImage} text="Iron" />
       </div>
       <div className="flex items-center gap-10 pt-8">
-        <div className="w-full h-[34px] bg-[#141D2D] rounded-full border border-white">
-          <div
-            className={`h-[32px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] rounded-full text-center text-[22px] w-[${progress}%]`}
-          >
-            {progress}
-          </div>
-        </div>
         <Button
           className="!h-14"
           text="Stake"

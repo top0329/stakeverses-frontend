@@ -1,36 +1,36 @@
 import { Address } from "viem";
-import { Contract, ContractRunner } from 'ethers';
+import { ContractRunner } from 'ethers';
 
 export interface IButtonClass {
   name: string;
   style: string;
 }
 
-export interface ProductTokenForStakeListProps {
+export interface IProductTokenForStakeListProps {
   imageUri: string;
   text: string;
   consumable?: boolean;
 }
 
-export interface StakingPoolListProps {
-  productTokenList: ProductTokenForStakeListProps[];
+export interface IStakingPoolListProps {
+  productTokenList: IProductTokenForStakeListProps[];
   progress: number;
   instanceId: string;
   creatorAddress: string;
   remainingTime: string;
 }
 
-export interface ProductTokenInfo {
+export interface IProductTokenInfo {
   productAddress?: string;
-  productId: string;
-  ratio: string;
+  productId: number;
+  ratio: number;
   consumable: boolean;
 }
 
-export interface RewardTokenInfo {
+export interface IRewardTokenInfo {
   tokenAddress?: string;
-  tokenId: string;
-  ratio: string;
+  tokenId: number;
+  ratio: number;
   isERC1155: boolean;
 }
 
@@ -39,12 +39,7 @@ export type Web3ContextType = {
   chainId?: number;
   isConnected?: boolean;
   library?: ContractRunner;
-  // factoryContract: Contract;
-  // blueprintContract: Contract;
-  // productContract: Contract;
-  // factoryWeb3: any;
-  // blueprintWeb3: any;
-  // productWeb3: any;
+  productStakingInstance: any;
   erc20Approve: (erc20Address: string, spender: string, amount: string) => any;
   erc1155Approve: (
     erc1155Address: string,
@@ -52,3 +47,10 @@ export type Web3ContextType = {
     approved: boolean
   ) => any;
 };
+
+export interface IRewardTokenListForCreate {
+  tokenAddress?: string;
+  tokenId: number;
+  amount: number;
+  isERC1155: boolean;
+}

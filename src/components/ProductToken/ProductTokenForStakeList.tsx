@@ -1,13 +1,13 @@
 import Image from 'next/image';
 
-import { ProductTokenForStakeListProps } from '@/types';
+import { IProductTokenForStakeListProps } from '@/types';
 
 
 function ProductTokenForStakeList({
   imageUri,
   text,
   consumable,
-}: ProductTokenForStakeListProps) {
+}: IProductTokenForStakeListProps) {
   return (
     <div className="flex flex-col">
       <div className="flex justify-center items-center h-16 gap-1">

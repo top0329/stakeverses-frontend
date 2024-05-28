@@ -79,21 +79,6 @@ function StakesPage() {
               </p>
               <ProductTokenForStakeList imageUri={IronImage} text="Iron" />
             </div>
-            <div className="flex items-center gap-10 pt-8">
-              <div className="w-full h-[34px] bg-[#141D2D] rounded-full border border-white">
-                <div
-                  className={`h-[32px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] rounded-full text-center text-[22px] w-[76%]`}
-                >
-                  76%
-                </div>
-              </div>
-              <Button
-                className="!h-14"
-                text="Stake"
-                variant="primary"
-                onClick={() => router.push('/stakes/932')}
-              />
-            </div>
             <div className="flex flex-row items-center gap-32 pt-8">
               <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
                 <p className="text-[22px]">Instance Id</p>
@@ -113,6 +98,12 @@ function StakesPage() {
                   03:28
                 </div>
               </div>
+              <Button
+                className="!h-14"
+                text="Stake"
+                variant="primary"
+                onClick={() => router.push('/stakes/932')}
+              />
             </div>
           </div>
           <div className="text-[38px] text-center font-semibold underline">

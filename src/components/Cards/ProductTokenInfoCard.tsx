@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 import Button from '@/components/Buttons';
 import PickAxeImage from '@/assets/images/pickaxe.svg';
-import { ProductTokenInfo } from '@/types';
+import { IProductTokenInfo } from '@/types';
 
-function ProductTokenInfoCard({ productId, ratio, consumable }: ProductTokenInfo) {
+function ProductTokenInfoCard({ productId, ratio, consumable }: IProductTokenInfo) {
   return (
     <div className="relative col-span-6 bg-[#053F40] rounded-[20px] px-8 pt-12 pb-5 text-[22px]">
       <div className="flex flex-row justify-between gap-10">

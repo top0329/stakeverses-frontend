@@ -9,6 +9,7 @@ import Button from '@/components/Buttons';
 import AddRewardTokenModal from '@/components/Modals/AddRewardTokenModal';
 import RewardTokenInfoCard from '@/components/Cards/RewardTokenInfoCard';
 import {
+  baseAmountAtom,
   isAddRewardTokenModalOpenAtom,
   rewardTokenInfoAtom,
 } from '@/jotai/atoms';
@@ -20,6 +21,12 @@ function CreateInstanceRewardPage() {
   const [, setIsAddRewardTokenModalOpen] = useAtom(
     isAddRewardTokenModalOpenAtom
   );
+  const [baseAmount, setBaseAmount] = useAtom(baseAmountAtom);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setBaseAmount(Number(value));
+  }
 
   return (
     <React.Fragment>
@@ -30,7 +37,11 @@ function CreateInstanceRewardPage() {
         <Subtitle text="Charge Reward Token" />
         <div className="flex flex-row justify-end items-center text-[22px] px-10 -mt-10 mb-6">
           <label className="font-semibold">Enter Base Amount :</label>
-          <input className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed" />
+          <input
+            className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed"
+            onChange={handleInputChange}
+            value={baseAmount}
+          />
         </div>
         <div className="grid grid-cols-12 min-h-[315px] gap-x-20 gap-y-10 px-10">
           {rewardTokenInfo.length === 0 ? (

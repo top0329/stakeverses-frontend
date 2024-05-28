@@ -73,13 +73,6 @@ function PoolDetails({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
-          <div className="w-full h-[34px] bg-[#141D2D] rounded-full border border-white mt-2">
-            <div
-              className={`h-[32px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] rounded-full text-center text-[22px] w-[76%]`}
-            >
-              76%
-            </div>
-          </div>
         </div>
         <div className="bg-gradient-to-br from-[#192F3A] to-[#06C2C4] rounded-2xl p-0.5">
           <div className="bg-gradient-to-r from-[#010c09] to-[#044756] rounded-2xl">
@@ -137,8 +130,8 @@ function PoolDetails({ params }: { params: { id: string } }) {
                         <p className="text-[28px] font-semibold">11564</p>
                       </div>
                       <div className="flex flex-col">
-                        <p className="text-[22px]">Ratio</p>
-                        <p className="text-[28px] font-semibold">1</p>
+                        <p className="text-[22px]">Amount</p>
+                        <p className="text-[28px] font-semibold">1000</p>
                       </div>
                     </div>
                     <div className="absolute bottom-1.5 right-3 bg-[#141D2D] border border-[#2F3A42] rounded-full text-[#00B6E4] text-sm font-medium px-2 py-0.5">
@@ -161,8 +154,8 @@ function PoolDetails({ params }: { params: { id: string } }) {
                         <p className="text-[28px] font-semibold">11563</p>
                       </div>
                       <div className="flex flex-col">
-                        <p className="text-[22px]">Ratio</p>
-                        <p className="text-[28px] font-semibold">1</p>
+                        <p className="text-[22px]">Amount</p>
+                        <p className="text-[28px] font-semibold">1000</p>
                       </div>
                     </div>
                   </div>
@@ -182,8 +175,8 @@ function PoolDetails({ params }: { params: { id: string } }) {
                         <p className="text-[28px] font-semibold">11560</p>
                       </div>
                       <div className="flex flex-col">
-                        <p className="text-[22px]">Ratio</p>
-                        <p className="text-[28px] font-semibold">1</p>
+                        <p className="text-[22px]">Amount</p>
+                        <p className="text-[28px] font-semibold">1000</p>
                       </div>
                     </div>
                   </div>
@@ -203,8 +196,8 @@ function PoolDetails({ params }: { params: { id: string } }) {
                         <p className="text-[28px] font-semibold">11539</p>
                       </div>
                       <div className="flex flex-col">
-                        <p className="text-[22px]">Ratio</p>
-                        <p className="text-[28px] font-semibold">1</p>
+                        <p className="text-[22px]">Amount</p>
+                        <p className="text-[28px] font-semibold">1000</p>
                       </div>
                     </div>
                     <div className="absolute bottom-1.5 right-3 bg-[#141D2D] border border-[#2F3A42] rounded-full text-[#00B6E4] text-sm font-medium px-2 py-0.5">
@@ -239,7 +232,7 @@ function PoolDetails({ params }: { params: { id: string } }) {
                         </p>
                       </div>
                       <div className="flex flex-col gap-2">
-                        <p className="text-[22px]">Amount</p>
+                        <p className="text-[22px]">Ratio</p>
                         <p className="text-[28px] font-semibold">10</p>
                       </div>
                     </div>

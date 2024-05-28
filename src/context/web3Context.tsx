@@ -31,7 +31,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const web3 = new Web3(window.ethereum);
 
   const [provider, setProvider] = useState<ContractRunner>(defaultProvider);
-  const [productStakingInstanceContract, setProductStakingInstanceContract] =
+  const [productStakingInstance, setProductStakingInstance] =
     useState<Contract>({} as Contract);
 
   const init = useCallback(async () => {
@@ -48,7 +48,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         process.env.NEXT_PUBLIC_PRODUCTSTAKINGINSTANCEADDRESS
       );
 
-      setProductStakingInstanceContract(_productStakingInstanceWeb3);
+      setProductStakingInstance(_productStakingInstanceWeb3);
     } catch (err) {
       console.log(err);
     }
@@ -98,7 +98,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       chainId,
       isConnected,
       library: provider ?? signer,
-      productStakingInstanceContract,
+      productStakingInstance,
       erc20Approve,
       erc1155Approve,
     }),
@@ -108,7 +108,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       isConnected,
       provider,
       signer,
-      productStakingInstanceContract,
+      productStakingInstance,
       erc20Approve,
       erc1155Approve,
     ]

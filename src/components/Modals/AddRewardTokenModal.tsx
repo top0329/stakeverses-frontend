@@ -8,7 +8,7 @@ import {
 } from '@/jotai/atoms';
 import PickAxeImage from '@/assets/images/pickaxe.svg';
 import Button from '../Buttons';
-import { RewardTokenInfo } from '@/types';
+import { IRewardTokenInfo } from '@/types';
 
 function AddRewardTokenModal() {
   const [isAddRewardTokenModalOpen, setIsAddRewardTokenModalOpen] = useAtom(
@@ -16,11 +16,11 @@ function AddRewardTokenModal() {
   );
   const [, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
 
-  const [addRewardTokenInfo, setAddRewardTokenInfo] = useState<RewardTokenInfo>(
+  const [addRewardTokenInfo, setAddRewardTokenInfo] = useState<IRewardTokenInfo>(
     {
       tokenAddress: '',
-      tokenId: '',
-      ratio: '',
+      tokenId: 0,
+      ratio: 0,
       isERC1155: false,
     }
   );
@@ -30,19 +30,17 @@ function AddRewardTokenModal() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    setAddRewardTokenInfo((prevState) => ({
-      ...prevState!,
-      [name]: value,
-    }));
-  };
-
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    console.log(value);
-    setAddRewardTokenInfo((prevState) => ({
-      ...prevState!,
-      consumable: value === 'on',
-    }));
+    if (name === 'ratio' || name === 'tokenId') {
+      setAddRewardTokenInfo((prevState) => ({
+        ...prevState!,
+        [name]: parseInt(value),
+      }));
+    } else {
+      setAddRewardTokenInfo((prevState) => ({
+        ...prevState!,
+        [name]: value,
+      }));
+    }
   };
 
   const handleAddProductTokenClicked = () => {
@@ -52,8 +50,8 @@ function AddRewardTokenModal() {
     ]);
     setAddRewardTokenInfo({
       tokenAddress: '',
-      tokenId: '',
-      ratio: '',
+      tokenId: 0,
+      ratio: 0,
       isERC1155: false,
     });
     setIsAddRewardTokenModalOpen(false);

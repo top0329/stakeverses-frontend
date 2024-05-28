@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import Button from '@/components/Buttons';
 import PickAxeImage from '@/assets/images/pickaxe.svg';
-import { RewardTokenInfo } from '@/types';
+import { IRewardTokenInfo } from '@/types';
 import { truncateAddress } from '@/lib/utils';
 
 function RewardTokenInfoCard({
@@ -11,7 +11,7 @@ function RewardTokenInfoCard({
   tokenId,
   ratio,
   isERC1155,
-}: RewardTokenInfo) {
+}: IRewardTokenInfo) {
   return (
     <div className="relative col-span-6 bg-[#053F40] rounded-[20px] px-8 pt-12 pb-5 text-[22px]">
       <div className="flex flex-row justify-between gap-10">
