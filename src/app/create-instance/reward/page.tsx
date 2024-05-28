@@ -57,7 +57,7 @@ function CreateInstanceRewardPage() {
             onClick={() => setIsAddRewardTokenModalOpen(true)}
           />
           <Button
-            className="bg-[#192F3A]"
+            className="!bg-[#192F3A]"
             text="Next"
             variant="outline"
             onClick={() => router.push('/create-instance/create')}

@@ -51,7 +51,7 @@ function CreateInstanceProductPage() {
             text="Add Product"
             onClick={() => setIsAddProductTokenModalOpen(true)}
           />
-          <Button className="bg-[#192F3A]" text="Next" variant="outline" onClick={() => router.push('/create-instance/reward')} />
+          <Button className="!bg-[#192F3A]" text="Next" variant="outline" onClick={() => router.push('/create-instance/reward')} />
         </div>
       </div>
       <AddProductTokenModal />

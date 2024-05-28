@@ -121,43 +121,46 @@ function PoolDetails({ params }: { params: { id: string } }) {
                   Staking Tokens
                 </h2>
                 <div className="flex flex-col gap-[22px] bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-9 rounded-[20px] mb-10 h-[500px] overflow-y-auto custom-scrollbar">
-                  <div className="flex flex-row py-6 px-8 bg-[#141D2D]/70 rounded-[20px] gap-7">
+                  <div className="relative flex flex-row py-6 px-8 bg-[#141D2D]/70 rounded-[20px] gap-7">
                     <Image
-                      className="w-[90px] aspect-square rounded-full"
+                      className="min-w-[90px] aspect-square rounded-full"
                       src={BreadImage}
                       alt="bread"
                     />
                     <div className="flex flex-row justify-between items-center w-full">
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Token Name</p>
                         <p className="text-[28px] font-semibold">Bread</p>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Token Id</p>
                         <p className="text-[28px] font-semibold">11564</p>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Ratio</p>
                         <p className="text-[28px] font-semibold">1</p>
                       </div>
                     </div>
+                    <div className="absolute bottom-1.5 right-3 bg-[#141D2D] border border-[#2F3A42] rounded-full text-[#00B6E4] text-sm font-medium px-2 py-0.5">
+                      Consumable
+                    </div>
                   </div>
                   <div className="flex flex-row py-6 px-8 bg-[#141D2D]/70 rounded-[20px] gap-7">
                     <Image
-                      className="w-[90px] aspect-square rounded-full"
+                      className="min-w-[90px] aspect-square rounded-full"
                       src={FarmerImage}
-                      alt="famrer"
+                      alt="farmer"
                     />
                     <div className="flex flex-row justify-between items-center w-full">
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Token Name</p>
                         <p className="text-[28px] font-semibold">Farmer</p>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Token Id</p>
                         <p className="text-[28px] font-semibold">11563</p>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Ratio</p>
                         <p className="text-[28px] font-semibold">1</p>
                       </div>
@@ -165,44 +168,47 @@ function PoolDetails({ params }: { params: { id: string } }) {
                   </div>
                   <div className="flex flex-row py-6 px-8 bg-[#141D2D]/70 rounded-[20px] gap-7">
                     <Image
-                      className="w-[90px] aspect-square rounded-full"
+                      className="min-w-[90px] aspect-square rounded-full"
                       src={PickAxeImage}
                       alt="pickaxe"
                     />
                     <div className="flex flex-row justify-between items-center w-full">
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Token Name</p>
                         <p className="text-[28px] font-semibold">PickAxe</p>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Token Id</p>
                         <p className="text-[28px] font-semibold">11560</p>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Ratio</p>
                         <p className="text-[28px] font-semibold">1</p>
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-row py-6 px-8 bg-[#141D2D]/70 rounded-[20px] gap-7">
+                  <div className="relative flex flex-row py-6 px-8 bg-[#141D2D]/70 rounded-[20px] gap-7">
                     <Image
-                      className="w-[90px] aspect-square rounded-full"
+                      className="min-w-[90px] aspect-square rounded-full"
                       src={WaterImage}
                       alt="water"
                     />
                     <div className="flex flex-row justify-between items-center w-full">
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Token Name</p>
                         <p className="text-[28px] font-semibold">Water</p>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Token Id</p>
                         <p className="text-[28px] font-semibold">11539</p>
                       </div>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col">
                         <p className="text-[22px]">Ratio</p>
                         <p className="text-[28px] font-semibold">1</p>
                       </div>
+                    </div>
+                    <div className="absolute bottom-1.5 right-3 bg-[#141D2D] border border-[#2F3A42] rounded-full text-[#00B6E4] text-sm font-medium px-2 py-0.5">
+                      Consumable
                     </div>
                   </div>
                 </div>
