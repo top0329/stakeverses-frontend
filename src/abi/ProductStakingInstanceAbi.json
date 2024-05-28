@@ -1,0 +1,323 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "productTokenAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "instanceId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "instanceAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "creatingTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreateInstance",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "instanceId", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "rewardBaseAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "chargeReward",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "productAddress",
+            "type": "address"
+          },
+          { "internalType": "uint256", "name": "productId", "type": "uint256" },
+          { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+          { "internalType": "bool", "name": "consumable", "type": "bool" }
+        ],
+        "internalType": "struct IStakingInfo.ProductInfo[]",
+        "name": "productInfos",
+        "type": "tuple[]"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "tokenAddress",
+            "type": "address"
+          },
+          { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+          { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+          { "internalType": "bool", "name": "isERC1155", "type": "bool" }
+        ],
+        "internalType": "struct IStakingInfo.RewardTokenInfo[]",
+        "name": "rewardInfos",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rewardBaseAmount",
+        "type": "uint256"
+      },
+      { "internalType": "string", "name": "stkName", "type": "string" },
+      { "internalType": "string", "name": "stkSymbol", "type": "string" }
+    ],
+    "name": "createStakingInstance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "creators",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "currentInstanceId",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "creator", "type": "address" }
+    ],
+    "name": "getCreatorInstanceIds",
+    "outputs": [
+      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCreators",
+    "outputs": [
+      { "internalType": "address[]", "name": "", "type": "address[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getInstanceIds",
+    "outputs": [
+      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "instanceId", "type": "uint256" }
+    ],
+    "name": "getInstancePausingStatus",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "instanceId", "type": "uint256" }
+    ],
+    "name": "getProductStakingInstace",
+    "outputs": [
+      {
+        "internalType": "contract ProductStaking",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "instanceId", "type": "uint256" }
+    ],
+    "name": "getProductTokenArray",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "productAddress",
+            "type": "address"
+          },
+          { "internalType": "uint256", "name": "productId", "type": "uint256" },
+          { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+          { "internalType": "bool", "name": "consumable", "type": "bool" }
+        ],
+        "internalType": "struct IStakingInfo.ProductInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "instanceId", "type": "uint256" }
+    ],
+    "name": "getRewardTokenArray",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "tokenAddress",
+            "type": "address"
+          },
+          { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+          { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+          { "internalType": "bool", "name": "isERC1155", "type": "bool" }
+        ],
+        "internalType": "struct IStakingInfo.RewardTokenInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "instanceId", "type": "uint256" }
+    ],
+    "name": "getStakingInfo",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "creator", "type": "address" },
+          {
+            "internalType": "address",
+            "name": "instanceAddress",
+            "type": "address"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "productAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "productId",
+                "type": "uint256"
+              },
+              { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+              { "internalType": "bool", "name": "consumable", "type": "bool" }
+            ],
+            "internalType": "struct IStakingInfo.ProductInfo[]",
+            "name": "productInfo",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "tokenAddress",
+                "type": "address"
+              },
+              {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+              },
+              { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+              { "internalType": "bool", "name": "isERC1155", "type": "bool" }
+            ],
+            "internalType": "struct IStakingInfo.RewardTokenInfo[]",
+            "name": "rewardTokenInfo",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct IStakingInfo.StakingInstance",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "idStakingStatus",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "instanceIdAddress",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "instanceIdCreator",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "instanceIdRewardBaseAmount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "instanceIds",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "isInstancePaused",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

@@ -5,6 +5,7 @@ import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { DevTools } from 'jotai-devtools';
 
+import { Web3Provider } from '@/context/web3Context';
 import { config } from '@/lib/config';
 import { StoreProvider, store } from '@/jotai/store';
 
@@ -31,8 +32,10 @@ export default function Providers({ children, cookie }: Props) {
               overlayBlur: 'small',
             })}
           >
-            <DevTools store={store} />
-            {children}
+            <Web3Provider>
+              <DevTools store={store} />
+              {children}
+            </Web3Provider>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
