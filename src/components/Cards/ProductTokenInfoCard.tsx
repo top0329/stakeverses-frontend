@@ -20,21 +20,27 @@ function ProductTokenInfoCard({ productId, ratio, consumable }: ProductTokenInfo
               <div className="font-semibold">Product Name</div>
               <div>:</div>
             </div>
-            <div className="text-center w-full">Pickaxe</div>
+            <div className="flex justify-center items-center text-center w-full">
+              Pickaxe
+            </div>
           </div>
           <div className="flex flex-row">
             <div className="flex flex-row justify-between min-w-[200px]">
               <div className="font-semibold">Token Id</div>
               <div>:</div>
             </div>
-            <div className="text-center w-full">{productId}</div>
+            <div className="flex justify-center items-center text-center w-full">
+              {productId}
+            </div>
           </div>
           <div className="flex flex-row">
             <div className="flex flex-row justify-between min-w-[200px]">
               <div className="font-semibold">Ratio</div>
               <div>:</div>
             </div>
-            <div className="text-center w-full">{ratio}</div>
+            <div className="flex justify-center items-center text-center w-full">
+              {ratio}
+            </div>
           </div>
         </div>
       </div>

@@ -3,32 +3,34 @@ import Image from 'next/image';
 import { useAtom } from 'jotai';
 
 import {
-  isAddProductTokenModalOpenAtom,
-  productTokenInfoAtom,
+  isAddRewardTokenModalOpenAtom,
+  rewardTokenInfoAtom,
 } from '@/jotai/atoms';
 import PickAxeImage from '@/assets/images/pickaxe.svg';
 import Button from '../Buttons';
-import { ProductTokenInfo } from '@/types';
+import { RewardTokenInfo } from '@/types';
 
-function AddProductTokenModal() {
-  const [isAddProductTokenModalOpen, setIsAddProductTokenModalOpen] = useAtom(
-    isAddProductTokenModalOpenAtom
+function AddRewardTokenModal() {
+  const [isAddRewardTokenModalOpen, setIsAddRewardTokenModalOpen] = useAtom(
+    isAddRewardTokenModalOpenAtom
   );
-  const [, setProductTokenInfo] = useAtom(productTokenInfoAtom);
+  const [, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
 
-  const [addProductTokenInfo, setAddProductTokenInfo] =
-    useState<ProductTokenInfo>({
-      productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-      productId: '',
+  const [addRewardTokenInfo, setAddRewardTokenInfo] = useState<RewardTokenInfo>(
+    {
+      tokenAddress: '',
+      tokenId: '',
       ratio: '',
-      consumable: false,
-    });
+      isERC1155: false,
+    }
+  );
+  const [isERC1155, setIsERC1155] = useState(false);
 
   const modal = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    setAddProductTokenInfo((prevState) => ({
+    setAddRewardTokenInfo((prevState) => ({
       ...prevState!,
       [name]: value,
     }));
@@ -37,36 +39,43 @@ function AddProductTokenModal() {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     console.log(value);
-    setAddProductTokenInfo((prevState) => ({
+    setAddRewardTokenInfo((prevState) => ({
       ...prevState!,
       consumable: value === 'on',
     }));
   };
 
   const handleAddProductTokenClicked = () => {
-    setProductTokenInfo(
-      (prev) =>
-        [...prev, addProductTokenInfo].filter(
-          Boolean as any
-        ) as ProductTokenInfo[]
-    );
-    setAddProductTokenInfo({
-      productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-      productId: '',
+    setRewardTokenInfo((prev) => [
+      ...prev,
+      { ...addRewardTokenInfo, isERC1155 },
+    ]);
+    setAddRewardTokenInfo({
+      tokenAddress: '',
+      tokenId: '',
       ratio: '',
-      consumable: false,
+      isERC1155: false,
     });
-    setIsAddProductTokenModalOpen(false);
+    setIsAddRewardTokenModalOpen(false);
   };
 
   const handleCancelButtonClicked = () => {
-    setIsAddProductTokenModalOpen(false);
+    setIsAddRewardTokenModalOpen(false);
+  };
+
+  const handleRadioClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.id;
+    if (value === 'erc20') {
+      setIsERC1155(false);
+    } else if (value === 'erc1155') {
+      setIsERC1155(true);
+    }
   };
 
   return (
     <div
       className={`fixed right-0 bottom-0 top-0 left-0 z-30 flex h-full min-h-screen w-full items-center justify-center px-4 py-5 ${
-        isAddProductTokenModalOpen ? 'block' : 'hidden'
+        isAddRewardTokenModalOpen ? 'block' : 'hidden'
       }`}
     >
       <div
@@ -77,9 +86,7 @@ function AddProductTokenModal() {
         ref={modal}
         className="z-30 w-[826px] bg-gradient-to-r from-[#010e0c] to-[#05596d] text-white text-center rounded-[20px] border-2 border-white pb-8"
       >
-        <h2 className="text-[38px] font-bold mt-7 mb-6">
-          Add Product Token For Staker
-        </h2>
+        <h2 className="text-[38px] font-bold mt-7 mb-6">Add Reward Token</h2>
         <hr className="opacity-30 border" />
         <div className="grid grid-cols-12 mx-[47px] mt-12 mb-11 gap-10 text-[22px] font-semibold">
           <Image
@@ -87,25 +94,59 @@ function AddProductTokenModal() {
             src={PickAxeImage}
             alt="pickaxe"
           />
-          <div className="col-span-8 flex flex-col justify-between">
+          <div className="col-span-8 flex flex-col justify-between gap-3">
+            <div className="flex flex-row justify-center items-center gap-16">
+              <div className="flex flex-row items-center gap-4">
+                <input
+                  id="erc20"
+                  className="w-5 h-5"
+                  type="radio"
+                  checked={!isERC1155}
+                  onChange={handleRadioClick}
+                />
+                <label className="text-[23px]">ERC20</label>
+              </div>
+              <div className="flex flex-row items-center gap-4">
+                <input
+                  id="erc1155"
+                  className="w-5 h-5"
+                  type="radio"
+                  checked={isERC1155}
+                  onChange={handleRadioClick}
+                />
+                <label className="text-[23px]">ERC1155</label>
+              </div>
+            </div>
             <div className="flex flex-row justify-between items-center">
-              <label className="truncate">Product Name</label>
+              <label className="truncate">Token Name</label>
               <input
-                id="product-token-name"
+                id="token-name"
                 className="h-[50px] w-[260px] bg-[#A3A3A3]/50 border border-[#2F3A42] rounded-[15px] px-4 py-2"
                 disabled
               />
             </div>
             <div className="flex flex-row justify-between items-center">
-              <label>Token Id</label>
+              <label>Token Address</label>
               <input
-                id="product-token-id"
+                id="token-address"
                 className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
-                name="productId"
+                name="tokenAddress"
                 onChange={handleInputChange}
-                value={addProductTokenInfo.productId}
+                value={addRewardTokenInfo.tokenAddress}
               />
             </div>
+            {isERC1155 && (
+              <div className="flex flex-row justify-between items-center">
+                <label>Token Id</label>
+                <input
+                  id="token-id"
+                  className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
+                  name="tokenId"
+                  onChange={handleInputChange}
+                  value={addRewardTokenInfo.tokenId}
+                />
+              </div>
+            )}
             <div className="flex flex-row justify-between items-center">
               <label>Ratio</label>
               <input
@@ -113,22 +154,8 @@ function AddProductTokenModal() {
                 className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
                 name="ratio"
                 onChange={handleInputChange}
-                value={addProductTokenInfo.ratio}
+                value={addRewardTokenInfo.ratio}
               />
-            </div>
-            <div
-              id="consumable"
-              className="flex flex-row justify-start items-center gap-4"
-            >
-              <input
-                id="consumable"
-                type="checkbox"
-                className="w-6 h-6"
-                name="consumable"
-                onChange={handleCheckboxChange}
-                checked={addProductTokenInfo.consumable}
-              />
-              <label>Consumable</label>
             </div>
           </div>
         </div>
@@ -150,4 +177,4 @@ function AddProductTokenModal() {
   );
 }
 
-export default AddProductTokenModal;
+export default AddRewardTokenModal;
