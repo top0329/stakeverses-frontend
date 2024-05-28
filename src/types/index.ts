@@ -18,8 +18,15 @@ export interface StakingPoolListProps {
 }
 
 export interface ProductTokenInfo {
-  address: string;
-  id: string;
+  productAddress?: string;
+  productId: string;
   ratio: string;
   consumable: boolean;
+}
+
+export interface RewardTokenInfo {
+  tokenAddress?: string;
+  tokenId: string;
+  ratio: string;
+  isERC1155: boolean;
 }

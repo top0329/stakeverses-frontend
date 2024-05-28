@@ -23,7 +23,7 @@ function Header() {
           Stakes
         </Link>
         {/* <Link className="text-2xl font-medium truncate" href="/my-portfolio">My Portfolio</Link> */}
-        <Link className="text-2xl font-medium truncate" href="/create-instance">
+        <Link className="text-2xl font-medium truncate" href="/create-instance/product">
           Create Instance
         </Link>
         <Link className="text-2xl font-medium truncate" href="/faq">

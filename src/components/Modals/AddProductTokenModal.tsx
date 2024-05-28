@@ -14,12 +14,12 @@ function AddProductTokenModal() {
   const [isAddProductTokenModalOpen, setIsAddProductTokenModalOpen] = useAtom(
     isAddProductTokenModalOpenAtom
   );
-  const [productTokenInfo, setProductTokenInfo] = useAtom(productTokenInfoAtom);
+  const [, setProductTokenInfo] = useAtom(productTokenInfoAtom);
 
   const [addProductTokenInfo, setAddProductTokenInfo] =
     useState<ProductTokenInfo>({
-      address: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-      id: '',
+      productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
+      productId: '',
       ratio: '',
       consumable: false,
     });
@@ -51,8 +51,8 @@ function AddProductTokenModal() {
         ) as ProductTokenInfo[]
     );
     setAddProductTokenInfo({
-      address: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-      id: '',
+      productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
+      productId: '',
       ratio: '',
       consumable: false,
     });
@@ -103,7 +103,7 @@ function AddProductTokenModal() {
                 className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
                 name="id"
                 onChange={handleInputChange}
-                value={addProductTokenInfo.id}
+                value={addProductTokenInfo.productId}
               />
             </div>
             <div className="flex flex-row justify-between items-center">

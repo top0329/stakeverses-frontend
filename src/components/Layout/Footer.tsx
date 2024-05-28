@@ -36,7 +36,7 @@ function Footer() {
           <div className="flex flex-col gap-4">
             <Link href={'/stakes'}>Stakes</Link>
             {/* <Link href={'/my-portfolio'}>My Portfolio</Link> */}
-            <Link href={'/create-instance'}>Create Instance</Link>
+            <Link href={'/create-instance/product'}>Create Instance</Link>
             <Link href={'/faq'}>FAQ</Link>
           </div>
         </div>
