@@ -1,3 +1,14 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all", // Check all variables for being used
+        "args": "after-used", // Only check arguments after the last used argument
+        "ignoreRestSiblings": true, // Allow to have unused variables when using rest in object destructuring
+        "caughtErrors": "none" // Specify whether to check caught errors in try/catch blocks
+      }
+    ]
+  }
 }

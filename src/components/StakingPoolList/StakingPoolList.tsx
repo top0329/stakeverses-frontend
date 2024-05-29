@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
@@ -5,12 +6,6 @@ import Button from '@/components/Buttons';
 import { IStakingPoolListProps } from '@/types';
 import { truncateAddress } from '@/lib/utils';
 
-import BreadImage from '@/assets/images/bread.svg';
-import FarmerImage from '@/assets/images/farmer.svg';
-import PickAxeImage from '@/assets/images/pickaxe.svg';
-import WaterImage from '@/assets/images/water.svg';
-import IronImage from '@/assets/images/iron.svg';
-import React from 'react';
 
 function StakingPoolList({
   instanceId,

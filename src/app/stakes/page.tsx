@@ -2,24 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
 import Subtitle from '@/components/Subtitle';
-import Button from '@/components/Buttons';
-import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
 import StakingPoolList from '@/components/StakingPoolList/StakingPoolList';
 import useWeb3 from '@/hooks/useWeb3';
 import { stakingDataListAtom } from '@/jotai/atoms';
-import BreadImage from '@/assets/images/bread.svg';
-import FarmerImage from '@/assets/images/farmer.svg';
-import PickAxeImage from '@/assets/images/pickaxe.svg';
-import WaterImage from '@/assets/images/water.svg';
-import IronImage from '@/assets/images/iron.svg';
 
 function StakesPage() {
   const { productStakingInstance } = useWeb3();
-  const router = useRouter();
 
   const [stakingDataList, setStakingDataList] = useAtom(stakingDataListAtom);
 
@@ -44,7 +35,7 @@ function StakesPage() {
     if (Object.keys(productStakingInstance).length > 0) {
       init();
     }
-  }, [productStakingInstance]);
+  }, [productStakingInstance, setStakingDataList]);
 
   const handleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
