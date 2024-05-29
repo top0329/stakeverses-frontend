@@ -48,11 +48,11 @@ export type Web3ContextType = {
   library?: ContractRunner;
   productStakingInstance: any;
   // erc20Approve: (erc20Address: string, spender: string, amount: string) => any;
-  // erc1155Approve: (
-  //   erc1155Address: string,
-  //   spender: string,
-  //   approved: boolean
-  // ) => any;
+  erc1155Approve: (
+    erc1155Address: string,
+    spender: string,
+    approved: boolean
+  ) => any;
 };
 
 export interface IRewardTokenListForCreate {
