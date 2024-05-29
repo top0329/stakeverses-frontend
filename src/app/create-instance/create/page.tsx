@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import Image from 'next/image';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
@@ -34,7 +33,7 @@ function CreateInstanceCreatePage() {
           'stk'
         )
         .send({ from: account });
-        router.push('/stakes');
+      router.push('/stakes');
     } catch (err) {
       console.log(err);
     }

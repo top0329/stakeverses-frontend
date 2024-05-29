@@ -1,4 +1,5 @@
 'use client';
+
 import {
   createContext,
   useCallback,
@@ -28,7 +29,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const defaultProvider = new ethers.JsonRpcProvider(
     process.env.NEXT_PUBLIC_DEFAULTRPC
   );
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(window?.ethereum);
 
   const [provider, setProvider] = useState<ContractRunner>(defaultProvider);
   const [productStakingInstance, setProductStakingInstance] =

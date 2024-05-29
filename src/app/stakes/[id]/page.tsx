@@ -24,7 +24,7 @@ function PoolDetails({ params }: { params: { id: string } }) {
       <div className="relative my-24 rounded-[20px] bg-[#030C1B] px-[34px]">
         <Subtitle text="Pool Detail" />
         <div className="px-[54px] mb-12">
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <ProductTokenForStakeList imageUri={FarmerImage} text="Farmer" />
             <p className="text-[35px] font-medium -mt-16 px-1">+</p>
             <ProductTokenForStakeList imageUri={PickAxeImage} text="PickAxe" />
@@ -46,7 +46,7 @@ function PoolDetails({ params }: { params: { id: string } }) {
               * 1 min =
             </p>
             <ProductTokenForStakeList imageUri={IronImage} text="Iron" />
-          </div>
+          </div> */}
           <div className="flex flex-row justify-between py-9">
             <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
               <p className="text-[22px]">Instance Id</p>

@@ -7,17 +7,24 @@ export interface IButtonClass {
 }
 
 export interface IProductTokenForStakeListProps {
-  imageUri: string;
-  text: string;
+  productId: string;
+  ratio: string;
   consumable?: boolean;
 }
 
+export interface IRewardTokenInfoForStakeListProps {
+  tokenId: string;
+  tokenAddress: string;
+  ratio: string;
+  isERC1155?: boolean;
+}
+
 export interface IStakingPoolListProps {
-  productTokenList: IProductTokenForStakeListProps[];
-  progress: number;
   instanceId: string;
-  creatorAddress: string;
-  remainingTime: string;
+  creator: string;
+  instanceAddress: string;
+  productInfo: IProductTokenForStakeListProps[];
+  rewardTokenInfo: IRewardTokenInfoForStakeListProps[];
 }
 
 export interface IProductTokenInfo {
