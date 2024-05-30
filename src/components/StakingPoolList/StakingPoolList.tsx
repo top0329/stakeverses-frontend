@@ -46,7 +46,10 @@ function StakingPoolList({
                     ratio={product.ratio}
                     consumable
                   />
-                  {index !== productInfo.length - 1 && (
+                  {index !==
+                    productInfo.filter((product) => product.consumable === true)
+                      .length -
+                      1 && (
                     <p className="text-[35px] font-medium -mt-16 px-1">+</p>
                   )}
                 </React.Fragment>
@@ -58,18 +61,17 @@ function StakingPoolList({
           </React.Fragment>
         ) : null}
         <p className="text-[22px] -mt-14 px-1 whitespace-nowrap">=</p>
-        {rewardTokenInfo
-          .map((rewardToken, index) => (
-            <React.Fragment key={index}>
-              <ProductTokenForStakeList
-                productId={rewardToken.tokenId}
-                ratio={rewardToken.ratio}
-              />
-              {index !== productInfo.length - 1 && (
-                <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-              )}
-            </React.Fragment>
-          ))}
+        {rewardTokenInfo.map((rewardToken, index) => (
+          <React.Fragment key={index}>
+            <ProductTokenForStakeList
+              productId={rewardToken.tokenId}
+              ratio={rewardToken.ratio}
+            />
+            {index !== rewardTokenInfo.length - 1 && (
+              <p className="text-[35px] font-medium -mt-16 px-1">+</p>
+            )}
+          </React.Fragment>
+        ))}
       </div>
       <div className="flex flex-row items-center gap-32 pt-8">
         <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">

@@ -12,14 +12,25 @@ import {
 import Button from '@/components/Buttons';
 import AddProductTokenModal from '@/components/Modals/AddProductTokenModal';
 import ProductTokenInfoCard from '@/components/Cards/ProductTokenInfoCard';
+import useToast from '@/hooks/useToast';
 
 function CreateInstanceProductPage() {
+  const { showToast } = useToast();
   const router = useRouter();
 
   const [productTokenInfo] = useAtom(productTokenInfoAtom);
   const [, setIsAddProductTokenModalOpen] = useAtom(
     isAddProductTokenModalOpenAtom
   );
+
+  const handleAddProduct = () => {
+    setIsAddProductTokenModalOpen(true);
+  };
+
+  const handleNext = () => {
+    if (productTokenInfo.length === 0) showToast('fail', 'You need to add at least one product!');
+    else router.push('/create-instance/reward');
+  };
 
   return (
     <React.Fragment>
@@ -34,24 +45,33 @@ function CreateInstanceProductPage() {
               No Products have been added yet.
             </p>
           ) : (
-              <React.Fragment>
-                {productTokenInfo.map((productToken) => (
-                  <ProductTokenInfoCard
-                    key={productToken.productId}
-                    productId={productToken.productId}
-                    ratio={productToken.ratio}
-                    consumable={productToken.consumable}
-                  />
-                ))}
-              </React.Fragment>
+            <React.Fragment>
+              {productTokenInfo.map((productToken) => (
+                <ProductTokenInfoCard
+                  key={productToken.productId}
+                  productName={productToken.productName}
+                  imageUri={productToken.imageUri}
+                  productId={productToken.productId}
+                  ratio={productToken.ratio}
+                  consumable={productToken.consumable}
+                />
+              ))}
+            </React.Fragment>
           )}
         </div>
         <div className="flex flex-row justify-center gap-10 mt-[50px] pb-[38px]">
           <Button
             text="Add Product"
-            onClick={() => setIsAddProductTokenModalOpen(true)}
+            className={`${productTokenInfo.length > 3 && 'opacity-50'}`}
+            onClick={handleAddProduct}
+            disabled={productTokenInfo.length > 3}
           />
-          <Button className="!bg-[#192F3A]" text="Next" variant="outline" onClick={() => router.push('/create-instance/reward')} />
+          <Button
+            className="!bg-[#192F3A]"
+            text="Next"
+            variant="outline"
+            onClick={handleNext}
+          />
         </div>
       </div>
       <AddProductTokenModal />

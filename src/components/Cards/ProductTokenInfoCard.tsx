@@ -2,17 +2,25 @@ import React from 'react';
 import Image from 'next/image';
 
 import Button from '@/components/Buttons';
-import PickAxeImage from '@/assets/images/pickaxe.svg';
 import { IProductTokenInfo } from '@/types';
 
-function ProductTokenInfoCard({ productId, ratio, consumable }: IProductTokenInfo) {
+function ProductTokenInfoCard({
+  productName,
+  imageUri,
+  productId,
+  ratio,
+  consumable,
+}: IProductTokenInfo) {
   return (
     <div className="relative col-span-6 bg-[#053F40] rounded-[20px] px-8 pt-12 pb-5 text-[22px]">
       <div className="flex flex-row justify-between gap-10">
         <Image
           className="min-w-[205px] aspect-square border border-[#040E20] rounded-full"
-          src={PickAxeImage}
-          alt="pickaxe"
+          src={imageUri || ''}
+          width={205}
+          height={205}
+          alt="product"
+          unoptimized
         />
         <div className="flex flex-col justify-center w-full gap-10">
           <div className="flex flex-row">
@@ -21,7 +29,7 @@ function ProductTokenInfoCard({ productId, ratio, consumable }: IProductTokenInf
               <div>:</div>
             </div>
             <div className="flex justify-center items-center text-center w-full">
-              Pickaxe
+              {productName}
             </div>
           </div>
           <div className="flex flex-row">

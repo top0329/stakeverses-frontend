@@ -28,6 +28,8 @@ export interface IStakingPoolListProps {
 }
 
 export interface IProductTokenInfo {
+  productName?: string;
+  imageUri?: string;
   productAddress?: string;
   productId: number;
   ratio?: number;

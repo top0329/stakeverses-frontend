@@ -8,6 +8,7 @@ import { DevTools } from 'jotai-devtools';
 import { Web3Provider } from '@/context/web3Context';
 import { config } from '@/lib/config';
 import { StoreProvider, store } from '@/jotai/store';
+import ToastProvider from '@/context/toastContext';
 
 const queryClient = new QueryClient();
 
@@ -32,10 +33,12 @@ export default function Providers({ children, cookie }: Props) {
               overlayBlur: 'small',
             })}
           >
-            <Web3Provider>
-              <DevTools store={store} />
-              {children}
-            </Web3Provider>
+            <ToastProvider>
+              <Web3Provider>
+                <DevTools store={store} />
+                {children}
+              </Web3Provider>
+            </ToastProvider>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
