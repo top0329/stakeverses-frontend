@@ -10,7 +10,6 @@ import { truncateAddress } from '@/lib/utils';
 function StakingPoolList({
   instanceId,
   creator,
-  instanceAddress,
   productInfo,
   rewardTokenInfo,
 }: IStakingPoolListProps) {

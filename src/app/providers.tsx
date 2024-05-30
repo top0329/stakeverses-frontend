@@ -9,6 +9,7 @@ import { Web3Provider } from '@/context/web3Context';
 import { config } from '@/lib/config';
 import { StoreProvider, store } from '@/jotai/store';
 import ToastProvider from '@/context/toastContext';
+import SpinnerProvider from '@/context/spinnerContext';
 
 const queryClient = new QueryClient();
 
@@ -34,10 +35,12 @@ export default function Providers({ children, cookie }: Props) {
             })}
           >
             <ToastProvider>
-              <Web3Provider>
-                <DevTools store={store} />
-                {children}
-              </Web3Provider>
+              <SpinnerProvider>
+                <Web3Provider>
+                  <DevTools store={store} />
+                  {children}
+                </Web3Provider>
+              </SpinnerProvider>
             </ToastProvider>
           </RainbowKitProvider>
         </QueryClientProvider>

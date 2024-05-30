@@ -7,15 +7,23 @@ import { useAtom } from 'jotai';
 import Button from '@/components/Buttons';
 import ProductTokenStakeList from '@/components/Lists/ProductTokenStakeList';
 import useWeb3 from '@/hooks/useWeb3';
+import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { currentPoolDataAtom } from '@/jotai/atoms';
 
+const web3 = new Web3(window.ethereum);
+
 function Stake() {
-  const { erc1155Approve, isConnected, library } = useWeb3();
+  const { erc1155Approve, isConnected, library, account } = useWeb3();
 
   const [currentPoolData] = useAtom(currentPoolDataAtom);
 
   const [baseAmount, setBaseAmount] = useState<number>(0);
   const [isApproved, setIsApproved] = useState<boolean>(false);
+
+  const productStakingWeb3: any = new web3.eth.Contract(
+    ProductStakingAbi,
+    currentPoolData.instanceAddress
+  );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -23,35 +31,41 @@ function Stake() {
   };
 
   const handleApprove = async () => {
-    const web3 = new Web3(window.ethereum);
-    try {
-      if (isConnected && library) {
-        let receipt = null;
-        while (receipt === null || receipt.status === undefined) {
-          const res = erc1155Approve(
-            process.env.NEXT_PUBLIC_PRODUCTADDRESS!,
-            currentPoolData.instanceAddress,
-            true
-          );
-          receipt = await web3.eth.getTransactionReceipt(
-            (
-              await res
-            ).transactionHash
-          );
-        }
-        if (receipt && receipt.status !== undefined) {
-          if (receipt.status) {
-            setIsApproved(true);
-          } else {
-            setIsApproved(false);
+    if (isApproved) {
+      const tx = await productStakingWeb3.methods
+        .staking(baseAmount)
+        .send({ from: account });
+      console.log(tx);
+    } else {
+      try {
+        if (isConnected && library) {
+          let receipt = null;
+          while (receipt === null || receipt.status === undefined) {
+            const res = erc1155Approve(
+              process.env.NEXT_PUBLIC_PRODUCTADDRESS!,
+              currentPoolData.instanceAddress,
+              true
+            );
+            receipt = await web3.eth.getTransactionReceipt(
+              (
+                await res
+              ).transactionHash
+            );
           }
-        } else {
-          alert('Transaction is still pending');
-          await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before checking again
+          if (receipt && receipt.status !== undefined) {
+            if (receipt.status) {
+              setIsApproved(true);
+            } else {
+              setIsApproved(false);
+            }
+          } else {
+            alert('Transaction is still pending');
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before checking again
+          }
         }
+      } catch (err: any) {
+        console.log(err);
       }
-    } catch (err: any) {
-      console.log(err);
     }
   };
 
@@ -84,7 +98,7 @@ function Stake() {
             <div className="pb-10 mx-auto">
               <Button
                 className="!w-[160px]"
-                text={isApproved? 'Stake' : 'Approve'}
+                text={isApproved ? 'Stake' : 'Approve'}
                 onClick={handleApprove}
               />
             </div>

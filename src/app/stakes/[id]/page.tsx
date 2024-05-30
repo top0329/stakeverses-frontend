@@ -137,9 +137,9 @@ function PoolDetails() {
               </div>
             </div>
             <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-[22px]">Staked Amount</p>
+              <p className="text-[22px]">Instance Address</p>
               <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                645
+                {truncateAddress(currentPoolData.instanceAddress)}
               </div>
             </div>
             <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
