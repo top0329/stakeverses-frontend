@@ -1,8 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
+import { useAtom } from 'jotai';
 
 import Button from '@/components/Buttons';
+import {
+  isEditProductTokenModalOpenAtom,
+  productTokenInfoAtom,
+  selectedProductInfoAtom,
+} from '@/jotai/atoms';
 import { IProductTokenInfo } from '@/types';
+import EditProductTokenModal from '@/components/Modals/EditProductTokenModal';
 
 function ProductTokenInfoCard({
   productName,
@@ -11,6 +18,31 @@ function ProductTokenInfoCard({
   ratio,
   consumable,
 }: IProductTokenInfo) {
+  const [, setProductTokenInfo] = useAtom(productTokenInfoAtom);
+  const [, setIsEditProductTokenModalOpen] = useAtom(
+    isEditProductTokenModalOpenAtom
+  );
+  const [, setSelectedProductInfo] = useAtom(
+    selectedProductInfoAtom
+  );
+
+  const handleEdit = () => {
+    setIsEditProductTokenModalOpen(true);
+    setSelectedProductInfo({
+      productId: productId,
+      ratio: ratio,
+      consumable: consumable,
+    });
+  };
+
+  const handleRemove = () => {
+    setProductTokenInfo((prevProductTokenInfo) => {
+      return prevProductTokenInfo.filter(
+        (product) => product.productId !== productId
+      );
+    });
+  };
+
   return (
     <div className="relative col-span-6 bg-[#053F40] rounded-[20px] px-8 pt-12 pb-5 text-[22px]">
       <div className="flex flex-row justify-between gap-10">
@@ -53,11 +85,16 @@ function ProductTokenInfoCard({
         </div>
       </div>
       <div className="flex flex-row justify-end gap-4 pt-2.5">
-        <Button className="!w-[88px] !h-[34px] !text-[18px]" text="Edit" />
+        <Button
+          className="!w-[88px] !h-[34px] !text-[18px]"
+          text="Edit"
+          onClick={handleEdit}
+        />
         <Button
           className="!w-[88px] !h-[34px] !text-[18px] !bg-[#2F3A42]"
           text="Remove"
           variant="outline"
+          onClick={handleRemove}
         />
       </div>
       {consumable && (
@@ -65,6 +102,7 @@ function ProductTokenInfoCard({
           Consumable
         </div>
       )}
+      <EditProductTokenModal />
     </div>
   );
 }

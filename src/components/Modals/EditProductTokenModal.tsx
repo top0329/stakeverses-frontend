@@ -4,20 +4,22 @@ import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
 import {
-  isAddProductTokenModalOpenAtom,
+  isEditProductTokenModalOpenAtom,
   productTokenInfoAtom,
+  selectedProductInfoAtom,
 } from '@/jotai/atoms';
 import Button from '@/components/Buttons';
 import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenInfo } from '@/types';
 
-function AddProductTokenModal() {
-  const [isAddProductTokenModalOpen, setIsAddProductTokenModalOpen] = useAtom(
-    isAddProductTokenModalOpenAtom
+function EditProductTokenModal() {
+  const [isEditProductTokenModalOpen, setIsEditProductTokenModalOpen] = useAtom(
+    isEditProductTokenModalOpenAtom
   );
   const [productTokenInfo, setProductTokenInfo] = useAtom(productTokenInfoAtom);
+  const [selectedProductInfo] = useAtom(selectedProductInfoAtom);
 
-  const [addProductTokenInfo, setAddProductTokenInfo] =
+  const [editProductTokenInfo, setEditProductTokenInfo] =
     useState<IProductTokenInfo>({
       productName: '',
       productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
@@ -30,26 +32,38 @@ function AddProductTokenModal() {
     productId: '',
     ratio: '',
   });
+  const [initialProductId, setInitialProductId] = useState(0);
 
   const modal = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setEditProductTokenInfo({
+      ...editProductTokenInfo,
+      productId: selectedProductInfo.productId,
+      ratio: selectedProductInfo.ratio,
+      consumable: selectedProductInfo.consumable,
+    });
+    setInitialProductId(selectedProductInfo.productId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditProductTokenModalOpen]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const erc1155Data = await getERC1155Data(
           (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-          addProductTokenInfo.productId
+          editProductTokenInfo.productId
         );
         if (erc1155Data) {
           const { name, uri } = erc1155Data;
-          setAddProductTokenInfo({
-            ...addProductTokenInfo,
+          setEditProductTokenInfo({
+            ...editProductTokenInfo,
             productName: name,
             imageUri: uri,
           });
         } else {
-          setAddProductTokenInfo({
-            ...addProductTokenInfo,
+          setEditProductTokenInfo({
+            ...editProductTokenInfo,
             productName: '',
             imageUri: '',
           });
@@ -58,28 +72,29 @@ function AddProductTokenModal() {
         console.log(err);
       }
     }
-    if (addProductTokenInfo.productId) {
+    if (editProductTokenInfo.productId) {
       fetchData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addProductTokenInfo.productId]);
+  }, [editProductTokenInfo.productId]);
 
   useEffect(() => {
     if (
       productTokenInfo.some(
-        (item) => item.productId === addProductTokenInfo.productId
-      )
+        (item) => item.productId === editProductTokenInfo.productId
+      ) &&
+      initialProductId !== editProductTokenInfo.productId
     ) {
       setError({
         ...error,
         productId: 'This product token has already been added!',
       });
     } else if (
-      addProductTokenInfo.productId === undefined ||
-      Number.isNaN(addProductTokenInfo.productId)
+      editProductTokenInfo.productId === undefined ||
+      Number.isNaN(editProductTokenInfo.productId)
     ) {
-      setAddProductTokenInfo({
-        ...addProductTokenInfo,
+      setEditProductTokenInfo({
+        ...editProductTokenInfo,
         productName: '',
         imageUri: '',
       });
@@ -94,8 +109,8 @@ function AddProductTokenModal() {
       });
     }
     if (
-      addProductTokenInfo.ratio === undefined ||
-      Number.isNaN(addProductTokenInfo.ratio)
+      editProductTokenInfo.ratio === undefined ||
+      Number.isNaN(editProductTokenInfo.ratio)
     ) {
       setError({
         ...error,
@@ -103,17 +118,17 @@ function AddProductTokenModal() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addProductTokenInfo.productId, addProductTokenInfo.ratio]);
+  }, [editProductTokenInfo.productId, editProductTokenInfo.ratio]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     if (name === 'ratio' || name === 'productId') {
-      setAddProductTokenInfo((prevState) => ({
+      setEditProductTokenInfo((prevState) => ({
         ...prevState!,
         [name]: parseInt(value),
       }));
     } else {
-      setAddProductTokenInfo((prevState) => ({
+      setEditProductTokenInfo((prevState) => ({
         ...prevState!,
         [name]: value,
       }));
@@ -121,28 +136,32 @@ function AddProductTokenModal() {
   };
 
   const handleCheckboxChange = () => {
-    setAddProductTokenInfo((prevState) => ({
+    setEditProductTokenInfo((prevState) => ({
       ...prevState!,
-      consumable: !addProductTokenInfo.consumable,
+      consumable: !editProductTokenInfo.consumable,
     }));
   };
 
-  const handleAddProductTokenClicked = () => {
+  const handleEditProductTokenClicked = () => {
     if (
-      addProductTokenInfo.imageUri &&
-      addProductTokenInfo.productId &&
-      addProductTokenInfo.ratio &&
-      !productTokenInfo.some(
-        (item) => item.productId === addProductTokenInfo.productId
-      )
+      editProductTokenInfo.productId &&
+      editProductTokenInfo.ratio &&
+      (!productTokenInfo.some(
+        (item) => item.productId === editProductTokenInfo.productId
+      ) ||
+        initialProductId === editProductTokenInfo.productId)
     ) {
-      setProductTokenInfo(
-        (prev) =>
-          [...prev, addProductTokenInfo].filter(
-            Boolean as any
-          ) as IProductTokenInfo[]
-      );
-      setAddProductTokenInfo({
+      console.log('here is in');
+      console.log(editProductTokenInfo);
+      setProductTokenInfo((prev) => {
+        return prev.map((product) => {
+          if (product.productId === initialProductId) {
+            return { ...product, ...editProductTokenInfo };
+          }
+          return product;
+        });
+      });
+      setEditProductTokenInfo({
         productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
         productName: '',
         imageUri: '',
@@ -150,13 +169,13 @@ function AddProductTokenModal() {
         ratio: 0,
         consumable: false,
       });
-      setIsAddProductTokenModalOpen(false);
+      setIsEditProductTokenModalOpen(false);
       setError({ productId: '', ratio: '' });
     }
   };
 
   const handleCancelButtonClicked = () => {
-    setAddProductTokenInfo({
+    setEditProductTokenInfo({
       productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
       productName: '',
       imageUri: '',
@@ -165,13 +184,13 @@ function AddProductTokenModal() {
       consumable: false,
     });
     setError({ productId: '', ratio: '' });
-    setIsAddProductTokenModalOpen(false);
+    setIsEditProductTokenModalOpen(false);
   };
 
   return (
     <div
       className={`fixed right-0 bottom-0 top-0 left-0 z-30 flex h-full min-h-screen w-full items-center justify-center px-4 py-5 ${
-        isAddProductTokenModalOpen ? 'block' : 'hidden'
+        isEditProductTokenModalOpen ? 'block' : 'hidden'
       }`}
     >
       <div
@@ -183,19 +202,19 @@ function AddProductTokenModal() {
         className="z-30 w-[826px] bg-gradient-to-r from-[#010e0c] to-[#05596d] text-white text-center rounded-[20px] border-2 border-white pb-8"
       >
         <h2 className="text-[38px] font-bold mt-7 mb-6">
-          Add Product Token For Staker
+          Edit Product Token For Staker
         </h2>
         <hr className="opacity-30 border" />
         <div className="grid grid-cols-12 mx-[47px] mt-12 mb-11 gap-10 text-[22px] font-semibold">
-          {addProductTokenInfo.imageUri === '' ||
-          addProductTokenInfo.imageUri === undefined ? (
+          {editProductTokenInfo.imageUri === '' ||
+          editProductTokenInfo.imageUri === undefined ? (
             <div className="col-span-4 w-[243px] aspect-square bg-slate-600 border border-[#040E20] rounded-full"></div>
           ) : (
             <Image
               className="col-span-4 min-w-[243px] aspect-square border border-[#040E20] rounded-full"
               width={243}
               height={243}
-              src={addProductTokenInfo.imageUri}
+              src={editProductTokenInfo.imageUri}
               alt="product"
               unoptimized
             />
@@ -206,7 +225,7 @@ function AddProductTokenModal() {
               <input
                 id="product-token-name"
                 className="h-[50px] w-[260px] bg-[#A3A3A3]/50 border border-[#2F3A42] rounded-[15px] px-4 py-2"
-                value={addProductTokenInfo.productName}
+                value={editProductTokenInfo.productName}
                 disabled
               />
             </div>
@@ -218,7 +237,7 @@ function AddProductTokenModal() {
                   className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
                   name="productId"
                   onChange={handleInputChange}
-                  value={addProductTokenInfo.productId || ''}
+                  value={editProductTokenInfo.productId || ''}
                 />
                 {error.productId && (
                   <div className="text-red-600 text-xs text-left pl-2 pt-1">
@@ -237,7 +256,7 @@ function AddProductTokenModal() {
                   step={1}
                   min={1}
                   onChange={handleInputChange}
-                  value={addProductTokenInfo.ratio || ''}
+                  value={editProductTokenInfo.ratio || ''}
                 />
                 {error.ratio && (
                   <div className="text-red-600 text-xs text-left pl-2 pt-1">
@@ -256,7 +275,7 @@ function AddProductTokenModal() {
                 className="w-6 h-6"
                 name="consumable"
                 onChange={handleCheckboxChange}
-                checked={addProductTokenInfo.consumable}
+                checked={editProductTokenInfo.consumable}
               />
               <label>Consumable</label>
             </div>
@@ -265,8 +284,8 @@ function AddProductTokenModal() {
         <div className="flex flex-row justify-center items-center gap-12">
           <Button
             className="!w-[200px]"
-            text="Add"
-            onClick={handleAddProductTokenClicked}
+            text="Edit"
+            onClick={handleEditProductTokenClicked}
           />
           <Button
             className="bg-[#192F3A] !w-[200px]"
@@ -280,4 +299,4 @@ function AddProductTokenModal() {
   );
 }
 
-export default AddProductTokenModal;
+export default EditProductTokenModal;
