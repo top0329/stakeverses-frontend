@@ -32,10 +32,12 @@ const ToastProvider = ({ children }: { children: ReactElement }) => {
             }}
           >
             <div className="flex-1 w-0 p-4">
-              <div className="flex items-center">
+              <div className="flex items-center gap-4">
                 <div className="pt-0.5">
                   <Image
                     className="h-10 w-10 rounded-full"
+                    width={40}
+                    height={40}
                     src={SuccessImage}
                     alt="success"
                   />
@@ -80,11 +82,13 @@ const ToastProvider = ({ children }: { children: ReactElement }) => {
             }}
           >
             <div className="flex-1 w-0 p-4">
-              <div className="flex items-center">
+              <div className="flex items-center gap-4">
                 <div className="pt-0.5">
                   <Image
                     className="h-10 w-10 rounded-full"
                     src={WarningImage}
+                    width={40}
+                    height={40}
                     alt="warning"
                   />
                 </div>
@@ -128,11 +132,13 @@ const ToastProvider = ({ children }: { children: ReactElement }) => {
             }}
           >
             <div className="flex-1 w-0 p-4">
-              <div className="flex items-center">
+              <div className="flex items-center gap-4">
                 <div className="pt-0.5">
                   <Image
                     className="h-10 w-10 rounded-full"
                     src={QuestionImage}
+                    width={40}
+                    height={40}
                     alt="question"
                   />
                 </div>
@@ -176,7 +182,7 @@ const ToastProvider = ({ children }: { children: ReactElement }) => {
             }}
           >
             <div className="flex-1 w-0 p-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 <div className="pt-0.5">
                   <Image
                     className="h-10 w-10 rounded-full"

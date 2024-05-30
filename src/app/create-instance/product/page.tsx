@@ -1,7 +1,7 @@
 'use client';
 
 import Subtitle from '@/components/Subtitle';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
@@ -13,8 +13,10 @@ import Button from '@/components/Buttons';
 import AddProductTokenModal from '@/components/Modals/AddProductTokenModal';
 import ProductTokenInfoCard from '@/components/Cards/ProductTokenInfoCard';
 import useToast from '@/hooks/useToast';
+import useWeb3 from '@/hooks/useWeb3';
 
 function CreateInstanceProductPage() {
+  const { isConnected } = useWeb3();
   const { showToast } = useToast();
   const router = useRouter();
 
@@ -22,6 +24,13 @@ function CreateInstanceProductPage() {
   const [, setIsAddProductTokenModalOpen] = useAtom(
     isAddProductTokenModalOpenAtom
   );
+
+  useEffect(() => {
+    if (!isConnected) {
+      router.back();
+      showToast('warning', 'Please connect wallet!');
+    }
+  }, [isConnected, router, showToast]);
 
   const handleAddProduct = () => {
     setIsAddProductTokenModalOpen(true);

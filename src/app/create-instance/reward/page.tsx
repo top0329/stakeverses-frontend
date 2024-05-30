@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
@@ -8,6 +8,8 @@ import Subtitle from '@/components/Subtitle';
 import Button from '@/components/Buttons';
 import AddRewardTokenModal from '@/components/Modals/AddRewardTokenModal';
 import RewardTokenInfoCard from '@/components/Cards/RewardTokenInfoCard';
+import useWeb3 from '@/hooks/useWeb3';
+import useToast from '@/hooks/useToast';
 import {
   baseAmountAtom,
   isAddRewardTokenModalOpenAtom,
@@ -15,6 +17,8 @@ import {
 } from '@/jotai/atoms';
 
 function CreateInstanceRewardPage() {
+  const { isConnected } = useWeb3();
+  const { showToast } = useToast();
   const router = useRouter();
 
   const [rewardTokenInfo] = useAtom(rewardTokenInfoAtom);
@@ -22,6 +26,13 @@ function CreateInstanceRewardPage() {
     isAddRewardTokenModalOpenAtom
   );
   const [baseAmount, setBaseAmount] = useAtom(baseAmountAtom);
+
+  useEffect(() => {
+    if (!isConnected) {
+      router.back();
+      showToast('warning', 'Please connect wallet!');
+    }
+  }, [isConnected, router, showToast]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;

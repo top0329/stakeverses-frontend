@@ -26,7 +26,10 @@ const SpinnerProvider = ({ children }: { children: ReactElement }) => {
     <SpinnerContext.Provider value={{ openSpin, closeSpin }}>
       {children}
       {isSpin && (
-        <div className="spinner-wrapper bg-[#041431b9]">
+        <div
+          className="spinner-wrapper !bg-[#041431b9]"
+          style={{ backgroundColor: '#041431b9' }}
+        >
           <div className="loader"></div>
           <div style={{ color: 'white' }}>{title}...</div>
         </div>

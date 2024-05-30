@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
@@ -8,6 +8,8 @@ import Button from '@/components/Buttons';
 import ProductTokenListForCreate from '@/components/Lists/ProductTokenListForCreate';
 import RewardTokenListForCreate from '@/components/Lists/RewardTokenListForCreate';
 import useWeb3 from '@/hooks/useWeb3';
+import useToast from '@/hooks/useToast';
+import useSpinner from '@/hooks/useSpinner';
 import {
   baseAmountAtom,
   productTokenInfoAtom,
@@ -15,15 +17,25 @@ import {
 } from '@/jotai/atoms';
 
 function CreateInstanceCreatePage() {
-  const { account, productStakingInstance } = useWeb3();
+  const { account, productStakingInstance, isConnected } = useWeb3();
+  const { showToast } = useToast();
+  const { openSpin, closeSpin } = useSpinner();
   const router = useRouter();
 
   const [productTokenInfo] = useAtom(productTokenInfoAtom);
   const [rewardTokenInfo] = useAtom(rewardTokenInfoAtom);
   const [baseAmount] = useAtom(baseAmountAtom);
 
+  useEffect(() => {
+    if (!isConnected) {
+      router.back();
+      showToast('warning', 'Please connect wallet!');
+    }
+  }, [isConnected, router, showToast]);
+
   const handleCreateInstance = async () => {
     try {
+      openSpin('Creating Instance');
       await productStakingInstance.methods
         .createStakingInstance(
           productTokenInfo,
@@ -36,6 +48,8 @@ function CreateInstanceCreatePage() {
       router.push('/stakes');
     } catch (err) {
       console.log(err);
+    } finally {
+      closeSpin();
     }
   };
 

@@ -1,7 +1,12 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
+import useWeb3 from '@/hooks/useWeb3';
+import useToast from '@/hooks/useToast';
 import StakeversesLogo from '@/assets/images/Stakeverses-logo.png';
 import FacebookFooterImage from '@/assets/images/facebook-footer.png';
 import InstagramFooterImage from '@/assets/images/instagram-footer.png';
@@ -9,6 +14,15 @@ import TwitterFooterImage from '@/assets/images/twitter-footer.png';
 import LinkedinFooterImage from '@/assets/images/linkedin-footer.png';
 
 function Footer() {
+  const { isConnected } = useWeb3();
+  const { showToast } = useToast();
+  const router = useRouter();
+
+  const handleCreateInstance = () => {
+    if (isConnected) router.push('/create-instance/product');
+    else showToast('warning', 'Please connect wallet!');
+  };
+
   return (
     <div className="relative h-[477px] px-[136px] bg-gradient-footer text-lg">
       <div className="grid grid-cols-12 gap-16">
@@ -36,7 +50,9 @@ function Footer() {
           <div className="flex flex-col gap-4">
             <Link href={'/stakes'}>Stakes</Link>
             {/* <Link href={'/my-portfolio'}>My Portfolio</Link> */}
-            <Link href={'/create-instance/product'}>Create Instance</Link>
+            <div className="cursor-pointer" onClick={handleCreateInstance}>
+              Create Instance
+            </div>
             <Link href={'/faq'}>FAQ</Link>
           </div>
         </div>

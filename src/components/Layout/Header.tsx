@@ -1,11 +1,25 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-import StakeversesLogo from '@/assets/images/Stakeverses-logo.png';
 import { ConnectWallet } from '@/components/Buttons/ConnectButton';
+import useWeb3 from '@/hooks/useWeb3';
+import useToast from '@/hooks/useToast';
+import StakeversesLogo from '@/assets/images/Stakeverses-logo.png';
 
 function Header() {
+  const { isConnected } = useWeb3();
+  const { showToast } = useToast();
+  const router = useRouter();
+
+  const handleCreateInstance = () => {
+    if (isConnected) router.push('/create-instance/product');
+    else showToast('warning', 'Please connect wallet!');
+  };
+
   return (
     <div className="flex justify-between items-center h-[98px] mx-[130px] my-[51px] bg-white bg-opacity-15 rounded-full border border-white border-opacity-30">
       <Link href="/">
@@ -23,9 +37,12 @@ function Header() {
           Stakes
         </Link>
         {/* <Link className="text-2xl font-medium truncate" href="/my-portfolio">My Portfolio</Link> */}
-        <Link className="text-2xl font-medium truncate" href="/create-instance/product">
+        <div
+          className="text-2xl font-medium truncate cursor-pointer"
+          onClick={handleCreateInstance}
+        >
           Create Instance
-        </Link>
+        </div>
         <Link className="text-2xl font-medium truncate" href="/faq">
           FAQ
         </Link>
