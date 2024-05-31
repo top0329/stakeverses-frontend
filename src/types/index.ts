@@ -1,4 +1,4 @@
-import { Address } from "viem";
+import { Address } from 'viem';
 import { ContractRunner } from 'ethers';
 
 export interface IButtonClass {
@@ -37,6 +37,8 @@ export interface IProductTokenInfo {
 }
 
 export interface IRewardTokenInfo {
+  tokenName?: string;
+  imageUri?: string;
   tokenAddress?: string;
   tokenId: number;
   ratio: number;

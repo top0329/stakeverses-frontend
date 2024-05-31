@@ -39,6 +39,12 @@ function CreateInstanceRewardPage() {
     setBaseAmount(Number(value));
   }
 
+  const handleNext = () => {
+    if (rewardTokenInfo.length === 0)
+      showToast('fail', 'You need to add at least one Reward!');
+    else router.push('/create-instance/create');
+  };
+
   return (
     <React.Fragment>
       <h1 className="mt-[203px] text-[62px] text-center font-semibold">
@@ -82,7 +88,7 @@ function CreateInstanceRewardPage() {
             className="!bg-[#192F3A]"
             text="Next"
             variant="outline"
-            onClick={() => router.push('/create-instance/create')}
+            onClick={handleNext}
           />
         </div>
       </div>

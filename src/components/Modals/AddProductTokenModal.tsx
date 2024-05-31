@@ -8,10 +8,13 @@ import {
   productTokenInfoAtom,
 } from '@/jotai/atoms';
 import Button from '@/components/Buttons';
+import useToast from '@/hooks/useToast';
 import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenInfo } from '@/types';
 
 function AddProductTokenModal() {
+  const { showToast } = useToast();
+
   const [isAddProductTokenModalOpen, setIsAddProductTokenModalOpen] = useAtom(
     isAddProductTokenModalOpenAtom
   );
@@ -152,6 +155,8 @@ function AddProductTokenModal() {
       });
       setIsAddProductTokenModalOpen(false);
       setError({ productId: '', ratio: '' });
+    } else {
+      showToast('warning', 'Fill in all the information!');
     }
   };
 

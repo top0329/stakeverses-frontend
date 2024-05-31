@@ -1,30 +1,151 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
 
+import Button from '../Buttons';
+import useToast from '@/hooks/useToast';
+import PickAxeImage from '@/assets/images/pickaxe.svg';
 import {
   isAddRewardTokenModalOpenAtom,
   rewardTokenInfoAtom,
 } from '@/jotai/atoms';
-import PickAxeImage from '@/assets/images/pickaxe.svg';
-import Button from '../Buttons';
 import { IRewardTokenInfo } from '@/types';
 
 function AddRewardTokenModal() {
+  const { showToast } = useToast();
+
   const [isAddRewardTokenModalOpen, setIsAddRewardTokenModalOpen] = useAtom(
     isAddRewardTokenModalOpenAtom
   );
-  const [, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
+  const [rewardTokenInfo, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
 
-  const [addRewardTokenInfo, setAddRewardTokenInfo] = useState<IRewardTokenInfo>(
-    {
+  const [addRewardTokenInfo, setAddRewardTokenInfo] =
+    useState<IRewardTokenInfo>({
+      tokenName: '',
+      imageUri: '',
       tokenAddress: '',
       tokenId: 0,
       ratio: 0,
       isERC1155: false,
+    });
+  const [isERC1155, setIsERC1155] = useState<boolean | undefined>(undefined);
+  const [error, setError] = useState({
+    tokenAddress: '',
+    tokenId: '',
+    ratio: '',
+  });
+
+  useEffect(() => {
+    setIsERC1155(addRewardTokenInfo.isERC1155);
+  }, [addRewardTokenInfo.isERC1155]);
+
+  useEffect(() => {
+    if (isERC1155 === true) {
+      console.log('here is erc1155');
+      if (
+        rewardTokenInfo.some(
+          (item) =>
+            item.tokenAddress === addRewardTokenInfo.tokenAddress &&
+            item.tokenId === addRewardTokenInfo.tokenId
+        )
+      ) {
+        setError({
+          ...error,
+          tokenId: 'This token has already been added!',
+        });
+      } else if (
+        addRewardTokenInfo.tokenId === undefined ||
+        Number.isNaN(addRewardTokenInfo.tokenId)
+      ) {
+        setAddRewardTokenInfo({
+          ...addRewardTokenInfo,
+          tokenName: '',
+          imageUri: '',
+        });
+        setError({
+          ...error,
+          tokenId: 'Enter the token id!',
+        });
+      } else if (
+        addRewardTokenInfo.tokenAddress === undefined ||
+        addRewardTokenInfo.tokenAddress === ''
+      ) {
+        setError({
+          ...error,
+          tokenAddress: 'Enter the token address!',
+        });
+        setAddRewardTokenInfo({
+          ...addRewardTokenInfo,
+          tokenName: '',
+          imageUri: '',
+        });
+      } else {
+        setError({
+          ...error,
+          tokenId: '',
+        });
+      }
+      if (
+        addRewardTokenInfo.ratio === undefined ||
+        Number.isNaN(addRewardTokenInfo.ratio)
+      ) {
+        setError({
+          ...error,
+          ratio: 'Enter the ratio!',
+        });
+      } else {
+        setError({
+          ...error,
+          ratio: '',
+        });
+      }
     }
-  );
-  const [isERC1155, setIsERC1155] = useState(false);
+    if (isERC1155 === false) {
+      if (
+        rewardTokenInfo.some(
+          (item) => item.tokenAddress === addRewardTokenInfo.tokenAddress
+        )
+      ) {
+        setError({
+          ...error,
+          tokenAddress: 'This token has already been added!',
+        });
+      } else if (
+        addRewardTokenInfo.tokenAddress === undefined ||
+        addRewardTokenInfo.tokenAddress === ''
+      ) {
+        setError({
+          ...error,
+          tokenAddress: 'Enter the token address!',
+        });
+        setAddRewardTokenInfo({
+          ...addRewardTokenInfo,
+          tokenName: '',
+          imageUri: '',
+        });
+      } else if (
+        addRewardTokenInfo.ratio === undefined ||
+        Number.isNaN(addRewardTokenInfo.ratio)
+      ) {
+        setError({
+          ...error,
+          ratio: 'Enter the ratio!',
+        });
+      } else {
+        setError({
+          ...error,
+          tokenAddress: '',
+          ratio: '',
+        });
+      }
+    }
+    console.log(error.tokenAddress);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    addRewardTokenInfo.tokenId,
+    addRewardTokenInfo.tokenAddress,
+    addRewardTokenInfo.ratio,
+  ]);
 
   const modal = useRef<HTMLDivElement>(null);
 
@@ -41,24 +162,47 @@ function AddRewardTokenModal() {
         [name]: value,
       }));
     }
+    console.log(value);
   };
 
   const handleAddProductTokenClicked = () => {
     setRewardTokenInfo((prev) => [
       ...prev,
-      { ...addRewardTokenInfo, isERC1155 },
+      { ...addRewardTokenInfo, isERC1155: addRewardTokenInfo.isERC1155 },
     ]);
     setAddRewardTokenInfo({
+      tokenName: '',
+      imageUri: '',
       tokenAddress: '',
       tokenId: 0,
       ratio: 0,
       isERC1155: false,
     });
+    setError({
+      tokenAddress: '',
+      tokenId: '',
+      ratio: '',
+    });
+    setIsERC1155(undefined);
     setIsAddRewardTokenModalOpen(false);
   };
 
   const handleCancelButtonClicked = () => {
     setIsAddRewardTokenModalOpen(false);
+    setAddRewardTokenInfo({
+      tokenName: '',
+      imageUri: '',
+      tokenAddress: '',
+      tokenId: 0,
+      ratio: 0,
+      isERC1155: false,
+    });
+    setError({
+      tokenAddress: '',
+      tokenId: '',
+      ratio: '',
+    });
+    setIsERC1155(undefined);
   };
 
   const handleRadioClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,35 +269,58 @@ function AddRewardTokenModal() {
             </div>
             <div className="flex flex-row justify-between items-center">
               <label>Token Address</label>
-              <input
-                id="token-address"
-                className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
-                name="tokenAddress"
-                onChange={handleInputChange}
-                value={addRewardTokenInfo.tokenAddress}
-              />
+              <div>
+                <input
+                  id="token-address"
+                  className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
+                  name="tokenAddress"
+                  onChange={handleInputChange}
+                  value={addRewardTokenInfo.tokenAddress}
+                />
+                {error.tokenAddress && (
+                  <div className="text-red-600 text-xs text-left pl-2 pt-1">
+                    {error.tokenAddress}
+                  </div>
+                )}
+              </div>
             </div>
             {isERC1155 && (
               <div className="flex flex-row justify-between items-center">
                 <label>Token Id</label>
-                <input
-                  id="token-id"
-                  className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
-                  name="tokenId"
-                  onChange={handleInputChange}
-                  value={addRewardTokenInfo.tokenId}
-                />
+                <div>
+                  <input
+                    id="token-id"
+                    className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
+                    name="tokenId"
+                    onChange={handleInputChange}
+                    value={addRewardTokenInfo.tokenId || ''}
+                  />
+                  {error.tokenId && (
+                    <div className="text-red-600 text-xs text-left pl-2 pt-1">
+                      {error.tokenId}
+                    </div>
+                  )}
+                </div>
               </div>
             )}
             <div className="flex flex-row justify-between items-center">
               <label>Ratio</label>
-              <input
-                id="product-token-ratio"
-                className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
-                name="ratio"
-                onChange={handleInputChange}
-                value={addRewardTokenInfo.ratio}
-              />
+              <div>
+                <input
+                  id="product-token-ratio"
+                  className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
+                  name="ratio"
+                  step={1}
+                  min={1}
+                  onChange={handleInputChange}
+                  value={addRewardTokenInfo.ratio || ''}
+                />
+                {error.ratio && (
+                  <div className="text-red-600 text-xs text-left pl-2 pt-1">
+                    {error.ratio}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
