@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { ConnectWallet } from '@/components/Buttons/ConnectButton';
 import useWeb3 from '@/hooks/useWeb3';
@@ -14,8 +14,17 @@ function Header() {
   const { isConnected } = useWeb3();
   const { showToast } = useToast();
   const router = useRouter();
+  const path = usePathname();
 
   const [activeItem, setActiveItem] = useState<number>(0);
+
+  useEffect(() => {
+    path.includes('stakes') && setActiveItem(1);
+    path.includes('my-portfolio') && setActiveItem(2);
+    path.includes('create-instance') && setActiveItem(3);
+    path.includes('faq') && setActiveItem(4);
+    path === '/' && setActiveItem(0);
+  }, [path, setActiveItem]);
 
   const handleCreateInstance = () => {
     if (isConnected) {
@@ -26,7 +35,7 @@ function Header() {
 
   return (
     <div className="flex justify-between items-center h-[98px] mx-[130px] my-[51px] bg-white bg-opacity-15 rounded-full border border-white border-opacity-30">
-      <Link href="/">
+      <Link href="/" onClick={() => setActiveItem(0)}>
         <Image
           src={StakeversesLogo}
           className="ml-[15px]"
