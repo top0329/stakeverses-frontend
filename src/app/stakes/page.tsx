@@ -46,7 +46,7 @@ function StakesPage() {
       <h1 className="mt-[203px] text-[62px] text-center font-semibold">
         Stakes
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#030C1B]">
+      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75">
         <Subtitle text="Stakes List" />
         <button
           className="absolute top-[50px] right-[96px] flex items-center gap-5 bg-gradient-to-r from-[#192F3A] to-[#06C2C4] text-white text-[22px] font-semibold rounded-[5px] py-2.5 px-[18px]"

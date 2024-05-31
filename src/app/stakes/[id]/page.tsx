@@ -17,7 +17,7 @@ import {
 import { truncateAddress } from '@/lib/utils';
 import { currentPoolDataAtom } from '@/jotai/atoms';
 
-function PoolDetails() {
+function PoolDetailsPage() {
   const router = useRouter();
   const { id } = useParams();
   const { productStakingInstance } = useWeb3();
@@ -41,7 +41,7 @@ function PoolDetails() {
       <h1 className="mt-[203px] text-[62px] text-center font-semibold">
         Stakes
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#030C1B] px-[34px]">
+      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 px-[34px]">
         <Subtitle text="Pool Detail" />
         <div className="px-[54px] mb-12">
           <div className="flex items-center justify-between">
@@ -220,7 +220,7 @@ function PoolDetails() {
           <Button
             className="!w-[200px]"
             text="Stake"
-            onClick={() => router.push(`/stakes/${id}/stake`)}
+            onClick={() => router.push(`/stakes/${id}/staking`)}
           />
         </div>
       </div>
@@ -228,4 +228,4 @@ function PoolDetails() {
   );
 }
 
-export default PoolDetails;
+export default PoolDetailsPage;

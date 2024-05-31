@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,9 +15,13 @@ function Header() {
   const { showToast } = useToast();
   const router = useRouter();
 
+  const [activeItem, setActiveItem] = useState<number>(0);
+
   const handleCreateInstance = () => {
-    if (isConnected) router.push('/create-instance/product');
-    else showToast('warning', 'Please connect wallet!');
+    if (isConnected) {
+      router.push('/create-instance/product');
+      setActiveItem(3);
+    } else showToast('warning', 'Please connect wallet!');
   };
 
   return (
@@ -33,18 +37,62 @@ function Header() {
         />
       </Link>
       <div className="flex justify-center items-center gap-8 mr-[15px]">
-        <Link className="text-2xl font-medium truncate" href="/stakes">
+        <Link
+          className={`text-2xl truncate cursor-pointer ${
+            activeItem === 1
+              ? 'font-semibold text-[#26DDFF] space-y-0.5'
+              : 'font-medium'
+          }`}
+          href="/stakes"
+          onClick={() => setActiveItem(1)}
+        >
           Stakes
+          {activeItem === 1 && (
+            <div className="border border-[#26DDFF] w-full"></div>
+          )}
         </Link>
-        {/* <Link className="text-2xl font-medium truncate" href="/my-portfolio">My Portfolio</Link> */}
+        {isConnected && (
+          <Link
+            className={`text-2xl truncate cursor-pointer ${
+              activeItem === 2
+                ? 'font-semibold text-[#26DDFF] space-y-0.5'
+                : 'font-medium'
+            }`}
+            href="/my-portfolio"
+            onClick={() => setActiveItem(2)}
+          >
+            My Portfolio
+            {activeItem === 2 && (
+              <div className="border border-[#26DDFF] w-full"></div>
+            )}
+          </Link>
+        )}
         <div
-          className="text-2xl font-medium truncate cursor-pointer"
+          className={`text-2xl truncate cursor-pointer ${
+            activeItem === 3
+              ? 'font-semibold text-[#26DDFF] space-y-0.5'
+              : 'font-medium'
+          }`}
           onClick={handleCreateInstance}
         >
           Create Instance
+          {activeItem === 3 && (
+            <div className="border border-[#26DDFF] w-full"></div>
+          )}
         </div>
-        <Link className="text-2xl font-medium truncate" href="/faq">
+        <Link
+          className={`text-2xl truncate cursor-pointer ${
+            activeItem === 4
+              ? 'font-semibold text-[#26DDFF] space-y-0.5'
+              : 'font-medium'
+          }`}
+          href="/faq"
+          onClick={() => setActiveItem(4)}
+        >
           FAQ
+          {activeItem === 4 && (
+            <div className="border border-[#26DDFF] w-full"></div>
+          )}
         </Link>
         <ConnectWallet />
       </div>

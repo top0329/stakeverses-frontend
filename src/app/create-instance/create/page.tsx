@@ -58,7 +58,7 @@ function CreateInstanceCreatePage() {
       <h1 className="mt-[203px] text-[62px] text-center font-semibold">
         Create Instance
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#030C1B] pt-[80px]">
+      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 pt-[80px]">
         <div className="flex flex-row justify-between gap-7 mt-5 mx-8 h-full">
           <div className="w-full text-[38px] text-center h-full">
             <h2 className="text-[38px] font-semibold mb-6">Staking Tokens</h2>

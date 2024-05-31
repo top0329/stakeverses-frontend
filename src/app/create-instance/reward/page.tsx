@@ -44,7 +44,7 @@ function CreateInstanceRewardPage() {
       <h1 className="mt-[203px] text-[62px] text-center font-semibold">
         Create Instance
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#030C1B] min-h-[644px]">
+      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 min-h-[644px]">
         <Subtitle text="Charge Reward Token" />
         <div className="flex flex-row justify-end items-center text-[22px] px-10 -mt-10 mb-6">
           <label className="font-semibold">Enter Base Amount :</label>

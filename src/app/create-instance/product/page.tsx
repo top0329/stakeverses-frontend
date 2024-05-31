@@ -46,7 +46,7 @@ function CreateInstanceProductPage() {
       <h1 className="mt-[203px] text-[62px] text-center font-semibold">
         Create Instance
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#030C1B] min-h-[644px]">
+      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 min-h-[644px]">
         <Subtitle text="Token for Stake" />
         <div className="grid grid-cols-12 min-h-[315px] gap-x-20 gap-y-10 px-10">
           {productTokenInfo.length === 0 ? (

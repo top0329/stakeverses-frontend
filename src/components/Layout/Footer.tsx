@@ -47,9 +47,9 @@ function Footer() {
         </div>
         <div className="grid col-span-2 text-lg">
           <h3 className="font-medium mt-28">Pages</h3>
-          <div className="flex flex-col gap-4">
+          <div className={`flex flex-col gap-4 ${isConnected && 'mt-10'}`}>
             <Link href={'/stakes'}>Stakes</Link>
-            {/* <Link href={'/my-portfolio'}>My Portfolio</Link> */}
+            {isConnected && <Link href={'/my-portfolio'}>My Portfolio</Link>}
             <div className="cursor-pointer" onClick={handleCreateInstance}>
               Create Instance
             </div>
@@ -63,7 +63,7 @@ function Footer() {
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry.
             </h5>
-            <h5>+908 89097 890</h5>
+            <h5>+1 234 567 8900</h5>
           </div>
         </div>
         <div className="grid col-span-3">
