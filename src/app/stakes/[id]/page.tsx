@@ -44,7 +44,7 @@ function PoolDetailsPage() {
       <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 px-[34px]">
         <Subtitle text="Pool Detail" />
         <div className="px-[54px] mb-12">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-center gap-4">
             {currentPoolData.productInfo.length > 0 &&
               currentPoolData.productInfo
                 .filter(

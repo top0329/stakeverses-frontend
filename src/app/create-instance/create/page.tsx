@@ -36,10 +36,25 @@ function CreateInstanceCreatePage() {
   const handleCreateInstance = async () => {
     try {
       openSpin('Creating Instance');
+      const _productTokenInfo = productTokenInfo.map((product) => {
+        const { imageUri, productName, ...rest } = product;
+        return rest;
+      })
+      const _rewardTokenInfo = rewardTokenInfo.map((rewardToken) => {
+        const { imageUri, tokenName, ...rest } = rewardToken;
+        return rest;
+      })
+      console.log(
+        _productTokenInfo,
+        _rewardTokenInfo,
+        baseAmount,
+        'Stakeverse Token',
+        'stk'
+      );
       await productStakingInstance.methods
         .createStakingInstance(
-          productTokenInfo,
-          rewardTokenInfo,
+          _productTokenInfo,
+          _rewardTokenInfo,
           baseAmount,
           'Stakeverse Token',
           'stk'

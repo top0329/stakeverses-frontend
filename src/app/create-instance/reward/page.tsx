@@ -37,11 +37,13 @@ function CreateInstanceRewardPage() {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setBaseAmount(Number(value));
-  }
+  };
 
   const handleNext = () => {
     if (rewardTokenInfo.length === 0)
       showToast('fail', 'You need to add at least one Reward!');
+    else if (baseAmount === 0 || baseAmount === undefined)
+      showToast('fail', 'You need to enter the valid amount!');
     else router.push('/create-instance/create');
   };
 
@@ -56,8 +58,9 @@ function CreateInstanceRewardPage() {
           <label className="font-semibold">Enter Base Amount :</label>
           <input
             className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed"
+            step={1}
             onChange={handleInputChange}
-            value={baseAmount}
+            value={baseAmount || ''}
           />
         </div>
         <div className="grid grid-cols-12 min-h-[315px] gap-x-20 gap-y-10 px-10">

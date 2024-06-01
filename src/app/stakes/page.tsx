@@ -71,16 +71,20 @@ function StakesPage() {
           </ul>
         </div>
         <div className="flex flex-col gap-10 mx-[90px] pb-10">
-          {stakingDataList.map((stakingData) => (
-            <StakingPoolList
-              key={stakingData.instanceId}
-              instanceId={stakingData.instanceId}
-              creator={stakingData.creator}
-              instanceAddress={stakingData.instanceAddress}
-              productInfo={stakingData.productInfo}
-              rewardTokenInfo={stakingData.rewardTokenInfo}
-            />
-          ))}
+          {stakingDataList.length > 0 ? (
+            stakingDataList.map((stakingData) => (
+              <StakingPoolList
+                key={stakingData.instanceId}
+                instanceId={stakingData.instanceId}
+                creator={stakingData.creator}
+                instanceAddress={stakingData.instanceAddress}
+                productInfo={stakingData.productInfo}
+                rewardTokenInfo={stakingData.rewardTokenInfo}
+              />
+            ))
+          ) : (
+            <div className='flex justify-center items-center text-[28px] font-semibold text-center py-10'>There is no Staking Pools</div>
+          )}
           <div className="text-[38px] text-center font-semibold underline">
             See More
           </div>

@@ -69,6 +69,24 @@ function AddProductTokenModal() {
 
   useEffect(() => {
     if (
+      addProductTokenInfo.ratio === undefined ||
+      Number.isNaN(addProductTokenInfo.ratio)
+    ) {
+      setError({
+        ...error,
+        ratio: 'Enter the ratio!',
+      });
+    } else {
+      setError({
+        ...error,
+        ratio: '',
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addProductTokenInfo.ratio]);
+
+  useEffect(() => {
+    if (
       productTokenInfo.some(
         (item) => item.productId === addProductTokenInfo.productId
       )
@@ -96,17 +114,8 @@ function AddProductTokenModal() {
         productId: '',
       });
     }
-    if (
-      addProductTokenInfo.ratio === undefined ||
-      Number.isNaN(addProductTokenInfo.ratio)
-    ) {
-      setError({
-        ...error,
-        ratio: 'Enter the ratio!',
-      });
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addProductTokenInfo.productId, addProductTokenInfo.ratio]);
+  }, [addProductTokenInfo.productId]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;

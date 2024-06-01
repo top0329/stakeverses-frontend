@@ -19,7 +19,6 @@ export default async function getERC1155Data(
   );
   try {
     const tokenUri = await erc1155Contract.uri(tokenId);
-    console.log(tokenUri);
     const gatewayUrl = 'https://ipfs.io/';
     const metaData = await axios.get(`${gatewayUrl}${tokenUri}`);
     const { name, image } = metaData.data;

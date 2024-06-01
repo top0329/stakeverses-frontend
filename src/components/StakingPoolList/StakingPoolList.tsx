@@ -17,7 +17,7 @@ function StakingPoolList({
 
   return (
     <div className="bg-[#053F40] px-[50px] py-9 rounded-[20px]">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-center gap-4">
         {productInfo
           .filter((product) => product.consumable === false)
           .map((product, index) => (

@@ -28,7 +28,6 @@ function AddRewardTokenModal() {
       ratio: 0,
       isERC1155: false,
     });
-  const [isERC1155, setIsERC1155] = useState<boolean | undefined>(undefined);
   const [error, setError] = useState({
     tokenAddress: '',
     tokenId: '',
@@ -36,18 +35,52 @@ function AddRewardTokenModal() {
   });
 
   useEffect(() => {
-    setIsERC1155(addRewardTokenInfo.isERC1155);
-  }, [addRewardTokenInfo.isERC1155]);
+    if (addRewardTokenInfo.isERC1155 === true) {
+      if (
+        addRewardTokenInfo.ratio === undefined ||
+        Number.isNaN(addRewardTokenInfo.ratio)
+      ) {
+        setError({
+          ...error,
+          ratio: 'Enter the ratio!',
+        });
+      } else {
+        setError({
+          ...error,
+          ratio: '',
+        });
+      }
+    }
+    if (addRewardTokenInfo.isERC1155 === false) {
+      if (
+        addRewardTokenInfo.ratio === undefined ||
+        Number.isNaN(addRewardTokenInfo.ratio)
+      ) {
+        setError({
+          ...error,
+          ratio: 'Enter the ratio!',
+        });
+      } else {
+        setError({
+          ...error,
+          tokenAddress: '',
+          ratio: '',
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addRewardTokenInfo.ratio]);
 
   useEffect(() => {
-    if (isERC1155 === true) {
-      console.log('here is erc1155');
+    if (addRewardTokenInfo.isERC1155 === true) {
       if (
-        rewardTokenInfo.some(
-          (item) =>
-            item.tokenAddress === addRewardTokenInfo.tokenAddress &&
-            item.tokenId === addRewardTokenInfo.tokenId
-        )
+        rewardTokenInfo
+          .filter((item) => item.isERC1155 === true)
+          .some(
+            (item) =>
+              item.tokenAddress === addRewardTokenInfo.tokenAddress &&
+              item.tokenId === addRewardTokenInfo.tokenId
+          )
       ) {
         setError({
           ...error,
@@ -66,6 +99,32 @@ function AddRewardTokenModal() {
           ...error,
           tokenId: 'Enter the token id!',
         });
+      } else {
+        setError({
+          ...error,
+          tokenAddress: '',
+          tokenId: '',
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addRewardTokenInfo.tokenId]);
+
+  useEffect(() => {
+    if (addRewardTokenInfo.isERC1155 === true) {
+      if (
+        rewardTokenInfo
+          .filter((item) => item.isERC1155 === true)
+          .some(
+            (item) =>
+              item.tokenAddress === addRewardTokenInfo.tokenAddress &&
+              item.tokenId === addRewardTokenInfo.tokenId
+          )
+      ) {
+        setError({
+          ...error,
+          tokenId: 'This token has already been added!',
+        });
       } else if (
         addRewardTokenInfo.tokenAddress === undefined ||
         addRewardTokenInfo.tokenAddress === ''
@@ -82,25 +141,12 @@ function AddRewardTokenModal() {
       } else {
         setError({
           ...error,
+          tokenAddress: '',
           tokenId: '',
         });
       }
-      if (
-        addRewardTokenInfo.ratio === undefined ||
-        Number.isNaN(addRewardTokenInfo.ratio)
-      ) {
-        setError({
-          ...error,
-          ratio: 'Enter the ratio!',
-        });
-      } else {
-        setError({
-          ...error,
-          ratio: '',
-        });
-      }
     }
-    if (isERC1155 === false) {
+    if (addRewardTokenInfo.isERC1155 === false) {
       if (
         rewardTokenInfo.some(
           (item) => item.tokenAddress === addRewardTokenInfo.tokenAddress
@@ -123,29 +169,15 @@ function AddRewardTokenModal() {
           tokenName: '',
           imageUri: '',
         });
-      } else if (
-        addRewardTokenInfo.ratio === undefined ||
-        Number.isNaN(addRewardTokenInfo.ratio)
-      ) {
-        setError({
-          ...error,
-          ratio: 'Enter the ratio!',
-        });
       } else {
         setError({
           ...error,
           tokenAddress: '',
-          ratio: '',
         });
       }
     }
-    console.log(error.tokenAddress);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    addRewardTokenInfo.tokenId,
-    addRewardTokenInfo.tokenAddress,
-    addRewardTokenInfo.ratio,
-  ]);
+  }, [addRewardTokenInfo.tokenAddress]);
 
   const modal = useRef<HTMLDivElement>(null);
 
@@ -165,26 +197,60 @@ function AddRewardTokenModal() {
     console.log(value);
   };
 
+  const handleRadioClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.id;
+    if (value === 'erc20') {
+      setAddRewardTokenInfo((prev) => {
+        return { ...prev, isERC1155: false };
+      });
+      setError({ tokenAddress: '', tokenId: '', ratio: '' });
+    } else if (value === 'erc1155') {
+      setAddRewardTokenInfo((prev) => {
+        return { ...prev, isERC1155: true };
+      });
+      setError({ tokenAddress: '', tokenId: '', ratio: '' });
+    }
+  };
+
   const handleAddProductTokenClicked = () => {
-    setRewardTokenInfo((prev) => [
-      ...prev,
-      { ...addRewardTokenInfo, isERC1155: addRewardTokenInfo.isERC1155 },
-    ]);
-    setAddRewardTokenInfo({
-      tokenName: '',
-      imageUri: '',
-      tokenAddress: '',
-      tokenId: 0,
-      ratio: 0,
-      isERC1155: false,
-    });
-    setError({
-      tokenAddress: '',
-      tokenId: '',
-      ratio: '',
-    });
-    setIsERC1155(undefined);
-    setIsAddRewardTokenModalOpen(false);
+    if (
+      (addRewardTokenInfo.isERC1155 === false &&
+        addRewardTokenInfo.tokenAddress &&
+        addRewardTokenInfo.ratio &&
+        !rewardTokenInfo.some(
+          (item) => item.tokenAddress === addRewardTokenInfo.tokenAddress
+        )) ||
+      (addRewardTokenInfo.isERC1155 === true &&
+        addRewardTokenInfo.tokenAddress &&
+        addRewardTokenInfo.tokenId &&
+        addRewardTokenInfo.ratio &&
+        !rewardTokenInfo.some(
+          (item) =>
+            item.tokenAddress === addRewardTokenInfo.tokenAddress &&
+            item.tokenId === addRewardTokenInfo.tokenId
+        ))
+    ) {
+      setRewardTokenInfo((prev) => [
+        ...prev,
+        { ...addRewardTokenInfo, isERC1155: addRewardTokenInfo.isERC1155 },
+      ]);
+      setAddRewardTokenInfo({
+        tokenName: '',
+        imageUri: '',
+        tokenAddress: '',
+        tokenId: 0,
+        ratio: 0,
+        isERC1155: false,
+      });
+      setError({
+        tokenAddress: '',
+        tokenId: '',
+        ratio: '',
+      });
+      setIsAddRewardTokenModalOpen(false);
+    } else {
+      showToast('warning', 'Fill in all the information!');
+    }
   };
 
   const handleCancelButtonClicked = () => {
@@ -202,16 +268,6 @@ function AddRewardTokenModal() {
       tokenId: '',
       ratio: '',
     });
-    setIsERC1155(undefined);
-  };
-
-  const handleRadioClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.id;
-    if (value === 'erc20') {
-      setIsERC1155(false);
-    } else if (value === 'erc1155') {
-      setIsERC1155(true);
-    }
   };
 
   return (
@@ -243,7 +299,7 @@ function AddRewardTokenModal() {
                   id="erc20"
                   className="w-5 h-5"
                   type="radio"
-                  checked={!isERC1155}
+                  checked={!addRewardTokenInfo.isERC1155}
                   onChange={handleRadioClick}
                 />
                 <label className="text-[23px]">ERC20</label>
@@ -253,7 +309,7 @@ function AddRewardTokenModal() {
                   id="erc1155"
                   className="w-5 h-5"
                   type="radio"
-                  checked={isERC1155}
+                  checked={addRewardTokenInfo.isERC1155}
                   onChange={handleRadioClick}
                 />
                 <label className="text-[23px]">ERC1155</label>
@@ -284,7 +340,7 @@ function AddRewardTokenModal() {
                 )}
               </div>
             </div>
-            {isERC1155 && (
+            {addRewardTokenInfo.isERC1155 && (
               <div className="flex flex-row justify-between items-center">
                 <label>Token Id</label>
                 <div>
