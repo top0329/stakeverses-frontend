@@ -43,6 +43,7 @@ export interface IRewardTokenInfo {
   tokenId: number;
   ratio: number;
   isERC1155?: boolean;
+  isApproved?: boolean;
 }
 
 export type Web3ContextType = {
@@ -51,7 +52,7 @@ export type Web3ContextType = {
   isConnected?: boolean;
   library?: ContractRunner;
   productStakingInstance: any;
-  // erc20Approve: (erc20Address: string, spender: string, amount: string) => any;
+  erc20Approve: (erc20Address: string, spender: string, amount: string) => any;
   erc1155Approve: (
     erc1155Address: string,
     spender: string,
@@ -64,4 +65,5 @@ export interface IRewardTokenListForCreate {
   tokenId: number;
   amount: number;
   isERC1155?: boolean;
+  isApproved?: boolean;
 }

@@ -7,9 +7,9 @@ import { useAtom } from 'jotai';
 import Button from '@/components/Buttons';
 import ProductTokenStakeList from '@/components/Lists/ProductTokenStakeList';
 import useWeb3 from '@/hooks/useWeb3';
+import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { currentPoolDataAtom } from '@/jotai/atoms';
-import useSpinner from '@/hooks/useSpinner';
 
 const web3 = new Web3(window.ethereum);
 
@@ -35,7 +35,7 @@ function StakingPage() {
   const handleApprove = async () => {
     if (isApproved) {
       try {
-        openSpin('Approving');
+        openSpin('Staking Product');
         await productStakingWeb3.methods
           .staking(baseAmount)
           .send({ from: account });
@@ -45,11 +45,9 @@ function StakingPage() {
         closeSpin();
       }
     } else {
-      console.log('here');
       try {
         if (isConnected && library) {
-          openSpin('Staking Product');
-          console.log('spinner opened');
+          openSpin('Approving');
           let receipt = null;
           while (receipt === null || receipt.status === undefined) {
             const res = erc1155Approve(

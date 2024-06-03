@@ -194,7 +194,6 @@ function AddRewardTokenModal() {
         [name]: value,
       }));
     }
-    console.log(value);
   };
 
   const handleRadioClick = (event: React.ChangeEvent<HTMLInputElement>) => {

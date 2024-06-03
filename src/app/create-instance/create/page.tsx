@@ -35,32 +35,39 @@ function CreateInstanceCreatePage() {
 
   const handleCreateInstance = async () => {
     try {
-      openSpin('Creating Instance');
-      const _productTokenInfo = productTokenInfo.map((product) => {
-        const { imageUri, productName, ...rest } = product;
-        return rest;
-      })
-      const _rewardTokenInfo = rewardTokenInfo.map((rewardToken) => {
-        const { imageUri, tokenName, ...rest } = rewardToken;
-        return rest;
-      })
-      console.log(
-        _productTokenInfo,
-        _rewardTokenInfo,
-        baseAmount,
-        'Stakeverse Token',
-        'stk'
-      );
-      await productStakingInstance.methods
-        .createStakingInstance(
+      if (
+        rewardTokenInfo.filter((token) => token.isApproved).length ===
+        rewardTokenInfo.length
+      ) {
+        openSpin('Creating Instance');
+        const _productTokenInfo = productTokenInfo.map((product) => {
+          const { imageUri, productName, ...rest } = product;
+          return rest;
+        });
+        const _rewardTokenInfo = rewardTokenInfo.map((rewardToken) => {
+          const { imageUri, tokenName, ...rest } = rewardToken;
+          return rest;
+        });
+        console.log(
           _productTokenInfo,
           _rewardTokenInfo,
           baseAmount,
           'Stakeverse Token',
           'stk'
-        )
-        .send({ from: account });
-      router.push('/stakes');
+        );
+        await productStakingInstance.methods
+          .createStakingInstance(
+            _productTokenInfo,
+            _rewardTokenInfo,
+            baseAmount,
+            'Stakeverse Token',
+            'stk'
+          )
+          .send({ from: account });
+        router.push('/stakes');
+      } else {
+        showToast('warning', 'Please approve all reward tokens!');
+      }
     } catch (err) {
       console.log(err);
     } finally {
@@ -99,6 +106,7 @@ function CreateInstanceCreatePage() {
                   tokenId={rewardToken.tokenId}
                   amount={rewardToken.ratio * baseAmount}
                   isERC1155={rewardToken.isERC1155}
+                  isApproved={rewardToken.isApproved}
                 />
               ))}
             </div>
