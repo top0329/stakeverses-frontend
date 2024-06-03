@@ -7,6 +7,7 @@ import { useAtom } from 'jotai';
 import Button from '@/components/Buttons';
 import Subtitle from '@/components/Subtitle';
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
+import RewardTokenForStakeList from '@/components/ProductToken/RewardTokenForStakeList';
 import ProductTokenListForPoolDetail from '@/components/Lists/ProductTokenListForPoolDetail';
 import RewardTokenListForPoolDetail from '@/components/Lists/RewardTokenListForPoolDetail';
 import useWeb3 from '@/hooks/useWeb3';
@@ -112,11 +113,13 @@ function PoolDetailsPage() {
                   index: number
                 ) => (
                   <React.Fragment key={index}>
-                    <ProductTokenForStakeList
-                      productId={rewardToken.tokenId}
+                    <RewardTokenForStakeList
+                      tokenId={rewardToken.tokenId}
+                      tokenAddress={rewardToken.tokenAddress}
                       ratio={rewardToken.ratio}
+                      isERC1155={rewardToken.isERC1155}
                     />
-                    {index !== currentPoolData.productInfo.length - 1 && (
+                    {index !== currentPoolData.rewardTokenInfo.length - 1 && (
                       <p className="text-[35px] font-medium -mt-16 px-1">+</p>
                     )}
                   </React.Fragment>

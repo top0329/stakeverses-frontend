@@ -14,6 +14,7 @@ export const productTokenInfoAtom = atom<IProductTokenInfo[]>([]);
 export const rewardTokenInfoAtom = atom<IRewardTokenInfo[]>([]);
 export const baseAmountAtom = atom<number>(0);
 export const stakingDataListAtom = atom<IStakingPoolListProps[]>([]);
+export const myStakingDataListAtom = atom<IStakingPoolListProps[]>([]);
 export const currentPoolDataAtom = atom<IStakingPoolListProps>({
   creator: '',
   instanceAddress: '',
@@ -35,5 +36,6 @@ productTokenInfoAtom.debugLabel = 'productTokenInfoAtom';
 rewardTokenInfoAtom.debugLabel = 'rewardTokenInfoAtom';
 baseAmountAtom.debugLabel = 'baseAmountAtom';
 stakingDataListAtom.debugLabel = 'stakingDataListAtom';
+myStakingDataListAtom.debugLabel = 'myStakingDataListAtom';
 currentPoolDataAtom.debugLabel = 'currentPoolDataAtom';
 selectedProductInfoAtom.debugLabel = 'selectedProductInfoAtom';

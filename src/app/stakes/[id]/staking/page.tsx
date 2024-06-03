@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Web3 from 'web3';
 import { useAtom } from 'jotai';
 
@@ -16,6 +17,7 @@ const web3 = new Web3(window.ethereum);
 function StakingPage() {
   const { erc1155Approve, isConnected, library, account } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
+  const router = useRouter();
 
   const [currentPoolData] = useAtom(currentPoolDataAtom);
 
@@ -39,6 +41,7 @@ function StakingPage() {
         await productStakingWeb3.methods
           .staking(baseAmount)
           .send({ from: account });
+        router.push('/my-portfolio');
       } catch (err) {
         console.log(err);
       } finally {
