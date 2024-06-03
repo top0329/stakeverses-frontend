@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
+import RewardTokenForStakeList from '../ProductToken/RewardTokenForStakeList';
 import Button from '@/components/Buttons';
 import { IStakingPoolListProps } from '@/types';
 import { truncateAddress } from '@/lib/utils';
@@ -62,9 +63,11 @@ function StakingPoolList({
         <p className="text-[22px] -mt-14 px-1 whitespace-nowrap">=</p>
         {rewardTokenInfo.map((rewardToken, index) => (
           <React.Fragment key={index}>
-            <ProductTokenForStakeList
-              productId={rewardToken.tokenId}
+            <RewardTokenForStakeList
+              tokenId={rewardToken.tokenId}
+              tokenAddress={rewardToken.tokenAddress}
               ratio={rewardToken.ratio}
+              isERC1155={rewardToken.isERC1155}
             />
             {index !== rewardTokenInfo.length - 1 && (
               <p className="text-[35px] font-medium -mt-16 px-1">+</p>

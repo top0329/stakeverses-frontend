@@ -3,38 +3,52 @@ import Image from 'next/image';
 import { Address } from 'viem';
 
 import getERC1155Data from '@/lib/getERC1155Data';
-import { IProductTokenForStakeListProps } from '@/types';
 import BreadImage from '@/assets/images/bread.svg';
+import getTokenData from '@/lib/getTokenData';
+import { IRewardTokenInfoForStakeListProps } from '@/types';
 
-function ProductTokenForStakeList({
-  productId,
+function RewardTokenForStakeList({
+  tokenId,
+  tokenAddress,
   ratio,
-  consumable,
-}: IProductTokenForStakeListProps) {
+  isERC1155,
+}: IRewardTokenInfoForStakeListProps) {
   const [imageUri, setImageUri] = useState<string>(BreadImage);
   const [name, setName] = useState<string>('');
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const erc1155Data = await getERC1155Data(
-          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-          Number(productId)
-        );
-        if (erc1155Data) {
-          const { name, uri } = erc1155Data;
-          setImageUri(uri);
-          setName(name);
+        if (isERC1155) {
+          const erc1155Data = await getERC1155Data(
+            tokenAddress as Address,
+            Number(tokenId)
+          );
+          if (erc1155Data) {
+            const { name, uri } = erc1155Data;
+            setImageUri(uri);
+            setName(name);
+          }
+        } else {
+          console.log('erc20');
+          const erc20Data = await getTokenData(tokenAddress as Address);
+          console.log(erc20Data);
+          if (erc20Data) {
+            const { tokenName } = erc20Data;
+            setImageUri(
+              `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${tokenAddress}/logo.png`
+            );
+            setName(tokenName);
+          }
         }
       } catch (err) {
         console.log(err);
       }
     }
-    if (productId) {
+    if (tokenAddress) {
       fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productId]);
+  }, [isERC1155, tokenAddress, tokenId]);
 
   return (
     <div className="flex flex-col">
@@ -51,22 +65,14 @@ function ProductTokenForStakeList({
           unoptimized
           onError={() => {
             setImageUri(BreadImage);
-            setName('Bread');
           }}
         />
       </div>
       <div className="relative flex flex-col items-center text-center pb-6">
         <div className="text-2xl text-right">{name}</div>
-        <div
-          className={`absolute bottom-0 text-[11px] rounded-full bg-[#2F3A42] px-1.5 py-1 w-[92px] ${
-            consumable ? 'block' : 'hidden'
-          }`}
-        >
-          Consumable
-        </div>
       </div>
     </div>
   );
 }
 
-export default ProductTokenForStakeList;
+export default RewardTokenForStakeList;
