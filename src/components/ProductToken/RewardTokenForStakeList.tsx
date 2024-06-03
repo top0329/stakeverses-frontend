@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Address } from 'viem';
 
 import getERC1155Data from '@/lib/getERC1155Data';
-import BreadImage from '@/assets/images/bread.svg';
+import IronImage from '@/assets/images/iron.svg';
 import getTokenData from '@/lib/getTokenData';
 import { IRewardTokenInfoForStakeListProps } from '@/types';
 
@@ -13,7 +13,7 @@ function RewardTokenForStakeList({
   ratio,
   isERC1155,
 }: IRewardTokenInfoForStakeListProps) {
-  const [imageUri, setImageUri] = useState<string>(BreadImage);
+  const [imageUri, setImageUri] = useState<string>(IronImage);
   const [name, setName] = useState<string>('');
 
   useEffect(() => {
@@ -64,7 +64,7 @@ function RewardTokenForStakeList({
           alt="product"
           unoptimized
           onError={() => {
-            setImageUri(BreadImage);
+            setImageUri(IronImage);
           }}
         />
       </div>
