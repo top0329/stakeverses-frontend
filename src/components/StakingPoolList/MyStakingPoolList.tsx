@@ -5,7 +5,6 @@ import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForS
 import RewardTokenForStakeList from '../ProductToken/RewardTokenForStakeList';
 import Button from '@/components/Buttons';
 import { IStakingPoolListProps } from '@/types';
-import { truncateAddress } from '@/lib/utils';
 
 function MyStakingPoolList({
   instanceId,
@@ -81,10 +80,10 @@ function MyStakingPoolList({
             {Number(instanceId)}
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
+        <div className="flex flex-col items-center gap-2.5 w-auto text-center">
           <p className="text-[22px] truncate">Creator Address</p>
-          <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-            {truncateAddress(creator)}
+          <div className="flex items-center w-full h-[54px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-sm">
+            {creator}
           </div>
         </div>
         <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">

@@ -42,8 +42,8 @@ function RewardTokenInfoCard({
               <div className="font-semibold">Token Address</div>
               <div>:</div>
             </div>
-            <div className="flex justify-center items-center text-center text-xl font-medium w-full">
-              {tokenAddress ? truncateAddress(tokenAddress) : ''}
+            <div className="flex justify-center items-center text-center text-sm w-full break-all px-4">
+              {tokenAddress}
             </div>
           </div>
           {isERC1155 && (

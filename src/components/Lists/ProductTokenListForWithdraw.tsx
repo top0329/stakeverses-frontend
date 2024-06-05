@@ -34,10 +34,11 @@ function ProductTokenListForWithdraw({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId]);
+
   return (
-    <div className="flex flex-row justify-between items-center text-[28px] bg-[#053F40] rounded-[20px] px-14 py-5">
+    <div className="relative flex flex-row justify-between items-center text-[28px] bg-[#053F40] rounded-[20px] px-14 py-5">
       <Image
-        className="aspect-square w-16 rounded-full"
+        className="aspect-square min-w-[90px] rounded-full"
         width={90}
         height={90}
         src={imageUri}

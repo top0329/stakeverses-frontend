@@ -42,6 +42,7 @@ function ClaimPage() {
         selectedPoolData?.instanceAddress
       );
       await productStakingWeb3.methods.claim(account).send({ from: account });
+      router.push('/my-portfolio');
     } catch (err) {
       console.log(err);
     } finally {

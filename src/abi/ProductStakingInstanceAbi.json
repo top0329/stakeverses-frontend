@@ -43,20 +43,6 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "instanceId", "type": "uint256" },
-      {
-        "internalType": "uint256",
-        "name": "rewardBaseAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "chargeReward",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
       {
         "components": [
           {
@@ -116,6 +102,16 @@
   },
   {
     "inputs": [
+      { "internalType": "address", "name": "staker", "type": "address" },
+      { "internalType": "uint256", "name": "instanceId", "type": "uint256" }
+    ],
+    "name": "devRegisterStaker",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       { "internalType": "address", "name": "creator", "type": "address" }
     ],
     "name": "getCreatorInstanceIds",
@@ -137,6 +133,15 @@
   {
     "inputs": [],
     "name": "getInstanceIds",
+    "outputs": [
+      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getInstanceIdsForUser",
     "outputs": [
       { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
     ],

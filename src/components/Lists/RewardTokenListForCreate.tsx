@@ -9,7 +9,6 @@ import useWeb3 from '@/hooks/useWeb3';
 import useSpinner from '@/hooks/useSpinner';
 import ERC20Abi from '@/abi/ERC20ABI.json';
 import { rewardTokenInfoAtom } from '@/jotai/atoms';
-import { truncateAddress } from '@/lib/utils';
 import { IRewardTokenListForCreate } from '@/types';
 
 function RewardTokenListForCreate({
@@ -17,7 +16,7 @@ function RewardTokenListForCreate({
   tokenId,
   amount,
   isERC1155,
-  isApproved
+  isApproved,
 }: IRewardTokenListForCreate) {
   const { openSpin, closeSpin } = useSpinner();
   const { erc20Approve, erc1155Approve, isConnected, library } = useWeb3();
@@ -109,8 +108,9 @@ function RewardTokenListForCreate({
           </div>
           <div className="flex flex-col gap-3">
             <p className="text-[22px] truncate">Token Address</p>
-            <p className="text-[24px] font-semibold">
-              {tokenAddress ? truncateAddress(tokenAddress) : ''}
+            <p className="text-sm w-48 break-all">
+              {/* {tokenAddress ? truncateAddress(tokenAddress) : ''} */}
+              {tokenAddress}
             </p>
           </div>
           {isERC1155 && (

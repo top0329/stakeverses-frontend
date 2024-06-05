@@ -8,6 +8,7 @@ import { useAtom } from 'jotai';
 import Button from '@/components/Buttons';
 import ProductTokenStakeList from '@/components/Lists/ProductTokenStakeList';
 import useWeb3 from '@/hooks/useWeb3';
+import useToast from '@/hooks/useToast';
 import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { currentPoolDataAtom } from '@/jotai/atoms';
@@ -17,6 +18,7 @@ const web3 = new Web3(window.ethereum);
 function StakingPage() {
   const { erc1155Approve, isConnected, library, account } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
+  const { showToast } = useToast();
   const router = useRouter();
 
   const [currentPoolData] = useAtom(currentPoolDataAtom);
@@ -74,7 +76,7 @@ function StakingPage() {
             alert('Transaction is still pending');
             await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before checking again
           }
-        }
+        } else showToast('warning', 'Please connect your wallet!');
       } catch (err: any) {
         console.log(err);
       } finally {
@@ -98,7 +100,7 @@ function StakingPage() {
             <input
               className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed"
               onChange={handleInputChange}
-              value={baseAmount}
+              value={baseAmount || ''}
             />
           </div>
           <div className="flex flex-col gap-7 px-[49px]">

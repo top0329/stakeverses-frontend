@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 
 import IronImage from '@/assets/images/iron.svg';
-import { truncateAddress } from '@/lib/utils';
 import { IRewardTokenInfo } from '@/types';
 
 function RewardTokenListForPoolDetail({
@@ -28,8 +27,9 @@ function RewardTokenListForPoolDetail({
         </div>
         <div className="flex flex-col gap-3">
           <p className="text-[22px]">Token Address</p>
-          <p className="text-[24px] font-semibold">
-            {tokenAddress ? truncateAddress(tokenAddress) : ''}
+          <p className="text-sm w-48 break-all">
+            {/* {tokenAddress ? truncateAddress(tokenAddress) : ''} */}
+            {tokenAddress}
           </p>
         </div>
         {isERC1155 && (

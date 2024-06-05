@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAtom } from 'jotai';
 
@@ -15,7 +15,6 @@ import {
   IProductTokenForStakeListProps,
   IRewardTokenInfoForStakeListProps,
 } from '@/types';
-import { truncateAddress } from '@/lib/utils';
 import { currentPoolDataAtom } from '@/jotai/atoms';
 
 function PoolDetailsPage() {
@@ -25,12 +24,17 @@ function PoolDetailsPage() {
 
   const [currentPoolData, setCurrentPoolData] = useAtom(currentPoolDataAtom);
 
+  const [poolStatus, setPoolStatus] = useState<boolean>(false);
+
   useEffect(() => {
     async function fetchPoolData() {
       const _poolData = await productStakingInstance.methods
         .getStakingInfo(id)
         .call();
+      const _poolStatus =
+        await productStakingInstance.methods.getInstancePausingStatus(id);
       setCurrentPoolData(_poolData);
+      setPoolStatus(_poolStatus);
     }
     if (Object.keys(productStakingInstance).length > 0) {
       fetchPoolData();
@@ -43,7 +47,7 @@ function PoolDetailsPage() {
         Stakes
       </h1>
       <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 px-[34px]">
-        <Subtitle text="Pool Detail" />
+        <Subtitle text="Pool Details" />
         <div className="px-[54px] mb-12">
           <div className="flex items-center justify-center gap-4">
             {currentPoolData.productInfo.length > 0 &&
@@ -126,29 +130,33 @@ function PoolDetailsPage() {
                 )
               )}
           </div>
-          <div className="flex flex-row justify-between py-9">
-            <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-[22px]">Instance Id</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                {id}
+          <div className="flex flex-col justify-between items-center py-9 gap-6">
+            <div className="flex flex-row justify-center w-full gap-32">
+              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
+                <p className="text-[22px]">Instance Id</p>
+                <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
+                  {id}
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-2.5 w-auto text-center">
+                <p className="text-[22px]">Creator Address</p>
+                <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
+                  {currentPoolData.creator}
+                </div>
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-[22px]">Creator Address</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                {truncateAddress(currentPoolData.creator)}
+            <div className="flex flex-row justify-center w-full gap-32">
+              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
+                <p className="text-[22px]">Remaining time</p>
+                <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
+                  03:28
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-[22px]">Instance Address</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                {truncateAddress(currentPoolData.instanceAddress)}
-              </div>
-            </div>
-            <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-[22px]">Remaining time</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                03:28
+              <div className="flex flex-col items-center gap-2.5 w-auto text-center">
+                <p className="text-[22px]">Instance Address</p>
+                <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
+                  {currentPoolData.instanceAddress}
+                </div>
               </div>
             </div>
           </div>
@@ -176,8 +184,12 @@ function PoolDetailsPage() {
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
                 <p className="text-[22px]">Pool State</p>
-                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 text-xl font-medium">
-                  398
+                <div
+                  className={`w-full bg-transparent border rounded-[15px] px-4 py-3 text-xl font-medium ${
+                    poolStatus ? 'text-green-500' : 'text-red-500'
+                  }`}
+                >
+                  {poolStatus ? 'Active' : 'Inactive'}
                 </div>
               </div>
             </div>

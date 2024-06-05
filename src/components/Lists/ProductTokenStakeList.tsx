@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Address } from 'viem';
 
-import Button from '@/components/Buttons';
+import getERC1155Data from '@/lib/getERC1155Data';
+import BreadImage from '@/assets/images/bread.svg';
 
 function ProductTokenStakeList({
   productId,
@@ -9,25 +12,47 @@ function ProductTokenStakeList({
   productId: number;
   amount: number;
 }) {
-  // const { erc1155Approve } = useWeb3();
-  // const [isApproved, setIsApproved] = useState<boolean>(false);
+  const [imageUri, setImageUri] = useState<string>(BreadImage);
+  const [name, setName] = useState<string>('');
 
-  // const handleApprove = async () => {
-  //   try {
-  //     const res = erc1155Approve(
-  //       process.env.NEXT_PUBLIC_PRODUCTADDRESS!,
-  //       ,
-  //       true
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const erc1155Data = await getERC1155Data(
+          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
+          Number(productId)
+        );
+        if (erc1155Data) {
+          const { name, uri } = erc1155Data;
+          setImageUri(uri);
+          setName(name);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    if (productId) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productId]);
+
   return (
     <div className="flex flex-row justify-between pb-[18px] px-[32px] py-[18px] bg-[#141D2D]/70 rounded-[20px]">
+      <Image
+        className="aspect-square min-w-[90px] rounded-full"
+        width={90}
+        height={90}
+        src={imageUri}
+        alt="product"
+        unoptimized
+        onError={() => {
+          setImageUri(BreadImage);
+        }}
+      />
       <div className="flex flex-col">
         <p className="text-[22px]">Token Name</p>
-        <p className="text-[28px] text-center font-semibold">Bread</p>
+        <p className="text-[28px] text-center font-semibold">{name}</p>
       </div>
       <div className="flex flex-col">
         <p className="text-[22px]">Token Id</p>

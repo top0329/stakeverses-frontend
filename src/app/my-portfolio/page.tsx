@@ -8,7 +8,6 @@ import Button from '@/components/Buttons';
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
 import MyStakingPoolList from '@/components/StakingPoolList/MyStakingPoolList';
 import useWeb3 from '@/hooks/useWeb3';
-import { truncateAddress } from '@/lib/utils';
 import { myStakingDataListAtom } from '@/jotai/atoms';
 
 function MyPortfolioPage() {
@@ -97,10 +96,10 @@ function MyPortfolioPage() {
                   0983
                 </div>
               </div>
-              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
+              <div className="flex flex-col items-center gap-2.5 w-auto text-center">
                 <p className="text-[22px] truncate">Creator Address</p>
-                <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                  0x1I8D...8SDF
+                <div className="flex items-center w-full h-[54px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-sm">
+                  0x48C281DB38eAD8050bBd821d195FaE85A235d8fc
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
@@ -144,66 +143,6 @@ function MyPortfolioPage() {
               There is no Staking Pools you staked.
             </div>
           )}
-          {/* <div className="bg-[#053F40] px-[50px] py-9 rounded-[20px]">
-            <div className="flex items-center justify-between">
-              <ProductTokenForStakeList productId={'5'} ratio={'1'} />
-              <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-              <ProductTokenForStakeList productId={'5'} ratio={'1'} />
-              <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-              <p className="text-[50px] font-medium -mt-16 px-1">&#40;</p>
-              <ProductTokenForStakeList
-                productId={'6'}
-                ratio={'1'}
-                consumable
-              />
-              <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-              <ProductTokenForStakeList
-                productId={'6'}
-                ratio={'1'}
-                consumable
-              />
-              <p className="text-[50px] font-medium -mt-16 px-1">&#41;</p>
-              <p className="text-[22px] -mt-14 px-1 whitespace-nowrap">
-                * 1 min{' '}
-              </p>
-              <p className="text-[22px] -mt-14 px-1 whitespace-nowrap">=</p>
-              <ProductTokenForStakeList productId={'9'} ratio={'1'} />
-            </div>
-            <div className="flex flex-row justify-between items-center pt-6">
-              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-                <p className="text-[22px] truncate">Instance Id</p>
-                <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                  0983
-                </div>
-              </div>
-              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-                <p className="text-[22px] truncate">Creator Address</p>
-                <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                  0x1I8D...8SDF
-                </div>
-              </div>
-              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-                <p className="text-[22px] truncate">Remaining time</p>
-                <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
-                  03:28
-                </div>
-              </div>
-              <div className="flex flex-row gap-5">
-                <Button
-                  className="!w-[192px] !h-14"
-                  text="Withdraw"
-                  variant="primary"
-                  onClick={() => router.push('/my-portfolio/8/withdraw')}
-                />
-                <Button
-                  className="!w-[192px] !h-14"
-                  text="Claim"
-                  variant="primary"
-                  onClick={() => router.push('/my-portfolio/8/claim')}
-                />
-              </div>
-            </div>
-          </div> */}
         </div>
       )}
     </React.Fragment>

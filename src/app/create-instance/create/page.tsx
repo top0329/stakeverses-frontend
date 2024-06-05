@@ -22,9 +22,9 @@ function CreateInstanceCreatePage() {
   const { openSpin, closeSpin } = useSpinner();
   const router = useRouter();
 
-  const [productTokenInfo] = useAtom(productTokenInfoAtom);
-  const [rewardTokenInfo] = useAtom(rewardTokenInfoAtom);
-  const [baseAmount] = useAtom(baseAmountAtom);
+  const [productTokenInfo, setProductTokenInfo] = useAtom(productTokenInfoAtom);
+  const [rewardTokenInfo, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
+  const [baseAmount, setBaseAmount] = useAtom(baseAmountAtom);
 
   useEffect(() => {
     if (!isConnected) {
@@ -64,6 +64,9 @@ function CreateInstanceCreatePage() {
             'stk'
           )
           .send({ from: account });
+        setBaseAmount(0);
+        setProductTokenInfo([]);
+        setRewardTokenInfo([]);
         router.push('/stakes');
       } else {
         showToast('warning', 'Please approve all reward tokens!');
