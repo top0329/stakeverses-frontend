@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 
 import MyStakingPoolList from '@/components/StakingPoolList/MyStakingPoolList';
+import MyInstanceList from '@/components/StakingPoolList/MyInstanceList';
 import useWeb3 from '@/hooks/useWeb3';
 import {
   myCreatedInstanceDataListAtom,
@@ -86,7 +87,7 @@ function MyPortfolioPage() {
         <div className="flex flex-col py-20 px-24 rounded-b-[20px] rounded-tr-[20px] bg-[#040E20]/75 gap-10 mb-20">
           {myCreatedInstanceDataList.length > 0 ? (
             myCreatedInstanceDataList.map((stakingData) => (
-              <MyStakingPoolList
+              <MyInstanceList
                 key={stakingData.instanceId}
                 instanceId={stakingData.instanceId}
                 creator={stakingData.creator}

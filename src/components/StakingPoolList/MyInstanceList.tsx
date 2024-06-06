@@ -60,19 +60,21 @@ function MyInstanceList({
           </React.Fragment>
         ) : null}
         <p className="text-[22px] -mt-14 px-1 whitespace-nowrap">=</p>
-        {rewardTokenInfo.map((rewardToken, index) => (
-          <React.Fragment key={index}>
-            <RewardTokenForStakeList
-              tokenId={rewardToken.tokenId}
-              tokenAddress={rewardToken.tokenAddress}
-              ratio={rewardToken.ratio}
-              isERC1155={rewardToken.isERC1155}
-            />
-            {index !== rewardTokenInfo.length - 1 && (
-              <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-            )}
-          </React.Fragment>
-        ))}
+        <div className="flex flex-col">
+          {rewardTokenInfo.map((rewardToken, index) => (
+            <React.Fragment key={index}>
+              <RewardTokenForStakeList
+                tokenId={rewardToken.tokenId}
+                tokenAddress={rewardToken.tokenAddress}
+                ratio={rewardToken.ratio}
+                isERC1155={rewardToken.isERC1155}
+              />
+              {/* {index !== rewardTokenInfo.length - 1 && (
+                <p className="text-[35px] font-medium -mt-16 px-1">+</p>
+              )} */}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
       <div className="flex flex-row items-center gap-32 pt-8">
         <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
@@ -93,12 +95,18 @@ function MyInstanceList({
             03:28
           </div>
         </div>
-        <Button
-          className="!h-14"
-          text="Stake"
-          variant="primary"
-          onClick={() => router.push(`/stakes/${Number(instanceId)}`)}
-        />
+        <div className="flex flex-row gap-5">
+          <Button
+            className="!w-[220px] !h-14"
+            text="Charge Reward"
+            variant="primary"
+          />
+          <Button
+            className="!w-[140px] !h-14"
+            text="Pause"
+            variant="primary"
+          />
+        </div>
       </div>
     </div>
   );
