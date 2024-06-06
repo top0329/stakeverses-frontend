@@ -140,7 +140,9 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      { "internalType": "address", "name": "staker", "type": "address" }
+    ],
     "name": "getInstanceIdsForUser",
     "outputs": [
       { "internalType": "uint256[]", "name": "", "type": "uint256[]" }

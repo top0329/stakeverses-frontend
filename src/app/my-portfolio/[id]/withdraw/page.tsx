@@ -13,17 +13,14 @@ import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myStakingDataListAtom } from '@/jotai/atoms';
 import { IStakingPoolListProps } from '@/types';
-import { Contract, ethers } from 'ethers';
-import { useWriteContract } from 'wagmi';
 
 const web3 = new Web3(window.ethereum);
 
 function WithDrawPage() {
   const router = useRouter();
   const { id } = useParams();
-  const { account, productStakingInstance, library } = useWeb3();
+  const { account } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
-  const { writeContractAsync } = useWriteContract();
 
   const [myStakingDataList] = useAtom(myStakingDataListAtom);
 
@@ -41,65 +38,12 @@ function WithDrawPage() {
   const handleWithdraw = async () => {
     try {
       openSpin('Withdrawing');
-      writeContractAsync({
-        abi: ProductStakingAbi,
-        address: selectedPoolData?.instanceAddress as `0x${string}`,
-        functionName: 'withdraw',
-        args: [],
-      });
-      // writeContractAsync({
-      //   abi: ProductStakingAbi,
-      //   address: selectedPoolData?.instanceAddress as `0x${string}`,
-      //   functionName: 'claim',
-      //   args: [account],
-      // });
-      // let provider;
-      // provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_DEFAULTRPC);
-      // const signer = await provider.getSigner();
-      // const productStakingEthers: Contract = new ethers.Contract(
-      //   selectedPoolData?.instanceAddress || '',
-      //   ProductStakingAbi,
-      //   library
-      // ) as Contract;
-      // const productStakingWeb3: any = new web3.eth.Contract(
-      //   ProductStakingAbi,
-      //   selectedPoolData?.instanceAddress
-      // );
-
-      // console.log(
-      //   'ProductStaking instance data:',
-      //   await productStakingInstance.methods.getStakingInfo(1).call()
-      // );
-
-      // console.log(
-      //   'Calculate EndTime>>>>',
-      //   await productStakingWeb3.methods.devGetStakingEndTime().call()
-      // );
-
-      // console.log(
-      //   'Total reward base amount',
-      //   await productStakingWeb3.methods.rewardBaseAmount().call()
-      // );
-
-      // console.log(
-      //   'Total Staking Base Amount>>>',
-      //   await productStakingWeb3.methods.totalStakingBaseAmount().call()
-      // );
-
-      // console.log(
-      //   'Claimable Reward:',
-      //   await productStakingWeb3.methods.getClaimableReward(account).call()
-      // );
-
-      // console.log(
-      //   'Staker Information:',
-      //   await productStakingWeb3.methods.stakingUser(account).call()
-      // );
-
-      // await productStakingWeb3.methods.withdraw().send({ from: account });
-      // await productStakingEthers.withdraw().then((tx) => tx.wait());
-      // router.push('/my-portfolio');
-      console.log('clicked');
+      const productStakingWeb3: any = new web3.eth.Contract(
+        ProductStakingAbi,
+        selectedPoolData?.instanceAddress
+      );
+      await productStakingWeb3.methods.withdraw().send({ from: account });
+      router.push('/my-portfolio');
     } catch (err) {
       console.log(err);
     } finally {

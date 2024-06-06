@@ -59,19 +59,21 @@ function StakingPoolList({
           </React.Fragment>
         ) : null}
         <p className="text-[22px] -mt-14 px-1 whitespace-nowrap">=</p>
-        {rewardTokenInfo.map((rewardToken, index) => (
-          <React.Fragment key={index}>
-            <RewardTokenForStakeList
-              tokenId={rewardToken.tokenId}
-              tokenAddress={rewardToken.tokenAddress}
-              ratio={rewardToken.ratio}
-              isERC1155={rewardToken.isERC1155}
-            />
-            {index !== rewardTokenInfo.length - 1 && (
+        <div className="flex flex-col">
+          {rewardTokenInfo.map((rewardToken, index) => (
+            <React.Fragment key={index}>
+              <RewardTokenForStakeList
+                tokenId={rewardToken.tokenId}
+                tokenAddress={rewardToken.tokenAddress}
+                ratio={rewardToken.ratio}
+                isERC1155={rewardToken.isERC1155}
+              />
+              {/* {index !== rewardTokenInfo.length - 1 && (
               <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-            )}
-          </React.Fragment>
-        ))}
+            )} */}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
       <div className="flex flex-row justify-between items-center gap-4 pt-8">
         <div className="flex flex-col items-center gap-2.5 w-[160px] text-center">

@@ -306,6 +306,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "isIncludingConsumable",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",

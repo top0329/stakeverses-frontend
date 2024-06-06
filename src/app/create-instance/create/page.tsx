@@ -48,13 +48,6 @@ function CreateInstanceCreatePage() {
           const { imageUri, tokenName, ...rest } = rewardToken;
           return rest;
         });
-        console.log(
-          _productTokenInfo,
-          _rewardTokenInfo,
-          baseAmount,
-          'Stakeverse Token',
-          'stk'
-        );
         await productStakingInstance.methods
           .createStakingInstance(
             _productTokenInfo,
@@ -102,9 +95,9 @@ function CreateInstanceCreatePage() {
           <div className="w-full text-[38px] text-center h-full">
             <h2 className="text-[38px] font-semibold mb-6">Reward Tokens</h2>
             <div className="flex flex-col gap-[22px] bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-9 rounded-[20px] mb-10 h-[500px] overflow-y-auto custom-scrollbar">
-              {rewardTokenInfo.map((rewardToken) => (
+              {rewardTokenInfo.map((rewardToken, idx) => (
                 <RewardTokenListForCreate
-                  key={rewardToken.tokenId}
+                  key={idx}
                   tokenAddress={rewardToken.tokenAddress}
                   tokenId={rewardToken.tokenId}
                   amount={rewardToken.ratio * baseAmount}

@@ -15,6 +15,7 @@ export const rewardTokenInfoAtom = atom<IRewardTokenInfo[]>([]);
 export const baseAmountAtom = atom<number>(0);
 export const stakingDataListAtom = atom<IStakingPoolListProps[]>([]);
 export const myStakingDataListAtom = atom<IStakingPoolListProps[]>([]);
+export const myCreatedInstanceDataListAtom = atom<IStakingPoolListProps[]>([]);
 export const currentPoolDataAtom = atom<IStakingPoolListProps>({
   creator: '',
   instanceAddress: '',
