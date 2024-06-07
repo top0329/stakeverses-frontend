@@ -31,7 +31,7 @@ function PoolDetailsPage() {
 
   const [poolStatus, setPoolStatus] = useState<boolean>(false);
   const [numberOfStakers, setNumberOfStakers] = useState<number>(0);
-  const [remainingAmount, setRemainingAmount] = useState<number>(0);
+  const [remainingRewardAmount, setRemainingRewardAmount] = useState<number>(0);
   const [totalStakingBaseAmount, setTotalStakingBaseAmount] =
     useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(0);
@@ -56,7 +56,7 @@ function PoolDetailsPage() {
       const _remainingTime = await productStakingWeb3.methods
         .devGetStakingEndTime()
         .call();
-      const _remainingAmount = await productStakingWeb3.methods
+      const _remainingRewardAmount = await productStakingWeb3.methods
         .devGetRemainingTokens()
         .call();
       setCurrentPoolData(_poolData);
@@ -64,7 +64,7 @@ function PoolDetailsPage() {
       setNumberOfStakers(_numberOfStakers.length);
       setTotalStakingBaseAmount(Number(_totalStakingBaseAmount));
       setRemainingTime(Number(_remainingTime));
-      setRemainingAmount(Number(_remainingAmount));
+      setRemainingRewardAmount(Number(_remainingRewardAmount));
     }
     if (Object.keys(productStakingInstance).length > 0) {
       fetchPoolData();
@@ -206,9 +206,9 @@ function PoolDetailsPage() {
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-                <p className="text-xl truncate">Remaining Amount</p>
+                <p className="text-xl truncate">Remaining Reward Amount</p>
                 <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 text-xl font-medium">
-                  {remainingAmount}
+                  {remainingRewardAmount}
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
