@@ -30,7 +30,6 @@ function RewardTokenForStakeList({
             setName(name);
           }
         } else {
-          console.log('erc20');
           const erc20Data = await getTokenData(tokenAddress as Address);
           if (erc20Data) {
             const { tokenName } = erc20Data;
@@ -50,27 +49,23 @@ function RewardTokenForStakeList({
   }, [isERC1155, tokenAddress, tokenId]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center h-16 gap-8 mx-8">
-        <div className="flex justify-between items-center h-16 gap-8">
-          <div className="text-[22px] rounded-full border border-white aspect-square min-w-[28px] text-center leading-6">
-            {Number(ratio)}
-          </div>
-          <Image
-            className="aspect-square w-16 rounded-full"
-            width={64}
-            height={64}
-            src={imageUri}
-            alt="product"
-            unoptimized
-            onError={() => {
-              setImageUri(IronImage);
-            }}
-          />
-        </div>
-        <div className="text-2xl text-right">{name}</div>
+    <div className="flex flex-col justify-center items-center">
+      <div className="text-[22px] rounded-full border border-white aspect-square min-w-[28px] text-center leading-6">
+        {Number(ratio)}
       </div>
-      <div className="text-sm text-center bg-[#141D2D] rounded-xl px-2 py-1 border border-[#2F3A42]">
+      <Image
+        className="aspect-square min-w-16 rounded-full"
+        width={64}
+        height={64}
+        src={imageUri}
+        alt="product"
+        unoptimized
+        onError={() => {
+          setImageUri(IronImage);
+        }}
+      />
+      <div className="text-xl text-right">{name}</div>
+      <div className="w-[120px] text-sm text-center bg-[#141D2D] rounded-xl px-2 py-1 border border-[#2F3A42] break-all">
         {tokenAddress}
       </div>
     </div>

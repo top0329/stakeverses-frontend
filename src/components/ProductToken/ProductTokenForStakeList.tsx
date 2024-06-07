@@ -37,8 +37,8 @@ function ProductTokenForStakeList({
   }, [productId]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-center items-center h-16 gap-1">
+    <div className="flex flex-col gap-y-4">
+      <div className="flex flex-col justify-center items-center h-16 gap-1">
         <div className="text-[22px] rounded-full border border-white aspect-square min-w-[28px] text-center leading-6">
           {Number(ratio)}
         </div>
@@ -56,9 +56,9 @@ function ProductTokenForStakeList({
         />
       </div>
       <div className="relative flex flex-col items-center text-center pb-6">
-        <div className="text-2xl text-right">{name}</div>
+        <div className="text-xl text-right">{name}</div>
         <div
-          className={`absolute bottom-0 text-[11px] rounded-full bg-[#2F3A42] px-1.5 py-1 w-[92px] ${
+          className={`absolute bottom-0 text-[11px] rounded-full bg-[#2F3A42] px-1.5 py-1 w-auto ${
             consumable ? 'block' : 'hidden'
           }`}
         >

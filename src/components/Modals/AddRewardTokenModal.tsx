@@ -4,7 +4,6 @@ import { useAtom } from 'jotai';
 
 import Button from '../Buttons';
 import useToast from '@/hooks/useToast';
-import PickAxeImage from '@/assets/images/pickaxe.svg';
 import {
   isAddRewardTokenModalOpenAtom,
   rewardTokenInfoAtom,
@@ -286,11 +285,19 @@ function AddRewardTokenModal() {
         <h2 className="text-[38px] font-bold mt-7 mb-6">Add Reward Token</h2>
         <hr className="opacity-30 border" />
         <div className="grid grid-cols-12 mx-[47px] mt-12 mb-11 gap-10 text-[22px] font-semibold">
-          <Image
-            className="col-span-4 w-[243px] aspect-square border border-[#040E20] rounded-full"
-            src={PickAxeImage}
-            alt="pickaxe"
-          />
+          {addRewardTokenInfo.imageUri === '' ||
+          addRewardTokenInfo.imageUri === undefined ? (
+            <div className="col-span-4 w-[243px] aspect-square bg-slate-600 border border-[#040E20] rounded-full"></div>
+          ) : (
+            <Image
+              className="col-span-4 min-w-[243px] aspect-square border border-[#040E20] rounded-full"
+              width={243}
+              height={243}
+              src={addRewardTokenInfo.imageUri}
+              alt="reward"
+              unoptimized
+            />
+          )}
           <div className="col-span-8 flex flex-col justify-between gap-3">
             <div className="flex flex-row justify-center items-center gap-16">
               <div className="flex flex-row items-center gap-4">

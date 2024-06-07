@@ -9,6 +9,7 @@ import { IProductTokenInfo } from '@/types';
 function ProductTokenListForPoolDetail({
   productId,
   consumable,
+  amount,
 }: IProductTokenInfo) {
   const [imageUri, setImageUri] = useState<string>(BreadImage);
   const [name, setName] = useState<string>('');
@@ -36,7 +37,11 @@ function ProductTokenListForPoolDetail({
   }, [productId]);
 
   return (
-    <div className="relative flex flex-row py-6 px-8 bg-[#141D2D]/70 rounded-[20px] gap-7">
+    <div
+      className={`relative flex flex-row pt-2 px-4 bg-[#141D2D]/70 rounded-[20px] gap-2 ${
+        consumable ? 'pb-6' : 'pb-2'
+      }`}
+    >
       <Image
         className="aspect-square min-w-[90px] rounded-full"
         width={90}
@@ -48,18 +53,18 @@ function ProductTokenListForPoolDetail({
           setImageUri(BreadImage);
         }}
       />
-      <div className="flex flex-row justify-between items-center w-full">
+      <div className="flex flex-row justify-between items-center w-full gap-1">
         <div className="flex flex-col">
-          <p className="text-[22px] truncate">Product Name</p>
-          <p className="text-[28px] font-semibold">{name}</p>
+          <p className="text-xl truncate">Product Name</p>
+          <p className="text-2xl font-semibold">{name}</p>
         </div>
         <div className="flex flex-col">
-          <p className="text-[22px] truncate">Product Id</p>
-          <p className="text-[28px] font-semibold">{productId}</p>
+          <p className="text-xl truncate">Product Id</p>
+          <p className="text-2xl font-semibold">{productId}</p>
         </div>
         <div className="flex flex-col">
-          <p className="text-[22px]">Amount</p>
-          <p className="text-[28px] font-semibold">1000</p>
+          <p className="text-xl">Amount</p>
+          <p className="text-2xl font-semibold">{amount}</p>
         </div>
       </div>
       {consumable && (

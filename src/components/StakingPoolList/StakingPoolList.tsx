@@ -16,7 +16,7 @@ function StakingPoolList({
 
   return (
     <div className="bg-[#053F40] px-[50px] py-9 rounded-[20px]">
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center">
         {productInfo
           .filter((product) => product.consumable === false)
           .map((product, index) => (
@@ -59,7 +59,6 @@ function StakingPoolList({
           </React.Fragment>
         ) : null}
         <p className="text-[22px] -mt-14 px-1 whitespace-nowrap">=</p>
-        <div className="flex flex-col">
           {rewardTokenInfo.map((rewardToken, index) => (
             <React.Fragment key={index}>
               <RewardTokenForStakeList
@@ -68,12 +67,11 @@ function StakingPoolList({
                 ratio={rewardToken.ratio}
                 isERC1155={rewardToken.isERC1155}
               />
-              {/* {index !== rewardTokenInfo.length - 1 && (
+              {index !== rewardTokenInfo.length - 1 && (
               <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-            )} */}
+            )}
             </React.Fragment>
           ))}
-        </div>
       </div>
       <div className="flex flex-row justify-between items-center gap-4 pt-8">
         <div className="flex flex-col items-center gap-2.5 w-[160px] text-center">
@@ -82,16 +80,16 @@ function StakingPoolList({
             {Number(instanceId)}
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2.5 w-auto text-center">
-          <p className="text-[22px] truncate">Creator Address</p>
-          <div className="flex items-center w-full h-[54px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-sm">
-            {creator}
-          </div>
-        </div>
         <div className="flex flex-col items-center gap-2.5 w-[160px] text-center">
           <p className="text-[22px] truncate">Remaining time</p>
           <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
             03:28
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-2.5 w-auto text-center">
+          <p className="text-[22px] truncate">Creator Address</p>
+          <div className="flex items-center w-full h-[54px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-sm">
+            {creator}
           </div>
         </div>
         <Button

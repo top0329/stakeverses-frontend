@@ -33,6 +33,7 @@ export interface IProductTokenInfo {
   productAddress?: string;
   productId: number;
   ratio?: number;
+  amount?: number;
   consumable?: boolean;
 }
 
