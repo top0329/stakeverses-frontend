@@ -34,7 +34,7 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center h-[68px] mx-[20px] my-[20px] bg-white bg-opacity-15 rounded-full border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:mx-[20px] md:my-[40px]">
+    <div className="flex justify-between items-center h-[68px] mx-[20px] my-[20px] bg-white bg-opacity-15 rounded-full border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:my-[40px]">
       <Link href="/" onClick={() => setActiveItem(0)}>
         <Image
           src={StakeversesLogo}
