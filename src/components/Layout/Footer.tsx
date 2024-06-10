@@ -24,9 +24,9 @@ function Footer() {
   };
 
   return (
-    <div className="relative h-[477px] px-[136px] bg-gradient-footer text-lg">
-      <div className="grid grid-cols-12 gap-16">
-        <div className="grid col-span-4 gap-y-10">
+    <div className="relative h-[700px] px-[20px] bg-gradient-footer text-base xl:px-[100px] 2xl:px-[136px] xl:text-lg xl:h-[477px] lg:h-[450px] md:px-[70px] md:h-[600px]">
+      <div className="grid grid-cols-12 gap-6 xl:gap-10 2xl:gap-16">
+        <div className="grid col-span-12 gap-y-10 lg:col-span-3 lg:gap-y-20">
           <Link className="mt-9" href="/">
             <Image
               src={StakeversesLogo}
@@ -42,22 +42,25 @@ function Footer() {
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry.
             </p>
-            <p className="mt-16 text-lg">@Lorem</p>
+            <p className="mt-6 lg:mt-16">@Lorem</p>
           </div>
         </div>
-        <div className="grid col-span-2 text-lg">
-          <h3 className="font-medium mt-28">Pages</h3>
+        <div className="grid col-span-5 lg:col-span-2 md:col-span-3">
+          <h3 className="font-medium mt-6 lg:mt-28">Pages</h3>
           <div className={`flex flex-col gap-4 ${isConnected && 'mt-10'}`}>
             <Link href={'/stakes'}>Stakes</Link>
             {isConnected && <Link href={'/my-portfolio'}>My Portfolio</Link>}
-            <div className="cursor-pointer" onClick={handleCreateInstance}>
+            <div
+              className="truncate cursor-pointer"
+              onClick={handleCreateInstance}
+            >
               Create Instance
             </div>
             <Link href={'/faq'}>FAQ</Link>
           </div>
         </div>
-        <div className="grid col-span-3">
-          <h3 className="font-medium mt-28">Contact us</h3>
+        <div className="grid col-span-7 lg:col-span-3 md:col-span-4">
+          <h3 className="font-medium mt-6 lg:mt-28">Contact us</h3>
           <div className="flex flex-col gap-8 mt-6">
             <h5>
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -66,45 +69,41 @@ function Footer() {
             <h5>+1 234 567 8900</h5>
           </div>
         </div>
-        <div className="grid col-span-3">
-          <div className="flex flex-row justify-end items-end gap-4">
+        <div className="grid col-span-12 lg:col-span-4 md:col-span-5">
+          <div className="flex flex-row justify-start items-end gap-4 md:justify-end">
             <Link href={'#'}>
               <Image
+                className="min-w-[45px] max-w-[45px] h-[45px]"
                 src={FacebookFooterImage}
-                width={45}
-                height={45}
                 alt="facebook-icon"
               />
             </Link>
             <Link href={'#'}>
               <Image
+                className="min-w-[45px] max-w-[45px] h-[45px]"
                 src={InstagramFooterImage}
-                width={45}
-                height={45}
                 alt="instagram-icon"
               />
             </Link>
             <Link href={'#'}>
               <Image
+                className="min-w-[45px] max-w-[45px] h-[45px]"
                 src={TwitterFooterImage}
-                width={45}
-                height={45}
                 alt="twitter-icon"
               />
             </Link>
             <Link href={'#'}>
               <Image
+                className="min-w-[45px] max-w-[45px] h-[45px]"
                 src={LinkedinFooterImage}
-                width={45}
-                height={45}
                 alt="linkedin-icon"
               />
             </Link>
           </div>
         </div>
       </div>
-      <hr className="absolute inset-x-0 bg-[#D2D2D2] w-full mb-[85px] bottom-0" />
-      <p className="absolute inset-x-0 w-full text-center bottom-0 py-8">
+      <hr className="absolute inset-x-0 bg-[#D2D2D2] w-full mb-[72px] bottom-0 xl:mb-[85px]" />
+      <p className="absolute inset-x-0 w-full text-center bottom-0 py-6 xl:py-8">
         Copyright&copy; {new Date().getFullYear()} Stakeverses
       </p>
     </div>

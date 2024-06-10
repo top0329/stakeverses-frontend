@@ -12,7 +12,7 @@ body {
   }
 
   .btn {
-    @apply h-[70px] w-[251px] font-mono font-semibold text-white text-2xl rounded-full border-2 border-white;
+    @apply h-[50px] w-[160px] font-mono font-semibold text-white text-lg rounded-full border-2 border-white lg:h-[60px] lg:w-[200px] lg:text-xl xl:h-[70px] xl:w-[251px] xl:text-2xl;
   }
 
   .swiper-button-next::after {

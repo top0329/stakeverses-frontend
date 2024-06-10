@@ -27,7 +27,6 @@ function RewardTokenListForClaim({
       <div className="flex flex-col text-center gap-2">
         <div className="text-[22px]">Token Address</div>
         <div className="text-sm">
-          {/* {tokenAddress ? truncateAddress(tokenAddress) : ''} */}
           {tokenAddress}
         </div>
       </div>

@@ -1,6 +1,15 @@
 import { Address } from 'viem';
 import { ContractRunner } from 'ethers';
 
+export interface IButton {
+  text: string;
+  variant?: 'primary' | 'outline';
+  icon?: React.ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
 export interface IButtonClass {
   name: string;
   style: string;

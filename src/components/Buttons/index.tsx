@@ -1,16 +1,7 @@
 import React, { FC } from 'react';
-import { IButtonClass } from '@/types';
+import { IButton, IButtonClass } from '@/types';
 
-export interface Props {
-  text: string;
-  variant?: 'primary' | 'outline';
-  icon?: React.ReactNode;
-  className?: string;
-  disabled?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-const Button: FC<Props> = ({
+const Button: FC<IButton> = ({
   text,
   variant = 'primary',
   className,

@@ -34,20 +34,18 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center h-[98px] mx-[130px] my-[51px] bg-white bg-opacity-15 rounded-full border border-white border-opacity-30">
+    <div className="flex justify-between items-center h-[68px] mx-[20px] my-[20px] bg-white bg-opacity-15 rounded-full border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:mx-[20px] md:my-[40px]">
       <Link href="/" onClick={() => setActiveItem(0)}>
         <Image
           src={StakeversesLogo}
-          className="ml-[15px]"
+          className="ml-0 w-[180px] h-[54px] lg:w-[230px] lg:h-[72px] xl:w-[280px] xl:h-[80px] 2xl:ml-[15px] 2xl:w-[358px] 2xl:h-[93px] md:ml-[10px]"
           alt="Stakeverses Logo"
-          width={358}
-          height={93}
           priority
         />
       </Link>
-      <div className="flex justify-center items-center gap-8 mr-[15px]">
+      <div className="hidden justify-center items-center text-lg gap-2 mr-[10px] 2xl:mr-[15px] 2xl:gap-8 2xl:text-2xl xl:gap-6 xl:text-xl lg:gap-4 md:flex">
         <Link
-          className={`text-2xl truncate cursor-pointer ${
+          className={`truncate cursor-pointer ${
             activeItem === 1
               ? 'font-semibold text-[#26DDFF] space-y-0.5'
               : 'font-medium'
@@ -62,7 +60,7 @@ function Header() {
         </Link>
         {isConnected && (
           <Link
-            className={`text-2xl truncate cursor-pointer ${
+            className={`truncate cursor-pointer ${
               activeItem === 2
                 ? 'font-semibold text-[#26DDFF] space-y-0.5'
                 : 'font-medium'
@@ -77,7 +75,7 @@ function Header() {
           </Link>
         )}
         <div
-          className={`text-2xl truncate cursor-pointer ${
+          className={`truncate cursor-pointer ${
             activeItem === 3
               ? 'font-semibold text-[#26DDFF] space-y-0.5'
               : 'font-medium'
@@ -90,7 +88,7 @@ function Header() {
           )}
         </div>
         <Link
-          className={`text-2xl truncate cursor-pointer ${
+          className={`truncate cursor-pointer ${
             activeItem === 4
               ? 'font-semibold text-[#26DDFF] space-y-0.5'
               : 'font-medium'
@@ -105,6 +103,10 @@ function Header() {
         </Link>
         <ConnectWallet />
       </div>
+      <button className="block mr-6 md:hidden">
+        <hr className="w-7 border" />
+        <hr className="w-7 border mt-2" />
+      </button>
     </div>
   );
 }

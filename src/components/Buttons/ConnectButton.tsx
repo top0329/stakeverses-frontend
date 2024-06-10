@@ -82,6 +82,7 @@ export const ConnectWallet = () => {
         </div>
       </div> */}
       <Button
+        className=''
         text={`${truncateAddress(address ?? '')}`}
         variant="primary"
         onClick={async () => openAccountModal?.()}
