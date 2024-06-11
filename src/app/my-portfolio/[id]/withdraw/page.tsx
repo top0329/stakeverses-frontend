@@ -53,9 +53,7 @@ function WithDrawPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-[203px] text-[62px] text-center font-semibold">
-        Withdraw
-      </h1>
+      <h1 className="mt-24 text-6xl text-center font-semibold">Withdraw</h1>
       <div className="flex flex-col mt-24 py-20 px-24 rounded-b-[20px] rounded-tr-[20px] bg-[#040E20]/75 gap-16 mb-20">
         <div className="flex flex-col gap-10">
           <div className="text-[38px] font-semibold">Staked Token :</div>

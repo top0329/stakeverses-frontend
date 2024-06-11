@@ -1,7 +1,7 @@
 function Subtitle({ text }: { text: string }) {
   return (
     <div>
-      <h2 className="pt-[50px] text-[38px] text-center font-semibold">
+      <h2 className="pt-4 text-2xl text-center font-semibold md:text-3xl md:pt-8 lg:text-4xl lg:pt-10 xl:text-[38px] xl:pt-[50px]">
         {text}
       </h2>
       <div className="flex justify-center items-center pb-[54px]">

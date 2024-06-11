@@ -49,7 +49,7 @@ function CreateInstanceRewardPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-[203px] text-[62px] text-center font-semibold">
+      <h1 className="mt-24 text-6xl text-center font-semibold">
         Create Instance
       </h1>
       <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 min-h-[644px]">

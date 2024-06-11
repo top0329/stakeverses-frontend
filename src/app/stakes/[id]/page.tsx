@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Web3 from 'web3';
 import { useAtom } from 'jotai';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 import Button from '@/components/Buttons';
 import Subtitle from '@/components/Subtitle';
@@ -82,46 +83,19 @@ function PoolDetailsPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-[203px] text-[62px] text-center font-semibold">
+      <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Stakes
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 px-[34px]">
+      <div className="relative px-2 my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 lg:px-4 md:px-8 sm:my-12 sm:px-2">
         <Subtitle text="Pool Details" />
-        <div className="px-[54px] mb-12">
-          <div className="flex items-center justify-center">
-            {currentPoolData.productInfo.length > 0 &&
-              currentPoolData.productInfo
-                .filter(
-                  (product: IProductTokenForStakeListProps) =>
-                    product.consumable === false
-                )
-                .map(
-                  (product: IProductTokenForStakeListProps, index: number) => (
-                    <React.Fragment key={index}>
-                      <ProductTokenForStakeList
-                        productId={product.productId}
-                        ratio={product.ratio}
-                      />
-                      {currentPoolData.productInfo.filter(
-                        (product: IProductTokenForStakeListProps) =>
-                          product.consumable === true
-                      ).length !== 0 && (
-                        <p className="text-[35px] font-medium -mt-16 px-1">+</p>
-                      )}
-                    </React.Fragment>
-                  )
-                )}
-            {currentPoolData.productInfo.length > 0 &&
-            currentPoolData.productInfo.filter(
-              (product: IProductTokenForStakeListProps) =>
-                product.consumable === true
-            ).length > 0 ? (
-              <React.Fragment>
-                <p className="text-[50px] font-medium -mt-16 px-1">&#40;</p>
-                {currentPoolData.productInfo
+        <div className="mb-12">
+          <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
+            <div className="flex items-center justify-center gap-0 lg:gap-4 xl:gap-0">
+              {currentPoolData.productInfo.length > 0 &&
+                currentPoolData.productInfo
                   .filter(
                     (product: IProductTokenForStakeListProps) =>
-                      product.consumable === true
+                      product.consumable === false
                   )
                   .map(
                     (
@@ -132,65 +106,112 @@ function PoolDetailsPage() {
                         <ProductTokenForStakeList
                           productId={product.productId}
                           ratio={product.ratio}
-                          consumable
                         />
-                        {index !== currentPoolData.productInfo.length - 1 && (
-                          <p className="text-[35px] font-medium -mt-16 px-1">
+                        {currentPoolData.productInfo.filter(
+                          (product: IProductTokenForStakeListProps) =>
+                            product.consumable === true
+                        ).length !== 0 && (
+                          <p className="text-3xl font-medium -mt-16 px-0.5">
                             +
                           </p>
                         )}
                       </React.Fragment>
                     )
                   )}
-                <p className="text-[50px] font-medium -mt-16 px-1">&#41;</p>
-                <p className="text-xl -mt-14 px-1 whitespace-nowrap">
-                  * 1 min{' '}
-                </p>
-              </React.Fragment>
-            ) : null}
-            <p className="text-xl -mt-14 px-1 whitespace-nowrap">=</p>
-            {currentPoolData.rewardTokenInfo.length > 0 &&
-              currentPoolData.rewardTokenInfo.map(
-                (
-                  rewardToken: IRewardTokenInfoForStakeListProps,
-                  index: number
-                ) => (
-                  <React.Fragment key={index}>
-                    <RewardTokenForStakeList
-                      tokenId={rewardToken.tokenId}
-                      tokenAddress={rewardToken.tokenAddress}
-                      ratio={rewardToken.ratio}
-                      isERC1155={rewardToken.isERC1155}
-                    />
-                    {index !== currentPoolData.rewardTokenInfo.length - 1 && (
-                      <p className="text-[35px] font-medium -mt-16 px-1">+</p>
+              {currentPoolData.productInfo.length > 0 &&
+              currentPoolData.productInfo.filter(
+                (product: IProductTokenForStakeListProps) =>
+                  product.consumable === true
+              ).length > 0 ? (
+                <React.Fragment>
+                  <p className="text-3xl font-medium -mt-16 px-0.5 lg:text-5xl">
+                    &#40;
+                  </p>
+                  {currentPoolData.productInfo
+                    .filter(
+                      (product: IProductTokenForStakeListProps) =>
+                        product.consumable === true
+                    )
+                    .map(
+                      (
+                        product: IProductTokenForStakeListProps,
+                        index: number
+                      ) => (
+                        <React.Fragment key={index}>
+                          <ProductTokenForStakeList
+                            productId={product.productId}
+                            ratio={product.ratio}
+                            consumable
+                          />
+                          {index !== currentPoolData.productInfo.length - 1 && (
+                            <p className="text-2xl font-medium -mt-16 px-0 sm:text-3xl sm:px-0.5">
+                              +
+                            </p>
+                          )}
+                        </React.Fragment>
+                      )
                     )}
-                  </React.Fragment>
-                )
-              )}
+                  <p className="text-3xl font-medium -mt-16 px-0.5 lg:text-5xl">
+                    &#41;
+                  </p>
+                  <p className="text-sm -mt-14 px-0.5 whitespace-nowrap lg:text-xl md:text-lg">
+                    * 1min
+                  </p>
+                </React.Fragment>
+              ) : null}
+            </div>
+            <p className="text-xl -mt-14 px-0.5 whitespace-nowrap hidden xl:block">
+              =
+            </p>
+            <p className="text-xl -mt-0 px-0.5 whitespace-nowrap xl:-mt-14 block xl:hidden">
+              <Icon icon="mingcute:arrow-down-fill" width="36" height="36" />
+            </p>
+            <div className="flex justify-center items-center gap-0 lg:gap-4 xl:gap-0">
+              {currentPoolData.rewardTokenInfo.length > 0 &&
+                currentPoolData.rewardTokenInfo.map(
+                  (
+                    rewardToken: IRewardTokenInfoForStakeListProps,
+                    index: number
+                  ) => (
+                    <React.Fragment key={index}>
+                      <RewardTokenForStakeList
+                        tokenId={rewardToken.tokenId}
+                        tokenAddress={rewardToken.tokenAddress}
+                        ratio={rewardToken.ratio}
+                        isERC1155={rewardToken.isERC1155}
+                      />
+                      {index !== currentPoolData.rewardTokenInfo.length - 1 && (
+                        <p className="text-2xl font-medium -mt-16 px-0 -mx-1 2xl:-mx-0 xl:-mx-2 md:-mx-0 sm:text-3xl sm:px-0.5">
+                          +
+                        </p>
+                      )}
+                    </React.Fragment>
+                  )
+                )}
+            </div>
           </div>
-          <div className="flex flex-row justify-between py-9">
-            <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-xl">Instance Id</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
+          <div className="flex flex-row flex-wrap justify-between text-base py-9 gap-2 lg:text-xl md:flex-nowrap sm:text-lg">
+            <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
+              <p className="truncate">Instance Id</p>
+              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
                 {id}
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-xl">Instance Address</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
+            <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
+              <p className="truncate">Instance Address</p>
+              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
                 {truncateAddress(currentPoolData.instanceAddress)}
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-xl">Creator Address</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
+            <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
+              <p className="truncate">Creator Address</p>
+              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
                 {truncateAddress(currentPoolData.creator)}
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-              <p className="text-xl">Remaining Time</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xl font-medium">
+            <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
+              <p className="truncate">Remaining Time</p>
+              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
                 {calcRemainingTime(remainingTime)} days
               </div>
             </div>
@@ -198,29 +219,29 @@ function PoolDetailsPage() {
         </div>
         <div className="bg-gradient-to-br from-[#192F3A] to-[#06C2C4] rounded-2xl p-0.5">
           <div className="bg-gradient-to-r from-[#010c09] to-[#044756] rounded-2xl">
-            <div className="flex flex-row justify-between pt-10 px-[156px]">
-              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-                <p className="text-xl">Total Value Staked</p>
-                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 text-xl font-medium">
+            <div className="flex flex-row flex-wrap justify-between pt-10 px-6 text-base gap-2 lg:text-xl md:flex-nowrap sm:text-lg sm:px-16 md:px-10 xl:px-20 2xl:px-36">
+              <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
+                <p className="truncate">Total Value Staked</p>
+                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium">
                   {totalStakingBaseAmount}
                 </div>
               </div>
-              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-                <p className="text-xl truncate">Remaining Reward Amount</p>
-                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 text-xl font-medium">
+              <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
+                <p className="truncate">Remaining Reward</p>
+                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium">
                   {remainingRewardAmount}
                 </div>
               </div>
-              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-                <p className="text-xl truncate">Number of Stakers</p>
-                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 text-xl font-medium">
+              <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
+                <p className="truncate">Number of Stakers</p>
+                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium">
                   {numberOfStakers}
                 </div>
               </div>
-              <div className="flex flex-col items-center gap-2.5 w-[194px] text-center">
-                <p className="text-xl">Pool State</p>
+              <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
+                <p className="truncate">Pool State</p>
                 <div
-                  className={`w-full bg-transparent border rounded-[15px] px-4 py-3 text-xl font-medium ${
+                  className={`w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium ${
                     poolStatus ? 'text-green-500' : 'text-red-500'
                   }`}
                 >
@@ -228,10 +249,10 @@ function PoolDetailsPage() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-row justify-between gap-7 mt-10 mx-8 h-full">
-              <div className="w-full text-[38px] text-center h-full">
+            <div className="flex flex-col justify-between gap-4 mt-10 mx-2 h-full xl:mx-8 xl:gap-7 lg:flex-row sm:mx-6">
+              <div className="w-full text-4xl text-center h-full">
                 <h2 className="text-3xl font-semibold mb-6">Staking Tokens</h2>
-                <div className="flex flex-col gap-[22px] bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-9 rounded-[20px] mb-10 h-[500px] overflow-y-auto custom-scrollbar">
+                <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-4 rounded-[20px] mb-10 h-[500px] overflow-y-auto custom-scrollbar">
                   {currentPoolData.productInfo.map(
                     (product: IProductTokenForStakeListProps) => (
                       <ProductTokenListForPoolDetail
@@ -244,13 +265,13 @@ function PoolDetailsPage() {
                   )}
                 </div>
               </div>
-              <div className="w-full text-[38px] text-center h-full">
+              <div className="w-full text-4xl text-center h-full">
                 <h2 className="text-3xl font-semibold mb-6">Reward Tokens</h2>
-                <div className="flex flex-col gap-[22px] bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-9 rounded-[20px] mb-10 h-[500px] overflow-y-auto custom-scrollbar">
+                <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-4 rounded-[20px] mb-10 h-[500px] overflow-y-auto custom-scrollbar">
                   {currentPoolData.rewardTokenInfo.map(
-                    (rewardToken: IRewardTokenInfoForStakeListProps) => (
+                    (rewardToken: IRewardTokenInfoForStakeListProps, idx) => (
                       <RewardTokenListForPoolDetail
-                        key={rewardToken.tokenId}
+                        key={idx}
                         tokenAddress={rewardToken.tokenAddress}
                         tokenId={Number(rewardToken.tokenId)}
                         ratio={Number(rewardToken.ratio)}

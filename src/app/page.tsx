@@ -138,7 +138,7 @@ export default function Home() {
           believable.
         </h6>
       </div>
-      <div className="relative w-auto h-full -mx-10 px-32 text-center mb-[178px]">
+      <div className="relative w-auto h-full -mx-6 px-16 text-center mb-[178px] 2xl:px-32 lg:-mx-10 md:px-28 md:-mx-0">
         <Swiper
           navigation={{
             nextEl: '.swiper-button-next',
@@ -152,24 +152,28 @@ export default function Home() {
           loop={true}
           modules={[Autoplay, Navigation]}
           breakpoints={{
-            640: {
+            768: {
               slidesPerView: 2,
               spaceBetween: 20,
             },
             1024: {
+              slidesPerView: 2,
+              spaceBetween: 30,
+            },
+            1280: {
               slidesPerView: 3,
               spaceBetween: 30,
             },
           }}
         >
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="bg-[#010b0c] rounded-xl m-0.5 pt-[80px] flex flex-col justify-center items-center 2xl:pt-[116px]">
+            <div className="flex flex-col justify-center items-center bg-[#010b0c] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8">
               <Image
-                className="w-20 h-[54px] mx-auto mb-[58px]"
+                className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
                 alt="vector"
               />
-              <p className="mx-[48px] text-xl opacity-60">
+              <p className="text-lg opacity-60 lg:text-xl">
                 There are many variations of passages of Lorem Ipsum available,
                 but the majority have suffered alteration in some form.
               </p>
@@ -178,22 +182,22 @@ export default function Home() {
                 src={Avatar1Image}
                 alt="avatar1"
               />
-              <h6 className="mt-4 text-2xl font-medium underline">
+              <h6 className="truncate mt-4 text-xl font-medium underline lg:text-2xl">
                 Cameron Williamson
               </h6>
-              <p className="mt-1.5 mb-[70px] text-base underline text-[#01cacc] 2xl:mb-[90px]">
+              <p className="mt-1.5 text-base underline text-[#01cacc]">
                 FX Trader
               </p>
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="bg-[#010b0c] rounded-xl m-0.5 pt-[80px] flex flex-col justify-center items-center 2xl:pt-[116px]">
+            <div className="flex flex-col justify-center items-center bg-[#010b0c] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8">
               <Image
-                className="w-20 h-[54px] mx-auto mb-[58px]"
+                className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
                 alt="vector"
               />
-              <p className="mx-[48px] text-xl opacity-60">
+              <p className="text-lg opacity-60 lg:text-xl">
                 There are many variations of passages of Lorem Ipsum available,
                 but the majority have suffered alteration in some form.
               </p>
@@ -202,22 +206,22 @@ export default function Home() {
                 src={Avatar2Image}
                 alt="avatar1"
               />
-              <h6 className="mt-4 text-2xl font-medium underline">
+              <h6 className="truncate mt-4 text-xl font-medium underline lg:text-2xl">
                 Cameron Williamson
               </h6>
-              <p className="mt-1.5 mb-[70px] text-base underline text-[#01cacc] 2xl:mb-[90px]">
+              <p className="mt-1.5 text-base underline text-[#01cacc]">
                 FX Trader
               </p>
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="bg-[#010b0c] rounded-xl m-0.5 pt-[80px] flex flex-col justify-center items-center 2xl:pt-[116px]">
+            <div className="flex flex-col justify-center items-center bg-[#010b0c] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8">
               <Image
-                className="w-20 h-[54px] mx-auto mb-[58px]"
+                className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
                 alt="vector"
               />
-              <p className="mx-[48px] text-xl opacity-60">
+              <p className="text-lg opacity-60 lg:text-xl">
                 There are many variations of passages of Lorem Ipsum available,
                 but the majority have suffered alteration in some form.
               </p>
@@ -226,22 +230,22 @@ export default function Home() {
                 src={Avatar3Image}
                 alt="avatar1"
               />
-              <h6 className="mt-4 text-2xl font-medium underline">
+              <h6 className="truncate mt-4 text-xl font-medium underline lg:text-2xl">
                 Bessie Cooper
               </h6>
-              <p className="mt-1.5 mb-[70px] text-base underline text-[#01cacc] 2xl:mb-[90px]">
+              <p className="mt-1.5 text-base underline text-[#01cacc]">
                 Stock Manager
               </p>
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="bg-[#010b0c] rounded-xl m-0.5 pt-[80px] flex flex-col justify-center items-center 2xl:pt-[116px]">
+            <div className="flex flex-col justify-center items-center bg-[#010b0c] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8">
               <Image
-                className="w-20 h-[54px] mx-auto mb-[58px]"
+                className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
                 alt="vector"
               />
-              <p className="mx-[48px] text-xl opacity-60">
+              <p className="text-lg opacity-60 lg:text-xl">
                 There are many variations of passages of Lorem Ipsum available,
                 but the majority have suffered alteration in some form.
               </p>
@@ -250,17 +254,17 @@ export default function Home() {
                 src={Avatar1Image}
                 alt="avatar1"
               />
-              <h6 className="mt-4 text-2xl font-medium underline">
+              <h6 className="truncate mt-4 text-xl font-medium underline lg:text-2xl">
                 Albert Flores
               </h6>
-              <p className="mt-1.5 mb-[70px] text-base underline text-[#01cacc] 2xl:mb-[90px]">
+              <p className="mt-1.5 text-base underline text-[#01cacc]">
                 Crypto Analyst
               </p>
             </div>
           </SwiperSlide>
         </Swiper>
-        <div className="swiper-button-prev absolute -left-10 bg-[#02F5FF]/10 text-white rounded-full p-10"></div>
-        <div className="swiper-button-next bg-[#02F5FF]/10 text-white rounded-full p-10"></div>
+        <div className="swiper-button-prev bg-[#02F5FF]/10 text-white rounded-full p-6 md:p-10"></div>
+        <div className="swiper-button-next bg-[#02F5FF]/10 text-white rounded-full p-6 md:p-10"></div>
       </div>
       <div className="relative flex">
         <Image

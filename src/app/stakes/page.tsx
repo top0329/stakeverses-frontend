@@ -43,12 +43,12 @@ function StakesPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-[203px] text-[62px] text-center font-semibold">
+      <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Stakes
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75">
+      <div className="relative my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 sm:my-12">
         <Subtitle text="Stakes List" />
-        <button
+        {/* <button
           className="absolute top-[50px] right-[96px] flex items-center gap-5 bg-gradient-to-r from-[#192F3A] to-[#06C2C4] text-white text-[22px] font-semibold rounded-[5px] py-2.5 px-[18px]"
           onClick={handleDropdown}
         >
@@ -69,8 +69,8 @@ function StakesPage() {
               <button>Grid View</button>
             </li>
           </ul>
-        </div>
-        <div className="flex flex-col gap-10 mx-[90px] pb-10">
+        </div> */}
+        <div className="flex flex-col gap-10 mx-2 pb-10 2xl:mx-16 md:mx-10">
           {stakingDataList.length > 0 ? (
             stakingDataList.map((stakingData) => (
               <StakingPoolList
@@ -83,9 +83,11 @@ function StakesPage() {
               />
             ))
           ) : (
-            <div className='flex justify-center items-center text-[28px] font-semibold text-center py-10'>There is no Staking Pools</div>
+            <div className="flex justify-center items-center text-[28px] font-semibold text-center py-10">
+              There is no Staking Pools
+            </div>
           )}
-          <div className="text-[38px] text-center font-semibold underline">
+          <div className="text-2xl text-center font-semibold underline lg:text-3xl xl:text-4xl">
             See More
           </div>
         </div>

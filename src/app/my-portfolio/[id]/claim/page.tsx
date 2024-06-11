@@ -52,9 +52,7 @@ function ClaimPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-[203px] text-[62px] text-center font-semibold">
-        Claim
-      </h1>
+      <h1 className="mt-24 text-6xl text-center font-semibold">Claim</h1>
       <div className="flex flex-col mt-24 py-20 px-24 rounded-b-[20px] rounded-tr-[20px] bg-[#040E20]/75 gap-10 mb-20">
         {selectedPoolData?.rewardTokenInfo.map((rewardToken) => (
           <RewardTokenListForClaim

@@ -64,11 +64,11 @@ function RewardTokenForStakeList({
           setImageUri(IronImage);
         }}
       />
-      <div className="text-xl text-right">{name}</div>
+      <div className="text-lg text-right lg:text-xl">{name}</div>
       {/* <div className="w-[120px] text-sm text-center bg-[#141D2D] rounded-xl px-2 py-1 border-2 border-[#2F3A42] break-all">
         {tokenAddress}
-      </div> */}  
-      <div className="flex flex-col text-sm text-center bg-[#141D2D] rounded-xl px-2 py-1 border-2 border-[#2F3A42] break-words">
+      </div> */}
+      <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#141D2D] rounded-xl px-2 py-1 border-2 border-[#2F3A42] break-words sm:text-xs lg:text-sm">
         <span>{tokenAddress.slice(0, 11)}</span>
         <span>{tokenAddress.slice(11, 22)}</span>
         <span>{tokenAddress.slice(22, 33)}</span>

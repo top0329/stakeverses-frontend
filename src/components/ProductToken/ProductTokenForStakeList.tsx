@@ -43,7 +43,7 @@ function ProductTokenForStakeList({
           {Number(ratio)}
         </div>
         <Image
-          className="aspect-square w-16 rounded-full"
+          className="aspect-square min-w-12 max-w-12 rounded-full sm:min-w-16 sm:max-w-16"
           width={64}
           height={64}
           src={imageUri}
@@ -56,9 +56,9 @@ function ProductTokenForStakeList({
         />
       </div>
       <div className="relative flex flex-col items-center text-center pb-6">
-        <div className="text-xl text-right">{name}</div>
+        <div className="text-base text-right lg:text-xl sm:text-lg">{name}</div>
         <div
-          className={`absolute bottom-0 text-[11px] rounded-full bg-[#2F3A42] px-1.5 py-1 w-auto ${
+          className={`absolute bottom-0 text-[10px] rounded-full bg-[#2F3A42] px-1 py-1 w-auto sm:px-1.5 ${
             consumable ? 'block' : 'hidden'
           }`}
         >

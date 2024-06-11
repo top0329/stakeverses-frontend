@@ -62,9 +62,7 @@ function MyPortfolioPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-[203px] text-[62px] text-center font-semibold">
-        My Portfolio
-      </h1>
+      <h1 className="mt-24 text-6xl text-center font-semibold">My Portfolio</h1>
       <div className="flex flex-row text-[38px] font-semibold items-center justify-start mt-24">
         <div
           className={`flex justify-center items-center rounded-tl-[20px] w-[400px] h-[100px] text-center cursor-pointer ${
