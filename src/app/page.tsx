@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 
@@ -29,6 +30,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <React.Fragment>
       <div className="grid grid-cols-12 gap-y-16 md:gap-0">
@@ -61,11 +64,13 @@ export default function Home() {
               className="!w-[120px] md:!w-[180px] xl:!w-[250px] lg:!w-[200px]"
               text="Stake"
               variant="primary"
+              onClick={() => router.push('/stakes')}
             />
             <Button
               className="!w-[180px] xl:!w-[250px] lg:!w-[200px]"
               text="Create Instance"
               variant="primary"
+              onClick={() => router.push('/create-instance/product')}
             />
           </div>
           <div className="flex justify-center gap-4 md:justify-start">

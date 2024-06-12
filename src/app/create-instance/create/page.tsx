@@ -28,7 +28,7 @@ function CreateInstanceCreatePage() {
 
   useEffect(() => {
     if (!isConnected) {
-      router.back();
+      router.push('/my-portfolio');
       showToast('warning', 'Please connect wallet!');
     }
   }, [isConnected, router, showToast]);

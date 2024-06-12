@@ -27,12 +27,12 @@ function CreateInstanceRewardPage() {
   );
   const [baseAmount, setBaseAmount] = useAtom(baseAmountAtom);
 
-  // useEffect(() => {
-  //   if (!isConnected) {
-  //     router.back();
-  //     showToast('warning', 'Please connect wallet!');
-  //   }
-  // }, [isConnected, router, showToast]);
+  useEffect(() => {
+    if (!isConnected) {
+      router.push('/my-portfolio');
+      showToast('warning', 'Please connect wallet!');
+    }
+  }, [isConnected, router, showToast]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;

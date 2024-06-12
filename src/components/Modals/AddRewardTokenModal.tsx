@@ -190,7 +190,7 @@ function AddRewardTokenModal() {
     } else {
       setAddRewardTokenInfo((prevState) => ({
         ...prevState!,
-        [name]: value,
+        [name]: value.trim(),
       }));
     }
   };
