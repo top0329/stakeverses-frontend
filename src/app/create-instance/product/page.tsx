@@ -25,12 +25,12 @@ function CreateInstanceProductPage() {
     isAddProductTokenModalOpenAtom
   );
 
-  useEffect(() => {
-    if (!isConnected) {
-      router.push('/my-portfolio');
-      showToast('warning', 'Please connect wallet!');
-    }
-  }, [isConnected, router, showToast]);
+  // useEffect(() => {
+  //   if (!isConnected) {
+  //     router.push('/stakes');
+  //     showToast('warning', 'Please connect wallet!');
+  //   }
+  // }, [isConnected, router, showToast]);
 
   const handleAddProduct = () => {
     setIsAddProductTokenModalOpen(true);
@@ -44,12 +44,12 @@ function CreateInstanceProductPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-24 text-6xl text-center font-semibold">
+      <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Create Instance
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 min-h-[644px]">
+      <div className="relative px-2 my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 lg:px-4 md:px-8 sm:my-12 sm:px-2">
         <Subtitle text="Token for Stake" />
-        <div className="grid grid-cols-12 min-h-[315px] gap-x-20 gap-y-10 px-10">
+        <div className="grid grid-cols-12 min-h-[315px] gap-x-20 gap-y-10">
           {productTokenInfo.length === 0 ? (
             <p className="col-span-12 text-[42px] text-center font-semibold pt-[120px]">
               No Products have been added yet.

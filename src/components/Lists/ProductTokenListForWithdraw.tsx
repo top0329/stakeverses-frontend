@@ -49,15 +49,24 @@ function ProductTokenListForWithdraw({
         }}
       />
       <div className="flex flex-col text-center">
-        <div className="truncate">Name</div>
+        <div className="truncate">
+          <span className="hidden md:block">Token Name</span>
+          <span className="block md:hidden">Name</span>
+        </div>
         <div className="font-semibold">{name}</div>
       </div>
       <div className="flex flex-col text-center">
-        <div className="truncate">Id</div>
+        <div className="truncate">
+          <span className="hidden md:block">Token Id</span>
+          <span className="block md:hidden">Id</span>
+        </div>
         <div className="font-semibold">{productId}</div>
       </div>
       <div className="flex flex-col text-center">
-        <div className="truncate">Amount</div>
+        <div className="truncate">
+          <span className="hidden md:block">Token Amount</span>
+          <span className="block md:hidden">Amount</span>
+        </div>
         <div className="font-semibold">10</div>
       </div>
       {consumable && (

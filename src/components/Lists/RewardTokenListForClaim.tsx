@@ -23,27 +23,39 @@ function RewardTokenListForClaim({
         <div className="font-semibold">{isERC1155 ? 'ERC1155' : 'ERC20'}</div>
       </div>
       <div className="flex flex-col">
-        <div className="flex flex-row justify-between items-center gap-10 sm:justify-between sm:gap-4">
+        <div className="flex flex-row justify-between items-center gap-10 sm:justify-between sm:gap-4 lg:gap-6 2xl:gap-20">
           <div className="flex flex-col text-center">
-            <div className="truncate tracking-[-1px]">Name</div>
+            <div className="truncate tracking-[-1px]">
+              <span className="hidden md:block">Token Name</span>
+              <span className="block md:hidden">Name</span>
+            </div>
             <div className="font-semibold">Iron</div>
           </div>
           <div className="hidden flex-col text-center gap-2 sm:flex">
-            <div className="truncate tracking-[-1px]">Address</div>
+            <div className="truncate tracking-[-1px]">
+              <span className="hidden md:block">Token Address</span>
+              <span className="block md:hidden">Address</span>
+            </div>
             <div className="text-sm break-all">{tokenAddress}</div>
           </div>
           {isERC1155 && (
             <div className="flex flex-col text-center gap-2">
-              <div className="truncate tracking-[-1px]">Id</div>
+              <div className="truncate tracking-[-1px]">
+                <span className="hidden md:block">Token Id</span>
+                <span className="block md:hidden">Id</span>
+              </div>
               <div className="font-semibold">{tokenId}</div>
             </div>
           )}
           <div className="flex flex-col text-center">
-            <div className="truncate tracking-[-1px]">Amount</div>
+            <div className="truncate tracking-[-1px]">
+              <span className="hidden md:block">Token Amount</span>
+              <span className="block md:hidden">Amount</span>
+            </div>
             <div className="font-semibold">10</div>
           </div>
         </div>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between sm:hidden">
           <div className="flex flex-col text-center gap-2">
             <div className="truncate tracking-[-1px]">Address</div>
             <div className="text-sm break-all">{tokenAddress}</div>

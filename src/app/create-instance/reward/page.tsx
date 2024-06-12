@@ -29,7 +29,7 @@ function CreateInstanceRewardPage() {
 
   useEffect(() => {
     if (!isConnected) {
-      router.push('/my-portfolio');
+      router.push('/stakes');
       showToast('warning', 'Please connect wallet!');
     }
   }, [isConnected, router, showToast]);

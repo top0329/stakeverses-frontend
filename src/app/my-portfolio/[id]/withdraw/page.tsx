@@ -58,7 +58,9 @@ function WithDrawPage() {
       </h1>
       <div className="relative flex flex-col py-10 px-2 rounded-[20px] bg-[#040E20]/75 gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20">
         <div className="flex flex-col gap-10">
-          <div className="text-[38px] font-semibold">Staked Token :</div>
+          <div className="text-xl font-semibold lg:text-4xl md:text-3xl sm:text-2xl">
+            Staked Token :
+          </div>
           {selectedPoolData?.productInfo.map((productToken) => (
             <ProductTokenListForWithdraw
               key={productToken.productId}
@@ -68,7 +70,9 @@ function WithDrawPage() {
           ))}
         </div>
         <div className="flex flex-col gap-10">
-          <div className="text-[38px] font-semibold">Reward Token :</div>
+          <div className="text-xl font-semibold lg:text-4xl md:text-3xl sm:text-2xl">
+            Reward Token :
+          </div>
           {selectedPoolData?.rewardTokenInfo.map((rewardToken) => (
             <RewardTokenListForClaim
               key={rewardToken.tokenId}
