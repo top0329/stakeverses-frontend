@@ -14,8 +14,6 @@ function StakesPage() {
 
   const [stakingDataList, setStakingDataList] = useAtom(stakingDataListAtom);
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   useEffect(() => {
     async function init() {
       const instanceIds = await productStakingInstance.methods
@@ -37,10 +35,6 @@ function StakesPage() {
     }
   }, [productStakingInstance, setStakingDataList]);
 
-  const handleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
-
   return (
     <React.Fragment>
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
@@ -48,28 +42,6 @@ function StakesPage() {
       </h1>
       <div className="relative my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 sm:my-12">
         <Subtitle text="Stakes List" />
-        {/* <button
-          className="absolute top-[50px] right-[96px] flex items-center gap-5 bg-gradient-to-r from-[#192F3A] to-[#06C2C4] text-white text-[22px] font-semibold rounded-[5px] py-2.5 px-[18px]"
-          onClick={handleDropdown}
-        >
-          <span>View</span>
-          <Icon icon="ep:arrow-down-bold" />
-        </button>
-        <div
-          id="dropdown"
-          className={`absolute top-[110px] right-[96px] z-10  bg-[#00242D] divide-y divide-gray-100 rounded-[5px] shadow w-[140px] h-[108px] ${
-            isDropdownOpen ? 'block' : 'hidden'
-          }`}
-        >
-          <ul className="px-2 py-3 text-xl text-center">
-            <li className="bg-gradient-to-br from-[#00B8E2] to-[#00E2B2] py-1.5 px-[15px] rounded-[5px] mb-2">
-              <button>List View</button>
-            </li>
-            <li className="py-1.5 px-[15px] rounded-[5px]">
-              <button>Grid View</button>
-            </li>
-          </ul>
-        </div> */}
         <div className="flex flex-col gap-10 mx-2 pb-10 2xl:mx-16 md:mx-10">
           {stakingDataList.length > 0 ? (
             stakingDataList.map((stakingData) => (

@@ -36,7 +36,7 @@ function ProductTokenListForWithdraw({
   }, [productId]);
 
   return (
-    <div className="relative flex flex-row justify-between items-center text-[28px] bg-[#053F40] rounded-[20px] px-14 py-5">
+    <div className="relative flex flex-row justify-between items-center text-xl bg-[#053F40] rounded-[20px] px-4 py-5 md:px-14 sm:px-8">
       <Image
         className="aspect-square min-w-[90px] rounded-full"
         width={90}
@@ -49,15 +49,15 @@ function ProductTokenListForWithdraw({
         }}
       />
       <div className="flex flex-col text-center">
-        <div className="text-[22px]">Token Name</div>
+        <div className="truncate">Name</div>
         <div className="font-semibold">{name}</div>
       </div>
       <div className="flex flex-col text-center">
-        <div className="text-[22px]">Token Id</div>
+        <div className="truncate">Id</div>
         <div className="font-semibold">{productId}</div>
       </div>
       <div className="flex flex-col text-center">
-        <div className="text-[22px]">Withdraw Amount</div>
+        <div className="truncate">Amount</div>
         <div className="font-semibold">10</div>
       </div>
       {consumable && (
