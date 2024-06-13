@@ -19,7 +19,6 @@ import {
   IRewardTokenInfoForStakeListProps,
 } from '@/types';
 import { currentPoolDataAtom } from '@/jotai/atoms';
-import { truncateAddress } from '@/lib/utils';
 
 const web3 = new Web3(window.ethereum);
 
@@ -190,29 +189,55 @@ function PoolDetailsPage() {
                 )}
             </div>
           </div>
-          <div className="flex flex-row flex-wrap justify-between text-base py-9 gap-2 lg:text-xl md:flex-nowrap sm:text-lg">
-            <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
-              <p className="truncate">Instance Id</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
-                {id}
+          <div className="flex flex-col flex-wrap justify-between items-center text-base py-9 gap-4 lg:text-xl md:flex-nowrap sm:text-lg">
+            <div className="flex justify-between w-full max-w-[450px] gap-4 sm:justify-center sm:max-w-max sm:gap-28">
+              <div className="flex flex-col items-center gap-2.5 text-center w-[194px] md:hidden">
+                <p className="truncate">Instance Id</p>
+                <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
+                  {id}
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-2.5 text-center w-[194px] md:hidden">
+                <p className="truncate">Pool State</p>
+                <div
+                  className={`w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium ${
+                    poolStatus ? 'text-green-500' : 'text-red-500'
+                  }`}
+                >
+                  {poolStatus ? 'Active' : 'Inactive'}
+                </div>
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
-              <p className="truncate">Instance Address</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
-                {truncateAddress(currentPoolData.instanceAddress)}
+            <div className="flex justify-center w-full gap-4 md:justify-between">
+              <div className="hidden flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px] md:flex">
+                <p className="truncate">Instance Id</p>
+                <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
+                  {id}
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-2.5 text-center w-auto">
+                <p className="truncate">Instance Address</p>
+                <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium break-all sm:break-normal">
+                  {currentPoolData.instanceAddress}
+                </div>
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
-              <p className="truncate">Creator Address</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
-                {truncateAddress(currentPoolData.creator)}
+            <div className="flex justify-center w-full gap-4 md:justify-between">
+              <div className="hidden flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px] md:flex">
+                <p className="truncate">Pool State</p>
+                <div
+                  className={`w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium ${
+                    poolStatus ? 'text-green-500' : 'text-red-500'
+                  }`}
+                >
+                  {poolStatus ? 'Active' : 'Inactive'}
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
-              <p className="truncate">Remaining Time</p>
-              <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
-                {calcRemainingTime(remainingTime)} days
+              <div className="flex flex-col items-center gap-2.5 text-center w-auto">
+                <p className="truncate">Creator Address</p>
+                <div className="w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium break-all sm:break-normal">
+                  {currentPoolData.creator}
+                </div>
               </div>
             </div>
           </div>
@@ -239,13 +264,9 @@ function PoolDetailsPage() {
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
-                <p className="truncate">Pool State</p>
-                <div
-                  className={`w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium ${
-                    poolStatus ? 'text-green-500' : 'text-red-500'
-                  }`}
-                >
-                  {poolStatus ? 'Active' : 'Inactive'}
+                <p className="truncate">Remaining Time</p>
+                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium">
+                  {calcRemainingTime(remainingTime)} days
                 </div>
               </div>
             </div>

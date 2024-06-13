@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Address } from 'viem';
 
 import getERC1155Data from '@/lib/getERC1155Data';
-import IronImage from '@/assets/images/iron.svg';
+import DefaultERC20Image from '@/assets/images/erc20.png';
 import getTokenData from '@/lib/getTokenData';
 import { IRewardTokenInfoForStakeListProps } from '@/types';
 
@@ -13,7 +13,7 @@ function RewardTokenForStakeList({
   ratio,
   isERC1155,
 }: IRewardTokenInfoForStakeListProps) {
-  const [imageUri, setImageUri] = useState<string>(IronImage);
+  const [imageUri, setImageUri] = useState<string>('');
   const [name, setName] = useState<string>('');
 
   useEffect(() => {
@@ -50,24 +50,21 @@ function RewardTokenForStakeList({
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="text-[22px] rounded-full border border-white aspect-square min-w-[28px] text-center leading-6">
+      <div className="text-[22px] rounded-full border border-white aspect-square min-w-[28px] text-center leading-6 mb-1">
         {Number(ratio)}
       </div>
       <Image
         className="aspect-square min-w-16 rounded-full"
         width={64}
         height={64}
-        src={imageUri}
+        src={imageUri || DefaultERC20Image.src}
         alt="product"
         unoptimized
         onError={() => {
-          setImageUri(IronImage);
+          setImageUri(DefaultERC20Image.src);
         }}
       />
       <div className="text-lg text-right lg:text-xl">{name}</div>
-      {/* <div className="w-[120px] text-sm text-center bg-[#141D2D] rounded-xl px-2 py-1 border-2 border-[#2F3A42] break-all">
-        {tokenAddress}
-      </div> */}
       <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#141D2D] rounded-xl px-2 py-1 border-2 border-[#2F3A42] break-words sm:text-xs lg:text-sm">
         <span>{tokenAddress.slice(0, 11)}</span>
         <span>{tokenAddress.slice(11, 22)}</span>

@@ -43,7 +43,7 @@ function ProductTokenInfoCard({
 
   return (
     <div className="col-span-12 flex items-center bg-[#053F40] rounded-[20px] px-4 py-8 text-xl md:px-8 xs:col-span-6">
-      <div className="flex flex-col justify-between items-center w-full gap-4 2xl:gap-10 xl:flex-row">
+      <div className="flex flex-col justify-between items-center w-full h-full gap-4 2xl:gap-10 xl:flex-row">
         <div className="flex flex-col items-center gap-1">
           <Image
             className="min-w-[205px] max-h-[205px] aspect-square border border-[#040E20] rounded-full"
@@ -61,7 +61,7 @@ function ProductTokenInfoCard({
         </div>
         <div className="flex flex-col justify-between text-base w-full gap-4 xl:gap-8 md:text-lg">
           <div className="flex flex-row gap-1">
-            <div className="flex flex-row justify-between min-w-[120px]">
+            <div className="flex flex-row justify-between min-w-[106px] md:min-w-[120px]">
               <div className="tracking-[-1px]">Product Name</div>
               <div>:</div>
             </div>
@@ -70,7 +70,7 @@ function ProductTokenInfoCard({
             </div>
           </div>
           <div className="flex flex-row gap-1">
-            <div className="flex flex-row justify-between min-w-[120px]">
+            <div className="flex flex-row justify-between min-w-[106px] md:min-w-[120px]">
               <div className="tracking-[-1px]">Token Id</div>
               <div>:</div>
             </div>
@@ -79,7 +79,7 @@ function ProductTokenInfoCard({
             </div>
           </div>
           <div className="flex flex-row gap-1">
-            <div className="flex flex-row justify-between min-w-[120px]">
+            <div className="flex flex-row justify-between min-w-[106px] md:min-w-[120px]">
               <div className="tracking-[-1px]">Ratio</div>
               <div>:</div>
             </div>

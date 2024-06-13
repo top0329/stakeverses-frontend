@@ -112,14 +112,18 @@ function CreateInstanceCreatePage() {
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-center gap-10 mt-[50px] pb-[38px]">
+        <div className="flex flex-row justify-center gap-4 mt-[50px] pb-[38px] xs:gap-10">
           <Button
-            className="!bg-[#192F3A]"
+            className="!bg-[#192F3A] !w-32 xs:!w-36"
             text="Back"
             variant="outline"
             onClick={() => router.push('/create-instance/reward')}
           />
-          <Button text="Create Instance" onClick={handleCreateInstance} />
+          <Button
+            text="Create Instance"
+            className="!w-[200px] xl:!w-[280px] lg:!w-[220px]"
+            onClick={handleCreateInstance}
+          />
         </div>
       </div>
     </React.Fragment>
