@@ -52,7 +52,7 @@ function RewardTokenListForClaim({
               <span className="hidden md:block">Token Amount</span>
               <span className="block md:hidden">Amount</span>
             </div>
-            <div className="font-semibold">10</div>
+            <div className="font-semibold">{amount}</div>
           </div>
         </div>
         <div className="flex flex-row justify-between sm:hidden">

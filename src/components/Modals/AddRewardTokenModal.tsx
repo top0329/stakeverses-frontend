@@ -280,14 +280,16 @@ function AddRewardTokenModal() {
       ></div>
       <div
         ref={modal}
-        className="z-30 w-[826px] bg-gradient-to-r from-[#010e0c] to-[#05596d] text-white text-center rounded-[20px] border-2 border-white pb-8"
+        className="z-30 w-auto bg-gradient-to-r from-[#010e0c] to-[#05596d] text-white text-center rounded-[20px] border-2 border-white pb-8 lg:w-[826px] md:w-[670px] max-h-[90vh] overflow-auto modal-container"
       >
-        <h2 className="text-[38px] font-bold mt-7 mb-6">Add Reward Token</h2>
+        <h2 className="text-xl font-bold mt-7 mb-6 xl:text-4xl lg:3xl md:text-2xl">
+          Add Reward Token
+        </h2>
         <hr className="opacity-30 border" />
-        <div className="grid grid-cols-12 mx-[47px] mt-12 mb-11 gap-10 text-[22px] font-semibold">
+        <div className="flex flex-col justify-center items-center mx-5 my-8 gap-6 text-lg font-semibold lg:gap-10 lg:mx-[47px] md:flex-row md:items-between md:my-12 md:text-xl">
           {addRewardTokenInfo.imageUri === '' ||
           addRewardTokenInfo.imageUri === undefined ? (
-            <div className="col-span-4 w-[243px] aspect-square bg-slate-600 border border-[#040E20] rounded-full"></div>
+            <div className="min-w-[143px] max-w-[143px] aspect-square bg-slate-600 border border-[#040E20] rounded-full md:max-w-[243px] md:min-w-[243px]"></div>
           ) : (
             <Image
               className="col-span-4 min-w-[243px] aspect-square border border-[#040E20] rounded-full"
@@ -298,8 +300,8 @@ function AddRewardTokenModal() {
               unoptimized
             />
           )}
-          <div className="col-span-8 flex flex-col justify-between gap-3">
-            <div className="flex flex-row justify-center items-center gap-16">
+          <div className="flex flex-col justify-between gap-4 w-full xsgap-2">
+            <div className="flex flex-row justify-center items-center text-base gap-16 sm:text-lg lg:text-xl">
               <div className="flex flex-row items-center gap-4">
                 <input
                   id="erc20"
@@ -308,7 +310,7 @@ function AddRewardTokenModal() {
                   checked={!addRewardTokenInfo.isERC1155}
                   onChange={handleRadioClick}
                 />
-                <label className="text-[23px]">ERC20</label>
+                <label>ERC20</label>
               </div>
               <div className="flex flex-row items-center gap-4">
                 <input
@@ -318,23 +320,23 @@ function AddRewardTokenModal() {
                   checked={addRewardTokenInfo.isERC1155}
                   onChange={handleRadioClick}
                 />
-                <label className="text-[23px]">ERC1155</label>
+                <label>ERC1155</label>
               </div>
             </div>
-            <div className="flex flex-row justify-between items-center">
-              <label className="truncate">Token Name</label>
+            <div className="flex flex-col justify-between items-start w-full xs:flex-row xs:items-center">
+              <label className="truncate tracking-[-1px]">Token Name</label>
               <input
                 id="token-name"
-                className="h-[50px] w-[260px] bg-[#A3A3A3]/50 border border-[#2F3A42] rounded-[15px] px-4 py-2"
+                className="h-[50px] w-full bg-[#A3A3A3]/50 border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
                 disabled
               />
             </div>
-            <div className="flex flex-row justify-between items-center">
-              <label>Token Address</label>
-              <div>
+            <div className="flex flex-col justify-between items-start w-full xs:flex-row xs:items-center">
+              <label className="truncate tracking-[-1px]">Token Address</label>
+              <div className="w-full xs:w-auto">
                 <input
                   id="token-address"
-                  className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
+                  className="h-[50px] w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
                   name="tokenAddress"
                   onChange={handleInputChange}
                   value={addRewardTokenInfo.tokenAddress}
@@ -347,12 +349,12 @@ function AddRewardTokenModal() {
               </div>
             </div>
             {addRewardTokenInfo.isERC1155 && (
-              <div className="flex flex-row justify-between items-center">
-                <label>Token Id</label>
-                <div>
+              <div className="flex flex-col justify-between items-start w-full xs:flex-row xs:items-center">
+                <label className="truncate tracking-[-1px]">Token Id</label>
+                <div className="w-full xs:w-auto">
                   <input
                     id="token-id"
-                    className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
+                    className="h-[50px] w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
                     name="tokenId"
                     onChange={handleInputChange}
                     value={addRewardTokenInfo.tokenId || ''}
@@ -365,12 +367,12 @@ function AddRewardTokenModal() {
                 </div>
               </div>
             )}
-            <div className="flex flex-row justify-between items-center">
-              <label>Ratio</label>
-              <div>
+            <div className="flex flex-col justify-between items-start w-full xs:flex-row xs:items-center">
+              <label className="tracking-[-1px]">Ratio</label>
+              <div className="w-full xs:w-auto">
                 <input
                   id="product-token-ratio"
-                  className="h-[50px] w-[260px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2"
+                  className="h-[50px] w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
                   name="ratio"
                   step={1}
                   min={1}
@@ -386,14 +388,14 @@ function AddRewardTokenModal() {
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-center items-center gap-12">
+        <div className="flex flex-row justify-center items-center gap-6 px-5 md:gap-12">
           <Button
-            className="!w-[200px]"
+            className="!w-[120px] md:!w-[200px] xs:!w-[160px]"
             text="Add"
             onClick={handleAddProductTokenClicked}
           />
           <Button
-            className="bg-[#192F3A] !w-[200px]"
+            className="bg-[#192F3A] !w-[120px] md:!w-[200px] xs:!w-[160px]"
             text="Cancel"
             variant="outline"
             onClick={handleCancelButtonClicked}

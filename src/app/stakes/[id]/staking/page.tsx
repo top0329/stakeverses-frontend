@@ -87,7 +87,9 @@ function StakingPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-24 text-6xl text-center font-semibold">Stakes</h1>
+      <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
+        Stakes
+      </h1>
       <div className="relative grid grid-cols-12 my-24 rounded-[20px] bg-[#040E20]/75 gap-16 px-[72px] pt-[80px] pb-[93px]">
         <div className="col-span-7 bg-[#053F40] rounded-[20px]">
           <h3 className="text-[38px] text-center font-semibold pt-[42px] pb-[32px]">

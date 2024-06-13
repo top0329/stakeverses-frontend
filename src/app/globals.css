@@ -64,6 +64,15 @@ body {
   background-color: #555;
 }
 
+.modal-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+.modal-container {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
 .spinner-wrapper {
   position: fixed;
   top: 0px;

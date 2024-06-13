@@ -91,46 +91,67 @@ function RewardTokenListForCreate({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center py-2 px-8 bg-[#141D2D]/70 rounded-[20px]">
-      <div className="flex flex-row gap-7 w-full">
-        <div className="flex flex-col">
+    <div className="flex flex-col py-2 px-4 bg-[#141D2D]/70 rounded-[20px] text-lg gap-2 2xl:text-xl">
+      <div className="flex flex-row gap-4 lg:gap-2 md:gap-10 sm:gap-2">
+        <div className="flex flex-col justify-center items-center gap-0">
           <Image
             className="min-w-[90px] aspect-square rounded-full"
             src={IronImage}
             alt="bread"
           />
-          <p className="text-[22px]">ERC20</p>
+          <p>{isERC1155 ? 'ERC1155' : 'ERC20'}</p>
         </div>
-        <div className="flex flex-row justify-between items-center w-full">
+        <div className="flex flex-row justify-between items-center w-full gap-1">
           <div className="flex flex-col gap-2">
-            <p className="text-[22px] truncate">Token Name</p>
-            <p className="text-[28px] font-semibold">Iron</p>
+            <p className="truncate tracking-[-1px]">Token Name</p>
+            <p className="font-semibold">Iron</p>
           </div>
-          <div className="flex flex-col gap-3">
-            <p className="text-[22px] truncate">Token Address</p>
-            <p className="text-sm w-48 break-all">
-              {/* {tokenAddress ? truncateAddress(tokenAddress) : ''} */}
-              {tokenAddress}
-            </p>
+          <div className="hidden flex-col gap-1 2xl:flex lg:hidden sm:flex">
+            <p className="truncate tracking-[-1px]">Token Address</p>
+            <p className="text-sm w-48 break-all">{tokenAddress || ''}</p>
           </div>
           {isERC1155 && (
-            <div className="flex flex-col gap-3">
-              <p className="text-[22px] truncate">Token Id</p>
-              <p className="text-[24px] font-semibold">{tokenId}</p>
+            <div className="hidden flex-col gap-2 2xl:flex lg:hidden sm:flex">
+              <p className="truncate tracking-[-1px]">Token Id</p>
+              <p className="font-semibold">{tokenId}</p>
             </div>
           )}
           <div className="flex flex-col gap-2">
-            <p className="text-[22px]">Amount</p>
-            <p className="text-[28px] font-semibold">{amount}</p>
+            <p className="tracking-[-1px]">Amount</p>
+            <p className="font-semibold">{amount}</p>
           </div>
         </div>
       </div>
-      <Button
-        className={`!w-[160px] !h-10 mb-4 ${isApproved && 'opacity-50'}`}
-        text="Approve"
-        onClick={handleApprove}
-        disabled={isApproved}
-      />
+      <div className="flex flex-row justify-between w-full 2xl:hidden lg:flex sm:hidden">
+        <div
+          className={`flex ${
+            isERC1155 ? 'flex-col' : 'flex-row'
+          } justify-between items-center gap-2`}
+        >
+          <p className="truncate min-w-20 tracking-[-1px]">Address: </p>
+          {/* <p className="flex flex-col justify-start items-start text-sm w-auto">
+            <span>{tokenAddress?.slice(0, 21)}</span>
+            <span>{tokenAddress?.slice(21)}</span>
+          </p> */}
+          <p className="flex flex-col justify-start items-start text-sm break-all w-auto">
+            {tokenAddress}
+          </p>
+        </div>
+        {isERC1155 && (
+          <div className="flex flex-col gap-3">
+            <p className="truncate tracking-[-1px]">Token Id</p>
+            <p className="font-semibold">{tokenId}</p>
+          </div>
+        )}
+      </div>
+      <div className='flex justify-end w-full'>
+        <Button
+          className={`!w-[160px] !h-10 mb-4 ${isApproved && 'opacity-50'}`}
+          text="Approve"
+          onClick={handleApprove}
+          disabled={isApproved}
+        />
+      </div>
     </div>
   );
 }

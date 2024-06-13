@@ -42,45 +42,52 @@ function ProductTokenInfoCard({
   };
 
   return (
-    <div className="relative col-span-6 bg-[#053F40] rounded-[20px] px-8 pt-12 pb-5 text-xl">
-      <div className="flex flex-row justify-between gap-10">
-        <Image
-          className="min-w-[205px] max-h-[205px] aspect-square border border-[#040E20] rounded-full"
-          src={imageUri || ''}
-          width={205}
-          height={205}
-          alt="product"
-          unoptimized
-        />
-        <div className="flex flex-col justify-center w-full gap-8">
-          <div className="flex flex-row">
-            <div className="flex flex-row justify-between min-w-[154px]">
-              <div className="font-semibold">Product Name</div>
+    <div className="col-span-12 flex items-center bg-[#053F40] rounded-[20px] px-4 py-8 text-xl md:px-8 xs:col-span-6">
+      <div className="flex flex-col justify-between items-center w-full gap-4 2xl:gap-10 xl:flex-row">
+        <div className="flex flex-col items-center gap-1">
+          <Image
+            className="min-w-[205px] max-h-[205px] aspect-square border border-[#040E20] rounded-full"
+            src={imageUri || ''}
+            width={205}
+            height={205}
+            alt="product"
+            unoptimized
+          />
+          {consumable && (
+            <div className="bg-[#2F3A42] rounded-full text-[11px] text-center py-0 w-[92px]">
+              Consumable
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col justify-between text-base w-full gap-4 xl:gap-8 md:text-lg">
+          <div className="flex flex-row gap-1">
+            <div className="flex flex-row justify-between min-w-[120px]">
+              <div className="tracking-[-1px]">Product Name</div>
               <div>:</div>
             </div>
-            <div className="flex justify-center items-center text-center w-full">
+            <div className="flex justify-center items-center text-center w-full truncate font-semibold">
               {productName}
             </div>
           </div>
-          <div className="flex flex-row">
-            <div className="flex flex-row justify-between min-w-[154px]">
-              <div className="font-semibold">Token Id</div>
+          <div className="flex flex-row gap-1">
+            <div className="flex flex-row justify-between min-w-[120px]">
+              <div className="tracking-[-1px]">Token Id</div>
               <div>:</div>
             </div>
-            <div className="flex justify-center items-center text-center w-full">
+            <div className="flex justify-center items-center text-center w-full font-semibold">
               {productId}
             </div>
           </div>
-          <div className="flex flex-row">
-            <div className="flex flex-row justify-between min-w-[154px]">
-              <div className="font-semibold">Ratio</div>
+          <div className="flex flex-row gap-1">
+            <div className="flex flex-row justify-between min-w-[120px]">
+              <div className="tracking-[-1px]">Ratio</div>
               <div>:</div>
             </div>
-            <div className="flex justify-center items-center text-center w-full">
+            <div className="flex justify-center items-center text-center w-full font-semibold">
               {ratio}
             </div>
           </div>
-          <div className="flex flex-row justify-end gap-4 pt-2.5">
+          <div className="flex flex-row justify-center gap-4 sm:justify-end">
             <Button
               className="!w-[88px] !h-[34px] !text-[18px]"
               text="Edit"
@@ -95,11 +102,6 @@ function ProductTokenInfoCard({
           </div>
         </div>
       </div>
-      {consumable && (
-        <div className="absolute bottom-7 bg-[#2F3A42] rounded-full text-[11px] text-center py-0 w-[92px]">
-          Consumable
-        </div>
-      )}
       <EditProductTokenModal />
     </div>
   );

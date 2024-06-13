@@ -250,8 +250,10 @@ function PoolDetailsPage() {
               </div>
             </div>
             <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 lg:flex-row sm:mx-6">
-              <div className="w-full text-4xl text-center">
-                <h2 className="text-3xl font-semibold mb-6">Staking Tokens</h2>
+              <div className="w-full text-center">
+                <h2 className="text-xl font-semibold mb-6 sm:text-2xl lg:text-3xl">
+                  Staking Tokens
+                </h2>
                 <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-4 rounded-[20px] h-[93%]">
                   {currentPoolData.productInfo.map(
                     (product: IProductTokenForStakeListProps) => (
@@ -265,8 +267,10 @@ function PoolDetailsPage() {
                   )}
                 </div>
               </div>
-              <div className="w-full text-4xl text-center">
-                <h2 className="text-3xl font-semibold mb-6">Reward Tokens</h2>
+              <div className="w-full text-center">
+                <h2 className="text-xl font-semibold mb-6 sm:text-2xl lg:text-3xl">
+                  Reward Tokens
+                </h2>
                 <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-4 rounded-[20px] h-[93%]">
                   {currentPoolData.rewardTokenInfo.map(
                     (rewardToken: IRewardTokenInfoForStakeListProps, idx) => (

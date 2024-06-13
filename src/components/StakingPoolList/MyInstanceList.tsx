@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
@@ -12,8 +15,10 @@ function MyInstanceList({
   productInfo,
   rewardTokenInfo,
 }: IStakingPoolListProps) {
+  const router = useRouter();
+
   return (
-    <div className="bg-[#053F40] px-4 py-9 rounded-[20px] md:px-6">
+    <div className="bg-[#053F40] px-4 py-9 rounded-[20px] md:px-6 lg:px-10">
       <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
         <div className="flex items-center justify-center gap-0 lg:gap-4 xl:gap-0">
           {productInfo
@@ -89,7 +94,7 @@ function MyInstanceList({
           ))}
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center gap-6 pt-8 w-full 2xl:flex-row 2xl:justify-between 2xl:items-end 2xl:gap-4 xl:flex-col xl:items-start lg:flex-row lg:items-end">
+      <div className="flex flex-col justify-between items-center gap-6 pt-8 w-full 2xl:flex-row xl:items-end xl:gap-4 md:flex-row md:items-end lg:items-end">
         <div className="flex flex-col justify-between items-end text-base gap-4 xl:flex-row md:text-lg lg:text-xl">
           <div className="flex flex-row justify-between items-end w-full gap-4">
             <div className="flex flex-col items-center gap-2.5 min-w-[120px] w-auto text-center">
@@ -112,18 +117,14 @@ function MyInstanceList({
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-center w-full gap-14 lg:justify-end lg:gap-5 sm:gap-28">
-          <Button
-            className="!w-[180px] xl:!w-[220px] !h-14"
-            text="Charge Reward"
-            variant="primary"
-          />
-          <Button
-            className="!w-[100px] xl:!w-[140px] !h-14"
-            text="Pause"
-            variant="primary"
-          />
-        </div>
+        <Button
+          className="!w-[280px] xl:!w-[220px] !h-14 sm:!w-[180px]"
+          text="Charge Reward"
+          variant="primary"
+          onClick={() =>
+            router.push(`/my-portfolio/${Number(instanceId)}/charge-reward`)
+          }
+        />
       </div>
     </div>
   );

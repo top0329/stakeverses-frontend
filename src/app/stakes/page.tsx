@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
 
 import Subtitle from '@/components/Subtitle';
@@ -55,7 +54,7 @@ function StakesPage() {
               />
             ))
           ) : (
-            <div className="flex justify-center items-center text-[28px] font-semibold text-center py-10">
+            <div className="flex justify-center items-center text-2xl text-center font-semibold py-[60px] px-8 sm:text-3xl lg:text-4xl sm:px-0">
               There is no Staking Pools
             </div>
           )}

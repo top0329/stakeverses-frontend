@@ -49,13 +49,13 @@ function CreateInstanceRewardPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-24 text-6xl text-center font-semibold">
+      <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Create Instance
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 min-h-[644px]">
+      <div className="relative my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 sm:my-12">
         <Subtitle text="Charge Reward Token" />
-        <div className="flex flex-row justify-end items-center text-[22px] px-10 -mt-10 mb-6">
-          <label className="font-semibold">Enter Base Amount :</label>
+        <div className="flex flex-row justify-center items-center text-lg px-4 -mt-10 mb-6 lg:text-xl md:justify-end md:px-10">
+          <label className="font-semibold truncate">Enter Base Amount :</label>
           <input
             className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed"
             step={1}
@@ -63,16 +63,16 @@ function CreateInstanceRewardPage() {
             value={baseAmount || ''}
           />
         </div>
-        <div className="grid grid-cols-12 min-h-[315px] gap-x-20 gap-y-10 px-10">
+        <div className="grid grid-cols-12 min-h-[300px] gap-x-4 gap-y-4 2xl:gap-x-10 2xl:gap-y-10 md:gap-x-6 md:gap-y-6">
           {rewardTokenInfo.length === 0 ? (
-            <p className="col-span-12 text-[42px] text-center font-semibold pt-[120px]">
+            <p className="col-span-12 text-2xl text-center font-semibold pt-[120px] px-8 sm:text-3xl lg:text-4xl sm:px-0">
               No Reward token added.
             </p>
           ) : (
             <React.Fragment>
-              {rewardTokenInfo.map((rewardTokenInfo) => (
+              {rewardTokenInfo.map((rewardTokenInfo, idx) => (
                 <RewardTokenInfoCard
-                  key={rewardTokenInfo.tokenId}
+                  key={idx}
                   tokenAddress={rewardTokenInfo.tokenAddress}
                   tokenId={rewardTokenInfo.tokenId}
                   ratio={rewardTokenInfo.ratio}
@@ -82,7 +82,7 @@ function CreateInstanceRewardPage() {
             </React.Fragment>
           )}
         </div>
-        <div className="flex flex-row justify-center gap-10 mt-[50px] pb-[38px]">
+        <div className="flex flex-row justify-center gap-4 mt-[50px] pb-[38px] xs:gap-10">
           <Button
             text="Add Reward"
             onClick={() => setIsAddRewardTokenModalOpen(true)}

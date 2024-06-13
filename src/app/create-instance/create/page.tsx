@@ -73,14 +73,16 @@ function CreateInstanceCreatePage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-24 text-6xl text-center font-semibold">
+      <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Create Instance
       </h1>
-      <div className="relative my-24 rounded-[20px] bg-[#040E20]/75 pt-[80px]">
-        <div className="flex flex-row justify-between gap-7 mt-5 mx-8 h-full">
-          <div className="w-full text-[38px] text-center h-full">
-            <h2 className="text-[38px] font-semibold mb-6">Staking Tokens</h2>
-            <div className="flex flex-col gap-[22px] bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-9 rounded-[20px] mb-10 h-[500px] overflow-y-auto custom-scrollbar">
+      <div className="relative my-8 rounded-[20px] bg-[#040E20]/75 pt-8 xl:my-20 lg:my-16 sm:my-12">
+        <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 lg:flex-row sm:mx-6">
+          <div className="w-full text-center">
+            <h2 className="text-xl font-semibold mb-6 sm:text-2xl lg:text-3xl">
+              Staking Tokens
+            </h2>
+            <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-4 rounded-[20px] h-[90%]">
               {productTokenInfo.map((productToken) => (
                 <ProductTokenListForCreate
                   key={productToken.productId}
@@ -92,9 +94,11 @@ function CreateInstanceCreatePage() {
               ))}
             </div>
           </div>
-          <div className="w-full text-[38px] text-center h-full">
-            <h2 className="text-[38px] font-semibold mb-6">Reward Tokens</h2>
-            <div className="flex flex-col gap-[22px] bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-9 rounded-[20px] mb-10 h-[500px] overflow-y-auto custom-scrollbar">
+          <div className="w-full text-center">
+            <h2 className="text-xl font-semibold mb-6 sm:text-2xl lg:text-3xl">
+              Reward Tokens
+            </h2>
+            <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-4 rounded-[20px] h-[90%]">
               {rewardTokenInfo.map((rewardToken, idx) => (
                 <RewardTokenListForCreate
                   key={idx}
