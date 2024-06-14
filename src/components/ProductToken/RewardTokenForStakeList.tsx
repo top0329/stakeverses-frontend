@@ -13,7 +13,7 @@ function RewardTokenForStakeList({
   ratio,
   isERC1155,
 }: IRewardTokenInfoForStakeListProps) {
-  const [imageUri, setImageUri] = useState<string>('');
+  const [imageUri, setImageUri] = useState<string>(DefaultERC20Image.src);
   const [name, setName] = useState<string>('');
 
   useEffect(() => {

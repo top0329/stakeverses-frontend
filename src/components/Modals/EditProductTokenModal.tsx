@@ -32,7 +32,7 @@ function EditProductTokenModal() {
     productId: '',
     ratio: '',
   });
-  const [initialProductId, setInitialProductId] = useState(0);
+  const [initialProductId, setInitialProductId] = useState<number>(0);
 
   const modal = useRef<HTMLDivElement>(null);
 
@@ -284,7 +284,7 @@ function EditProductTokenModal() {
         <div className="flex flex-row justify-center items-center gap-6 px-5 md:gap-12">
           <Button
             className="!w-[120px] md:!w-[200px] xs:!w-[160px]"
-            text="Edit"
+            text="Update"
             onClick={handleEditProductTokenClicked}
           />
           <Button

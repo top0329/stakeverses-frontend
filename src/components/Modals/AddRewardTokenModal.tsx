@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
+import { Address } from 'viem';
 
 import Button from '../Buttons';
 import useToast from '@/hooks/useToast';
+import getERC1155Data from '@/lib/getERC1155Data';
+import getTokenData from '@/lib/getTokenData';
+import DefaultERC20Image from '@/assets/images/erc20.png';
+import DefaultERC1155Image from '@/assets/images/erc1155.png';
 import {
   isAddRewardTokenModalOpenAtom,
   rewardTokenInfoAtom,
@@ -71,110 +76,169 @@ function AddRewardTokenModal() {
   }, [addRewardTokenInfo.ratio]);
 
   useEffect(() => {
-    if (addRewardTokenInfo.isERC1155 === true) {
-      if (
-        rewardTokenInfo
-          .filter((item) => item.isERC1155 === true)
-          .some(
-            (item) =>
-              item.tokenAddress === addRewardTokenInfo.tokenAddress &&
-              item.tokenId === addRewardTokenInfo.tokenId
-          )
-      ) {
-        setError({
-          ...error,
-          tokenId: 'This token has already been added!',
-        });
-      } else if (
-        addRewardTokenInfo.tokenId === undefined ||
-        Number.isNaN(addRewardTokenInfo.tokenId)
-      ) {
-        setAddRewardTokenInfo({
-          ...addRewardTokenInfo,
-          tokenName: '',
-          imageUri: '',
-        });
-        setError({
-          ...error,
-          tokenId: 'Enter the token id!',
-        });
-      } else {
-        setError({
-          ...error,
-          tokenAddress: '',
-          tokenId: '',
-        });
+    async function fetchData() {
+      try {
+        if (addRewardTokenInfo.isERC1155 === true) {
+          const erc1155Data = await getERC1155Data(
+            (addRewardTokenInfo.tokenAddress || '') as Address,
+            Number(addRewardTokenInfo.tokenId)
+          );
+          if (erc1155Data) {
+            const { name, uri } = erc1155Data;
+            setAddRewardTokenInfo({
+              ...addRewardTokenInfo,
+              tokenName: name,
+              imageUri: uri,
+            });
+          }
+          if (
+            rewardTokenInfo
+              .filter((item) => item.isERC1155 === true)
+              .some(
+                (item) =>
+                  item.tokenAddress === addRewardTokenInfo.tokenAddress &&
+                  item.tokenId === addRewardTokenInfo.tokenId
+              )
+          ) {
+            setError({
+              ...error,
+              tokenId: 'This token has already been added!',
+            });
+          } else if (
+            addRewardTokenInfo.tokenId === undefined ||
+            Number.isNaN(addRewardTokenInfo.tokenId)
+          ) {
+            setAddRewardTokenInfo({
+              ...addRewardTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+            setError({
+              ...error,
+              tokenId: 'Enter the token id!',
+            });
+          } else {
+            setError({
+              ...error,
+              tokenAddress: '',
+              tokenId: '',
+            });
+          }
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addRewardTokenInfo.tokenId]);
 
   useEffect(() => {
-    if (addRewardTokenInfo.isERC1155 === true) {
-      if (
-        rewardTokenInfo
-          .filter((item) => item.isERC1155 === true)
-          .some(
-            (item) =>
-              item.tokenAddress === addRewardTokenInfo.tokenAddress &&
-              item.tokenId === addRewardTokenInfo.tokenId
-          )
-      ) {
-        setError({
-          ...error,
-          tokenId: 'This token has already been added!',
-        });
-      } else if (
-        addRewardTokenInfo.tokenAddress === undefined ||
-        addRewardTokenInfo.tokenAddress === ''
-      ) {
-        setError({
-          ...error,
-          tokenAddress: 'Enter the token address!',
-        });
-        setAddRewardTokenInfo({
-          ...addRewardTokenInfo,
-          tokenName: '',
-          imageUri: '',
-        });
-      } else {
-        setError({
-          ...error,
-          tokenAddress: '',
-          tokenId: '',
-        });
+    async function fetchData() {
+      try {
+        if (addRewardTokenInfo.isERC1155 === true) {
+          if (
+            addRewardTokenInfo.tokenAddress !== undefined &&
+            addRewardTokenInfo.tokenAddress !== ''
+          ) {
+            const erc1155Data = await getERC1155Data(
+              (addRewardTokenInfo.tokenAddress || '') as Address,
+              Number(addRewardTokenInfo.tokenId)
+            );
+            if (erc1155Data) {
+              const { name, uri } = erc1155Data;
+              setAddRewardTokenInfo({
+                ...addRewardTokenInfo,
+                tokenName: name,
+                imageUri: uri,
+              });
+            }
+          }
+          if (
+            rewardTokenInfo
+              .filter((item) => item.isERC1155 === true)
+              .some(
+                (item) =>
+                  item.tokenAddress === addRewardTokenInfo.tokenAddress &&
+                  item.tokenId === addRewardTokenInfo.tokenId
+              )
+          ) {
+            setError({
+              ...error,
+              tokenId: 'This token has already been added!',
+            });
+          } else if (
+            addRewardTokenInfo.tokenAddress === undefined ||
+            addRewardTokenInfo.tokenAddress === ''
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'Enter the token address!',
+            });
+            setAddRewardTokenInfo({
+              ...addRewardTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+          } else {
+            setError({
+              ...error,
+              tokenAddress: '',
+              tokenId: '',
+            });
+          }
+        }
+        if (addRewardTokenInfo.isERC1155 === false) {
+          if (
+            addRewardTokenInfo.tokenAddress !== undefined &&
+            addRewardTokenInfo.tokenAddress !== ''
+          ) {
+            const erc20Data = await getTokenData(
+              addRewardTokenInfo.tokenAddress as Address
+            );
+            if (erc20Data) {
+              const _tokenName = erc20Data.tokenName;
+              setAddRewardTokenInfo({
+                ...addRewardTokenInfo,
+                tokenName: _tokenName,
+                imageUri: `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${addRewardTokenInfo.tokenAddress}/logo.png`,
+              });
+            }
+          }
+          if (
+            rewardTokenInfo.some(
+              (item) => item.tokenAddress === addRewardTokenInfo.tokenAddress
+            )
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'This token has already been added!',
+            });
+          } else if (
+            addRewardTokenInfo.tokenAddress === undefined ||
+            addRewardTokenInfo.tokenAddress === ''
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'Enter the token address!',
+            });
+            setAddRewardTokenInfo({
+              ...addRewardTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+          } else {
+            setError({
+              ...error,
+              tokenAddress: '',
+            });
+          }
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
-    if (addRewardTokenInfo.isERC1155 === false) {
-      if (
-        rewardTokenInfo.some(
-          (item) => item.tokenAddress === addRewardTokenInfo.tokenAddress
-        )
-      ) {
-        setError({
-          ...error,
-          tokenAddress: 'This token has already been added!',
-        });
-      } else if (
-        addRewardTokenInfo.tokenAddress === undefined ||
-        addRewardTokenInfo.tokenAddress === ''
-      ) {
-        setError({
-          ...error,
-          tokenAddress: 'Enter the token address!',
-        });
-        setAddRewardTokenInfo({
-          ...addRewardTokenInfo,
-          tokenName: '',
-          imageUri: '',
-        });
-      } else {
-        setError({
-          ...error,
-          tokenAddress: '',
-        });
-      }
-    }
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addRewardTokenInfo.tokenAddress]);
 
@@ -298,6 +362,14 @@ function AddRewardTokenModal() {
               src={addRewardTokenInfo.imageUri}
               alt="reward"
               unoptimized
+              onError={() => {
+                setAddRewardTokenInfo({
+                  ...addRewardTokenInfo,
+                  imageUri: addRewardTokenInfo.isERC1155
+                    ? DefaultERC1155Image.src
+                    : DefaultERC20Image.src,
+                });
+              }}
             />
           )}
           <div className="flex flex-col justify-between gap-4 w-full xsgap-2">
@@ -328,6 +400,7 @@ function AddRewardTokenModal() {
               <input
                 id="token-name"
                 className="h-[50px] w-full bg-[#A3A3A3]/50 border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
+                value={addRewardTokenInfo.tokenName}
                 disabled
               />
             </div>

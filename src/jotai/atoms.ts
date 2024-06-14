@@ -28,6 +28,10 @@ export const selectedProductInfoAtom = atom<IProductTokenInfo>({
   ratio: 0,
   consumable: false,
 });
+export const selectedRewardInfoAtom = atom<IRewardTokenInfo>({
+  tokenId: 0,
+  ratio: 0,
+});
 
 isAddProductTokenModalOpenAtom.debugLabel = 'isAddProductTokenModalOpenAtom';
 isEditProductTokenModalOpenAtom.debugLabel = 'isEditProductTokenModalOpenAtom';
@@ -40,3 +44,4 @@ stakingDataListAtom.debugLabel = 'stakingDataListAtom';
 myStakingDataListAtom.debugLabel = 'myStakingDataListAtom';
 currentPoolDataAtom.debugLabel = 'currentPoolDataAtom';
 selectedProductInfoAtom.debugLabel = 'selectedProductInfoAtom';
+selectedRewardInfoAtom.debugLabel = 'selectedRewardInfoAtom';

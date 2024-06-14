@@ -189,7 +189,7 @@ function PoolDetailsPage() {
                 )}
             </div>
           </div>
-          <div className="flex flex-col flex-wrap justify-between items-center text-base py-9 gap-4 lg:text-xl md:flex-nowrap sm:text-lg">
+          <div className="flex flex-col flex-wrap justify-between items-center text-base px-0 py-9 gap-4 lg:text-xl lg:px-10 xl:px-20 md:flex-nowrap sm:text-lg">
             <div className="flex justify-between w-full max-w-[450px] gap-4 sm:justify-center sm:max-w-max sm:gap-28">
               <div className="flex flex-col items-center gap-2.5 text-center w-[194px] md:hidden">
                 <p className="truncate">Instance Id</p>

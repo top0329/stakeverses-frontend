@@ -114,7 +114,7 @@ function CreateInstanceCreatePage() {
         </div>
         <div className="flex flex-row justify-center gap-4 mt-[50px] pb-[38px] xs:gap-10">
           <Button
-            className="!bg-[#192F3A] !w-32 xs:!w-36"
+            className="!bg-[#192F3A] !w-32 xs:!w-52"
             text="Back"
             variant="outline"
             onClick={() => router.push('/create-instance/reward')}

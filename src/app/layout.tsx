@@ -3,11 +3,9 @@ import { headers } from 'next/headers';
 import { Inter } from 'next/font/google';
 
 import Providers from './providers';
-
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import '@rainbow-me/rainbowkit/styles.css';
-
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -30,7 +28,7 @@ export default function RootLayout({
         className={`${inter.className} overflow-x-hidden`}
         suppressHydrationWarning={true}
       >
-        <Providers>
+        <Providers cookie={cookie}>
           <Header />
           <main className="relative px-[20px] 2xl:px-[130px] xl:px-[100px] lg:px-[70px]">
             {children}

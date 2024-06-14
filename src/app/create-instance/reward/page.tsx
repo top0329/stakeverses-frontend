@@ -63,7 +63,7 @@ function CreateInstanceRewardPage() {
             value={baseAmount || ''}
           />
         </div>
-        <div className="grid grid-cols-12 min-h-[300px] gap-x-4 gap-y-4 2xl:gap-x-10 2xl:gap-y-10 md:gap-x-6 md:gap-y-6">
+        <div className="grid grid-cols-12 min-h-[300px] gap-x-4 gap-y-4 px-4 2xl:px-20 2xl:gap-x-10 2xl:gap-y-10 lg:px-10 md:gap-x-6 md:gap-y-6">
           {rewardTokenInfo.length === 0 ? (
             <p className="col-span-12 text-2xl text-center font-semibold pt-[120px] px-8 sm:text-3xl lg:text-4xl sm:px-0">
               No Reward token added.

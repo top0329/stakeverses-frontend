@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Web3 from 'web3';
 import { useAtom } from 'jotai';
+import { Address } from 'viem';
 
-import IronImage from '@/assets/images/iron.svg';
 import Button from '@/components/Buttons';
 import useWeb3 from '@/hooks/useWeb3';
 import useSpinner from '@/hooks/useSpinner';
 import ERC20Abi from '@/abi/ERC20ABI.json';
+import getTokenData from '@/lib/getTokenData';
+import getERC1155Data from '@/lib/getERC1155Data';
+import DefaultERC20Image from '@/assets/images/erc20.png';
 import { rewardTokenInfoAtom } from '@/jotai/atoms';
 import { IRewardTokenListForCreate } from '@/types';
 
@@ -22,6 +25,39 @@ function RewardTokenListForCreate({
   const { erc20Approve, erc1155Approve, isConnected, library } = useWeb3();
 
   const [rewardTokenInfo, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
+
+  const [imageUri, setImageUri] = useState<string>(DefaultERC20Image.src);
+  const [name, setName] = useState<string>('');
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (isERC1155) {
+          const erc1155Data = await getERC1155Data(
+            (tokenAddress || '') as Address,
+            Number(tokenId)
+          );
+          if (erc1155Data) {
+            const { name, uri } = erc1155Data;
+            setImageUri(uri);
+            setName(name);
+          }
+        } else {
+          const erc20Data = await getTokenData(tokenAddress as Address);
+          if (erc20Data) {
+            const { tokenName } = erc20Data;
+            setImageUri(
+              `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${tokenAddress}/logo.png`
+            );
+            setName(tokenName);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, [isERC1155, tokenId, tokenAddress]);
 
   const handleApprove = async () => {
     const web3 = new Web3(window.ethereum);
@@ -95,16 +131,22 @@ function RewardTokenListForCreate({
       <div className="flex flex-row gap-4 lg:gap-2 md:gap-10 sm:gap-2">
         <div className="flex flex-col justify-center items-center gap-0">
           <Image
-            className="min-w-[90px] aspect-square rounded-full"
-            src={IronImage}
-            alt="bread"
+            className="aspect-square min-w-[90px] rounded-full"
+            width={90}
+            height={90}
+            src={imageUri}
+            alt="reward"
+            unoptimized
+            onError={() => {
+              setImageUri(DefaultERC20Image.src);
+            }}
           />
           <p>{isERC1155 ? 'ERC1155' : 'ERC20'}</p>
         </div>
         <div className="flex flex-row justify-between items-center w-full gap-1">
           <div className="flex flex-col gap-2">
             <p className="truncate tracking-[-1px]">Token Name</p>
-            <p className="font-semibold">Iron</p>
+            <p className="font-semibold">{name}</p>
           </div>
           <div className="hidden flex-col gap-1 2xl:flex lg:hidden sm:flex">
             <p className="truncate tracking-[-1px]">Token Address</p>
@@ -144,7 +186,7 @@ function RewardTokenListForCreate({
           </div>
         )}
       </div>
-      <div className='flex justify-end w-full'>
+      <div className="flex justify-end w-full">
         <Button
           className={`!w-[160px] !h-10 mb-4 ${isApproved && 'opacity-50'}`}
           text="Approve"
