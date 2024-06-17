@@ -56,7 +56,9 @@ function ProductTokenForStakeList({
         />
       </div>
       <div className="relative flex flex-col items-center text-center pb-6">
-        <div className="text-base text-right lg:text-xl sm:text-lg">{name}</div>
+        <div className="text-sm text-right lg:text-xl sm:text-lg xs:text-base">
+          {name}
+        </div>
         <div
           className={`absolute bottom-0 text-[10px] rounded-full bg-[#2F3A42] px-1 py-1 w-auto sm:px-1.5 ${
             consumable ? 'block' : 'hidden'

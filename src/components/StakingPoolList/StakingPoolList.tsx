@@ -62,8 +62,8 @@ function StakingPoolList({
               <p className="text-3xl font-medium -mt-16 px-0.5 lg:text-5xl">
                 &#41;
               </p>
-              <p className="text-sm -mt-14 px-0.5 whitespace-nowrap lg:text-xl md:text-lg">
-                * 1min
+              <p className="text-sm -mt-14 px-0 whitespace-nowrap tracking-[-1px] lg:text-xl md:text-lg xs:tracking-[0px] xs:px-0.5">
+                * 1min  
               </p>
             </React.Fragment>
           ) : null}
@@ -93,24 +93,24 @@ function StakingPoolList({
         </div>
       </div>
       <div className="flex flex-col justify-center items-center gap-4 pt-8 w-full md:flex-row md:justify-between md:items-end">
-        <div className="flex flex-col justify-between items-end text-base gap-4 2xl:gap-14 xl:flex-row md:text-lg lg:text-xl">
+        <div className="flex flex-col justify-between items-center text-base gap-4 2xl:gap-14 xl:flex-row md:text-lg lg:text-xl">
           <div className="flex flex-row justify-between items-end w-full gap-4 2xl:gap-14">
-            <div className="flex flex-col items-center gap-2.5 w-[160px] text-center">
+            <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Instance Id</p>
-              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
+              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
                 {Number(instanceId)}
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[160px] text-center">
+            <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Remaining time</p>
-              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
+              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
                 03:28
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center gap-2.5 w-auto text-center">
             <p className="truncate">Creator Address</p>
-            <div className="flex items-center w-full h-[54px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xs sm:text-sm">
+            <div className="flex items-center w-full h-[34px] bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 text-xs tracking-[-1px] sm:text-sm xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px] xs:tracking-[0px]">
               {creator}
             </div>
           </div>

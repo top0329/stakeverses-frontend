@@ -1,5 +1,6 @@
 import { Address } from 'viem';
 import { ContractRunner } from 'ethers';
+import { ReactNode } from 'react';
 
 export interface IButton {
   text: string;
@@ -76,4 +77,9 @@ export interface IRewardTokenListForCreate {
   amount: number;
   isERC1155?: boolean;
   isApproved?: boolean;
+}
+
+export interface IAccordion {
+  title: string;
+  content: ReactNode;
 }

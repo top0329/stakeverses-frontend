@@ -111,8 +111,16 @@ function Header() {
           className="block mr-6 md:hidden"
           onClick={() => setIsListButtonClicked(!isListButtonClicked)}
         >
-          <hr className="w-7 border" />
-          <hr className="w-7 border mt-2" />
+          <hr
+            className={`w-7 border transition delay-100 ${
+              isListButtonClicked ? 'rotate-45' : ''
+            }`}
+          />
+          <hr
+            className={`w-7 border transition delay-100 ${
+              isListButtonClicked ? '-rotate-45 -mt-0.5' : 'mt-2'
+            }`}
+          />
         </button>
       </div>
       {isListButtonClicked && (

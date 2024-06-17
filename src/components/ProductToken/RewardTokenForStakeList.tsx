@@ -64,8 +64,10 @@ function RewardTokenForStakeList({
           setImageUri(DefaultERC20Image.src);
         }}
       />
-      <div className="text-lg text-right lg:text-xl">{name}</div>
-      <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#141D2D] rounded-xl px-2 py-1 border-2 border-[#2F3A42] break-words sm:text-xs lg:text-sm">
+      <div className="text-sm text-right lg:text-xl sm:text-lg xs:text-base">
+        {name}
+      </div>
+      <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#141D2D] rounded-xl px-1.5 py-1 border-2 border-[#2F3A42] break-words sm:text-xs lg:text-sm xs:px-2">
         <span>{tokenAddress.slice(0, 11)}</span>
         <span>{tokenAddress.slice(11, 22)}</span>
         <span>{tokenAddress.slice(22, 33)}</span>

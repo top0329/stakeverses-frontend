@@ -1,91 +1,98 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import {
-  useConnectModal,
-  useAccountModal,
-  useChainModal,
-} from '@rainbow-me/rainbowkit';
-import { useAccount, useDisconnect } from 'wagmi';
-import Button from '@/components/Buttons';
-import { truncateAddress } from '@/lib/utils';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Image from 'next/image';
 
 export const ConnectWallet = () => {
-  const { isConnecting, address, isConnected, chain } = useAccount();
-
-  const { openConnectModal } = useConnectModal();
-  const { openAccountModal } = useAccountModal();
-  const { openChainModal } = useChainModal();
-  const { disconnect } = useDisconnect();
-
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-  }, []);
-
-  if (!isConnected) {
-    return (
-      <Button
-        text={isConnecting ? 'Connecting...' : 'Connect Wallet'}
-        variant="primary"
-        onClick={async () => {
-          if (isConnected) {
-            disconnect();
-          }
-          openConnectModal?.();
-        }}
-        disabled={isConnecting}
-      />
-    );
-  }
-
-  if (isConnected && !chain) {
-    return (
-      <Button text="Wrong network" variant="primary" onClick={openChainModal} />
-    );
-  }
-
   return (
-    <React.Fragment>
-      {/* <div
-        className="flex justify-center items-center px-4 py-2 border border-neutral-700 bg-neutral-800/30 rounded-xl font-mono font-bold gap-x-2 cursor-pointer"
-        onClick={openChainModal}
-      >
-        <div
-          role="button"
-          tabIndex={1}
-          className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden"
-        >
-          {chain?.hasIcon && (
-            <div
-              className="text-white text-lg"
-              style={{
-                background: chain.iconBackground,
-                width: 24,
-                height: 24,
-                borderRadius: 999,
-                overflow: 'hidden',
-                marginRight: 4,
-              }}
-            >
-              {chain.iconUrl && (
-                <Image
-                  alt={chain.name ?? 'Chain icon'}
-                  src={chain.iconUrl}
-                  style={{ width: 24, height: 24 }}
-                />
-              )}
-            </div>
-          )}
-        </div>
-      </div> */}
-      <Button
-        className=''
-        text={`${truncateAddress(address ?? '')}`}
-        variant="primary"
-        onClick={async () => openAccountModal?.()}
-      />
-    </React.Fragment>
+    <ConnectButton.Custom>
+      {({
+        account,
+        chain,
+        openAccountModal,
+        openChainModal,
+        openConnectModal,
+        authenticationStatus,
+        mounted,
+      }) => {
+        const ready = mounted && authenticationStatus !== 'loading';
+        const connected =
+          ready &&
+          account &&
+          chain &&
+          (!authenticationStatus || authenticationStatus === 'authenticated');
+        return (
+          <div
+            {...(!ready && {
+              'aria-hidden': true,
+              style: {
+                opacity: 0,
+                pointerEvents: 'none',
+                userSelect: 'none',
+              },
+            })}
+          >
+            {(() => {
+              if (!connected) {
+                return (
+                  <button
+                    onClick={openConnectModal}
+                    type="button"
+                    className="btn bg-gradient-to-r from-[#192F3A] to-[#06C2C4]"
+                  >
+                    Connect Wallet
+                  </button>
+                );
+              }
+              if (chain.unsupported) {
+                return (
+                  <button
+                    className="btn bg-gradient-to-r from-[#192F3A] to-[#06C2C4] !text-red-600 truncate"
+                    onClick={openChainModal}
+                    type="button"
+                  >
+                    Wrong network
+                  </button>
+                );
+              }
+              return (
+                <div>
+                  <div className="flex justify-center items-center gap-2 btn bg-gradient-to-r from-[#192F3A] to-[#06C2C4] !w-auto px-4">
+                    <button onClick={openChainModal} type="button">
+                      {chain.hasIcon && (
+                        <div
+                          className="text-white text-lg"
+                          style={{
+                            background: chain.iconBackground,
+                            width: 24,
+                            height: 24,
+                            borderRadius: 999,
+                            overflow: 'hidden',
+                            marginRight: 4,
+                          }}
+                        >
+                          {chain.iconUrl && (
+                            <Image
+                              src={chain.iconUrl}
+                              width={24}
+                              height={24}
+                              alt={chain.name ?? 'Chain icon'}
+                            />
+                          )}
+                        </div>
+                      )}
+                    </button>
+                    <div className='flex items-center cursor-pointer h-full' onClick={openAccountModal}>
+                      {account.address.substring(0, 6)}...
+                      {account.address.substring(account.address.length - 4)}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        );
+      }}
+    </ConnectButton.Custom>
   );
 };

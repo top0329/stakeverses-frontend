@@ -14,11 +14,12 @@ import ProductTokenListForPoolDetail from '@/components/Lists/ProductTokenListFo
 import RewardTokenListForPoolDetail from '@/components/Lists/RewardTokenListForPoolDetail';
 import useWeb3 from '@/hooks/useWeb3';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
-import {
-  IProductTokenForStakeListProps,
-  IRewardTokenInfoForStakeListProps,
-} from '@/types';
 import { currentPoolDataAtom } from '@/jotai/atoms';
+import { calcRemainingTime } from '@/lib/utils';
+  import {
+    IProductTokenForStakeListProps,
+    IRewardTokenInfoForStakeListProps,
+  } from '@/types';
 
 const web3 = new Web3(window.ethereum);
 
@@ -70,15 +71,6 @@ function PoolDetailsPage() {
       fetchPoolData();
     }
   }, [id, productStakingInstance, setCurrentPoolData]);
-
-  const calcRemainingTime = (remainingTime: number) => {
-    const stakingEndTime = remainingTime;
-    const stakingEndTimeInMs = stakingEndTime * 1000;
-    const currentTimeInMs = Date.now();
-    const remainingTimeInMs = stakingEndTimeInMs - currentTimeInMs;
-    const remainingDays = Math.ceil(remainingTimeInMs / (1000 * 60 * 60 * 24));
-    return remainingDays;
-  };
 
   return (
     <React.Fragment>

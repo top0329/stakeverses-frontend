@@ -60,3 +60,13 @@ export async function useEthersSigner({ chainId }: { chainId?: number } = {}) {
   const { data: client } = useConnectorClient<Config>({ chainId });
   return useMemo(() => (client ? clientToSigner(client) : undefined), [client]);
 }
+
+
+export const calcRemainingTime = (remainingTime: number) => {
+  const stakingEndTime = remainingTime;
+  const stakingEndTimeInMs = stakingEndTime * 1000;
+  const currentTimeInMs = Date.now();
+  const remainingTimeInMs = stakingEndTimeInMs - currentTimeInMs;
+  const remainingDays = Math.ceil(remainingTimeInMs / (1000 * 60 * 60 * 24));
+  return remainingDays;
+};
