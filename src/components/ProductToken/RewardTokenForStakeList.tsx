@@ -12,6 +12,7 @@ function RewardTokenForStakeList({
   tokenAddress,
   ratio,
   isERC1155,
+  claimableReward,
 }: IRewardTokenInfoForStakeListProps) {
   const [imageUri, setImageUri] = useState<string>(DefaultERC20Image.src);
   const [name, setName] = useState<string>('');
@@ -46,7 +47,7 @@ function RewardTokenForStakeList({
     if (tokenAddress) {
       fetchData();
     }
-  }, [isERC1155, tokenAddress, tokenId]);
+  }, [isERC1155, tokenAddress, tokenId, claimableReward]);
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -73,6 +74,11 @@ function RewardTokenForStakeList({
         <span>{tokenAddress.slice(22, 33)}</span>
         <span>{tokenAddress.slice(33)}</span>
       </div>
+      {claimableReward !== undefined && (
+        <div className="text-[22px] text-center leading-6">
+          {Number(claimableReward)}
+        </div>
+      )}
     </div>
   );
 }

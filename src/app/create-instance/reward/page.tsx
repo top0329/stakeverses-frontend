@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 import Subtitle from '@/components/Subtitle';
 import Button from '@/components/Buttons';
@@ -54,14 +55,25 @@ function CreateInstanceRewardPage() {
       </h1>
       <div className="relative my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 sm:my-12">
         <Subtitle text="Charge Reward Token" />
-        <div className="flex flex-row justify-center items-center text-lg px-4 -mt-10 mb-6 lg:text-xl md:justify-end md:px-10">
-          <label className="font-semibold truncate">Enter Base Amount :</label>
-          <input
-            className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed"
-            step={1}
-            onChange={handleInputChange}
-            value={baseAmount || ''}
+        <div className="flex flex-row justify-between items-center text-lg px-4 -mt-10 mb-6 lg:text-xl md:px-10">
+          <Icon
+            className="cursor-pointer w-6 h-6 xs:w-8 xs:h-8 lg:w-10 lg:h-10"
+            icon="icon-park-solid:back"
+            width="48"
+            height="48"
+            onClick={() => router.push('/create-instance/product')}
           />
+          <div className="flex flex-row justify-center items-center">
+            <label className="font-semibold truncate tracking-[-1px] xs:tracking-[0px]">
+              Base Amount :
+            </label>
+            <input
+              className="w-20 ml-2 px-2 bg-transparent border-b-2 border-dashed xs:ml-4"
+              step={1}
+              onChange={handleInputChange}
+              value={baseAmount || ''}
+            />
+          </div>
         </div>
         <div className="grid grid-cols-12 min-h-[300px] gap-x-4 gap-y-4 px-4 2xl:px-20 2xl:gap-x-10 2xl:gap-y-10 lg:px-10 md:gap-x-6 md:gap-y-6">
           {rewardTokenInfo.length === 0 ? (
@@ -88,7 +100,7 @@ function CreateInstanceRewardPage() {
             onClick={() => setIsAddRewardTokenModalOpen(true)}
           />
           <Button
-            className="!bg-[#192F3A]"
+            className="!bg-[#192F3A] !w-[140px] xs:!w-[160px] xl:!w-[200px]"
             text="Next"
             variant="outline"
             onClick={handleNext}

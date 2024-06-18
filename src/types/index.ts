@@ -27,6 +27,7 @@ export interface IRewardTokenInfoForStakeListProps {
   tokenAddress: string;
   ratio: string;
   isERC1155?: boolean;
+  claimableReward?: string;
 }
 
 export interface IStakingPoolListProps {

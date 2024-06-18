@@ -1,13 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Web3 from 'web3';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
 import RewardTokenForStakeList from '../ProductToken/RewardTokenForStakeList';
 import Button from '@/components/Buttons';
+import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { IStakingPoolListProps } from '@/types';
+import { calcRemainingTime } from '@/lib/utils';
+
+let web3: any;
+if (typeof window !== 'undefined') {
+  web3 = new Web3(window.ethereum);
+}
 
 function MyInstanceList({
   instanceId,
@@ -17,8 +25,24 @@ function MyInstanceList({
 }: IStakingPoolListProps) {
   const router = useRouter();
 
+  const [remainingTime, setRemainingTime] = useState<number>(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      const productStakingWeb3: any = new web3.eth.Contract(
+        ProductStakingAbi,
+        instanceAddress
+      );
+      const _remainingTime = await productStakingWeb3.methods
+        .devGetStakingEndTime()
+        .call();
+      setRemainingTime(Number(_remainingTime));
+    }
+    fetchData();
+  }, [instanceAddress]);
+
   return (
-    <div className="bg-[#053F40] px-4 py-9 rounded-[20px] md:px-6 lg:px-10">
+    <div className="bg-[#053F40] px-4 py-9 rounded-[20px] md:px-6">
       <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
         <div className="flex items-center justify-center gap-0 lg:gap-4 xl:gap-0">
           {productInfo
@@ -94,31 +118,31 @@ function MyInstanceList({
           ))}
         </div>
       </div>
-      <div className="flex flex-col justify-between items-center gap-6 pt-8 w-full 2xl:flex-row xl:items-end xl:gap-4 md:flex-row md:items-end lg:items-end">
-        <div className="flex flex-col justify-between items-end text-base gap-4 xl:flex-row md:text-lg lg:text-xl">
-          <div className="flex flex-row justify-between items-end w-full gap-4">
-            <div className="flex flex-col items-center gap-2.5 min-w-[120px] w-auto text-center">
+      <div className="flex flex-col justify-center items-center gap-8 pt-8 w-full md:flex-row md:justify-between md:items-end">
+        <div className="flex flex-col justify-between items-center text-base gap-4 2xl:gap-14 xl:flex-row md:text-lg lg:text-xl">
+          <div className="flex flex-row justify-between items-end w-full gap-4 2xl:gap-14">
+            <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Instance Id</p>
-              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
+              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
                 {Number(instanceId)}
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[140px] text-center">
+            <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Remaining time</p>
-              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
-                03:28
+              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
+                {calcRemainingTime(remainingTime)} days
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center gap-2.5 w-auto text-center">
             <p className="truncate">Instance Address</p>
-            <div className="flex items-center w-full h-[54px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xs sm:text-sm">
+            <div className="flex items-center w-full h-[34px] bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 text-xs tracking-[-1px] sm:text-sm xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px] xs:tracking-[0px]">
               {instanceAddress}
             </div>
           </div>
         </div>
         <Button
-          className="!w-[280px] xl:!w-[220px] !h-14 sm:!w-[180px]"
+          className="truncate !w-[280px] xl:!w-[220px] !h-14 sm:!w-[180px]"
           text="Charge Reward"
           variant="primary"
           onClick={() =>

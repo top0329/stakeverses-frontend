@@ -13,7 +13,10 @@ import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myStakingDataListAtom } from '@/jotai/atoms';
 import { IStakingPoolListProps } from '@/types';
 
-const web3 = new Web3(window.ethereum);
+let web3: any;
+if (typeof window !== 'undefined') {
+  web3 = new Web3(window.ethereum);
+}
 
 function ClaimPage() {
   const router = useRouter();
@@ -56,9 +59,9 @@ function ClaimPage() {
         Claim
       </h1>
       <div className="relative flex flex-col py-10 px-2 rounded-[20px] bg-[#040E20]/75 gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20">
-        {selectedPoolData?.rewardTokenInfo.map((rewardToken) => (
+        {selectedPoolData?.rewardTokenInfo.map((rewardToken, idx) => (
           <RewardTokenListForClaim
-            key={rewardToken.tokenId}
+            key={idx}
             tokenId={Number(rewardToken.tokenId)}
             tokenAddress={rewardToken.tokenAddress}
             amount={Number(rewardToken.ratio)}

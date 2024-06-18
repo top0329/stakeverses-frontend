@@ -16,12 +16,15 @@ import useWeb3 from '@/hooks/useWeb3';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { currentPoolDataAtom } from '@/jotai/atoms';
 import { calcRemainingTime } from '@/lib/utils';
-  import {
-    IProductTokenForStakeListProps,
-    IRewardTokenInfoForStakeListProps,
-  } from '@/types';
+import {
+  IProductTokenForStakeListProps,
+  IRewardTokenInfoForStakeListProps,
+} from '@/types';
 
-const web3 = new Web3(window.ethereum);
+let web3: any;
+if (typeof window !== 'undefined') {
+  web3 = new Web3(window.ethereum);
+}
 
 function PoolDetailsPage() {
   const router = useRouter();
@@ -264,10 +267,10 @@ function PoolDetailsPage() {
             </div>
             <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 lg:flex-row sm:mx-6">
               <div className="w-full text-center">
-                <h2 className="text-xl font-semibold mb-6 sm:text-2xl lg:text-3xl">
-                  Staking Tokens
-                </h2>
-                <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-4 rounded-[20px] h-[93%]">
+                <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-4 mt-20 rounded-[20px] h-[calc(100%-80px)]">
+                  <h2 className="text-xl -mt-20 font-semibold mb-6 sm:text-2xl lg:text-3xl">
+                    Staking Tokens
+                  </h2>
                   {currentPoolData.productInfo.map(
                     (product: IProductTokenForStakeListProps) => (
                       <ProductTokenListForPoolDetail
@@ -281,10 +284,10 @@ function PoolDetailsPage() {
                 </div>
               </div>
               <div className="w-full text-center">
-                <h2 className="text-xl font-semibold mb-6 sm:text-2xl lg:text-3xl">
-                  Reward Tokens
-                </h2>
-                <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-4 rounded-[20px] h-[93%]">
+                <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-4 mt-20 rounded-[20px] h-[calc(100%-80px)]">
+                  <h2 className="text-xl -mt-20 font-semibold mb-6 sm:text-2xl lg:text-3xl">
+                    Reward Tokens
+                  </h2>
                   {currentPoolData.rewardTokenInfo.map(
                     (rewardToken: IRewardTokenInfoForStakeListProps, idx) => (
                       <RewardTokenListForPoolDetail

@@ -12,7 +12,10 @@ import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myCreatedInstanceDataListAtom } from '@/jotai/atoms';
 
-const web3 = new Web3(window.ethereum);
+let web3: any;
+if (typeof window !== 'undefined') {
+  web3 = new Web3(window.ethereum);
+}
 
 function ChargeRewardPage() {
   const router = useRouter();

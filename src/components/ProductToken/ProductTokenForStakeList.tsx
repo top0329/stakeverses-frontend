@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Address } from 'viem';
 
+import DefaultERC1155Image from '@/assets/images/erc1155.png';
 import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenForStakeListProps } from '@/types';
-import BreadImage from '@/assets/images/bread.svg';
 
 function ProductTokenForStakeList({
   productId,
   ratio,
   consumable,
 }: IProductTokenForStakeListProps) {
-  const [imageUri, setImageUri] = useState<string>(BreadImage);
+  const [imageUri, setImageUri] = useState<string>(DefaultERC1155Image.src);
   const [name, setName] = useState<string>('');
 
   useEffect(() => {
@@ -50,8 +50,8 @@ function ProductTokenForStakeList({
           alt="product"
           unoptimized
           onError={() => {
-            setImageUri(BreadImage);
-            setName('Bread');
+            setImageUri(DefaultERC1155Image.src);
+            setName('product');
           }}
         />
       </div>

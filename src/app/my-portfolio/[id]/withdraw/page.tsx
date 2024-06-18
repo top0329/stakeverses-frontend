@@ -14,7 +14,10 @@ import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myStakingDataListAtom } from '@/jotai/atoms';
 import { IStakingPoolListProps } from '@/types';
 
-const web3 = new Web3(window.ethereum);
+let web3: any;
+if (typeof window !== 'undefined') {
+  web3 = new Web3(window.ethereum);
+}
 
 function WithDrawPage() {
   const router = useRouter();

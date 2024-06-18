@@ -1,19 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Web3 from 'web3';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
 import RewardTokenForStakeList from '../ProductToken/RewardTokenForStakeList';
 import Button from '@/components/Buttons';
+import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { IStakingPoolListProps } from '@/types';
+import { calcRemainingTime } from '@/lib/utils';
+
+let web3: any;
+if (typeof window !== 'undefined') {
+  web3 = new Web3(window.ethereum);
+}
 
 function StakingPoolList({
   instanceId,
   creator,
+  instanceAddress,
   productInfo,
   rewardTokenInfo,
 }: IStakingPoolListProps) {
   const router = useRouter();
+
+  const [remainingTime, setRemainingTime] = useState<number>(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      const productStakingWeb3: any = new web3.eth.Contract(
+        ProductStakingAbi,
+        instanceAddress
+      );
+      const _remainingTime = await productStakingWeb3.methods
+        .devGetStakingEndTime()
+        .call();
+      setRemainingTime(Number(_remainingTime));
+    }
+    fetchData();
+  }, [instanceAddress]);
 
   return (
     <div className="bg-[#053F40] px-4 py-9 rounded-[20px] md:px-[50px]">
@@ -63,7 +88,7 @@ function StakingPoolList({
                 &#41;
               </p>
               <p className="text-sm -mt-14 px-0 whitespace-nowrap tracking-[-1px] lg:text-xl md:text-lg xs:tracking-[0px] xs:px-0.5">
-                * 1min  
+                * 1min
               </p>
             </React.Fragment>
           ) : null}
@@ -104,7 +129,7 @@ function StakingPoolList({
             <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Remaining time</p>
               <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
-                03:28
+                {calcRemainingTime(remainingTime)} days
               </div>
             </div>
           </div>

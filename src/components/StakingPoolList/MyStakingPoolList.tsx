@@ -1,19 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Web3 from 'web3';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
 import RewardTokenForStakeList from '../ProductToken/RewardTokenForStakeList';
 import Button from '@/components/Buttons';
+import useWeb3 from '@/hooks/useWeb3';
+import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { IStakingPoolListProps } from '@/types';
+import { calcRemainingTime } from '@/lib/utils';
+
+let web3: any;
+if (typeof window !== 'undefined') {
+  web3 = new Web3(window.ethereum);
+}
 
 function MyStakingPoolList({
   instanceId,
   creator,
+  instanceAddress,
   productInfo,
   rewardTokenInfo,
 }: IStakingPoolListProps) {
   const router = useRouter();
+  const { account } = useWeb3();
+
+  const [remainingTime, setRemainingTime] = useState<number>(0);
+  const [claimableReward, setClaimableReward] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const productStakingWeb3: any = new web3.eth.Contract(
+        ProductStakingAbi,
+        instanceAddress
+      );
+      const _remainingTime = await productStakingWeb3.methods
+        .devGetStakingEndTime()
+        .call();
+      const _claimableReward = await productStakingWeb3.methods
+        .getClaimableReward(account)
+        .call();
+      setRemainingTime(Number(_remainingTime));
+      setClaimableReward(_claimableReward);
+    }
+    fetchData();
+  }, [instanceAddress, account]);
 
   return (
     <div className="bg-[#053F40] px-4 py-9 rounded-[20px] md:px-6">
@@ -82,33 +114,36 @@ function MyStakingPoolList({
                 tokenAddress={rewardToken.tokenAddress}
                 ratio={rewardToken.ratio}
                 isERC1155={rewardToken.isERC1155}
+                claimableReward={claimableReward[index]}
               />
               {index !== rewardTokenInfo.length - 1 && (
-                <p className="text-[35px] font-medium -mt-16 px-1">+</p>
+                <p className="text-2xl font-medium -mt-16 px-0 -mx-1 2xl:-mx-0 xl:-mx-2 md:-mx-0 sm:text-3xl sm:px-0.5">
+                  +
+                </p>
               )}
             </React.Fragment>
           ))}
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center gap-6 pt-8 w-full 2xl:flex-row 2xl:justify-between 2xl:items-end 2xl:gap-4 xl:flex-col xl:items-start lg:flex-row lg:items-end">
-        <div className="flex flex-col justify-between items-end text-base gap-4 xl:flex-row md:text-lg lg:text-xl">
-          <div className="flex flex-row justify-between items-end w-full gap-4">
-            <div className="flex flex-col items-center gap-2.5 min-w-[120px] w-auto text-center">
+      <div className="flex flex-col justify-center items-center gap-8 pt-8 w-full md:justify-between md:items-center">
+        <div className="flex flex-col justify-start items-center text-base gap-4 xl:gap-14 lg:flex-row md:text-lg lg:text-xl">
+          <div className="flex flex-row justify-between items-end w-full gap-4 xl:gap-14">
+            <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Instance Id</p>
-              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
+              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
                 {Number(instanceId)}
               </div>
             </div>
-            <div className="flex flex-col items-center gap-2.5 w-[140px] text-center">
+            <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Remaining time</p>
-              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium">
-                03:28
+              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
+                {calcRemainingTime(remainingTime)} days
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center gap-2.5 w-auto text-center">
             <p className="truncate">Creator Address</p>
-            <div className="flex items-center w-full h-[54px] bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-3 text-xs sm:text-sm">
+            <div className="flex items-center w-full h-[34px] bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 text-xs tracking-[-1px] sm:text-sm xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px] xs:tracking-[0px]">
               {creator}
             </div>
           </div>

@@ -3,13 +3,13 @@ import Image from 'next/image';
 import { useAtom } from 'jotai';
 
 import Button from '@/components/Buttons';
+import EditProductTokenModal from '@/components/Modals/EditProductTokenModal';
 import {
   isEditProductTokenModalOpenAtom,
   productTokenInfoAtom,
   selectedProductInfoAtom,
 } from '@/jotai/atoms';
 import { IProductTokenInfo } from '@/types';
-import EditProductTokenModal from '@/components/Modals/EditProductTokenModal';
 
 function ProductTokenInfoCard({
   productName,

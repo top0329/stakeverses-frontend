@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Address } from 'viem';
 
-import BreadImage from '@/assets/images/bread.svg';
+import DefaultERC1155Image from '@/assets/images/erc1155.png';
 import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenInfo } from '@/types';
 
@@ -11,7 +11,7 @@ function ProductTokenListForCreate({
   ratio,
   consumable,
 }: IProductTokenInfo) {
-  const [imageUri, setImageUri] = useState<string>(BreadImage);
+  const [imageUri, setImageUri] = useState<string>(DefaultERC1155Image.src);
   const [name, setName] = useState<string>('');
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function ProductTokenListForCreate({
           alt="product"
           unoptimized
           onError={() => {
-            setImageUri(BreadImage);
+            setImageUri(DefaultERC1155Image.src);
           }}
         />
         <div className="flex flex-row justify-between items-center w-full gap-1">

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Web3 from 'web3';
 import { useAtom } from 'jotai';
@@ -11,9 +11,16 @@ import useWeb3 from '@/hooks/useWeb3';
 import useToast from '@/hooks/useToast';
 import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
-import { currentPoolDataAtom } from '@/jotai/atoms';
+import {
+  currentPoolDataAtom,
+  isProductApproveAvailableAtom,
+  stakeBaseAmountAtom,
+} from '@/jotai/atoms';
 
-const web3 = new Web3(window.ethereum);
+let web3: any;
+if (typeof window !== 'undefined') {
+  web3 = new Web3(window.ethereum);
+}
 
 function StakingPage() {
   const { erc1155Approve, isConnected, library, account } = useWeb3();
@@ -22,18 +29,37 @@ function StakingPage() {
   const router = useRouter();
 
   const [currentPoolData] = useAtom(currentPoolDataAtom);
+  const [stakeBaseAmount, setStakeBaseAmount] =
+    useAtom<number>(stakeBaseAmountAtom);
+  const [isProductApproveAvailable] = useAtom<boolean>(
+    isProductApproveAvailableAtom
+  );
 
-  const [baseAmount, setBaseAmount] = useState<number>(0);
   const [isApproved, setIsApproved] = useState<boolean>(false);
+  const [numberOfStakers, setNumberOfStakers] = useState<number>(0);
 
   const productStakingWeb3: any = new web3.eth.Contract(
     ProductStakingAbi,
     currentPoolData.instanceAddress
   );
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const _numberOfStakers = await productStakingWeb3.methods
+          .getStakers()
+          .call();
+        setNumberOfStakers(Number(_numberOfStakers.length));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  }, [productStakingWeb3.methods]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    setBaseAmount(Number(value));
+    setStakeBaseAmount(Number(value));
   };
 
   const handleApprove = async () => {
@@ -41,8 +67,9 @@ function StakingPage() {
       try {
         openSpin('Staking Product');
         await productStakingWeb3.methods
-          .staking(baseAmount)
+          .staking(stakeBaseAmount)
           .send({ from: account });
+        setStakeBaseAmount(0);
         router.push('/my-portfolio');
       } catch (err) {
         console.log(err);
@@ -90,61 +117,67 @@ function StakingPage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Stakes
       </h1>
-      <div className="relative grid grid-cols-12 my-24 rounded-[20px] bg-[#040E20]/75 gap-16 px-[72px] pt-[80px] pb-[93px]">
-        <div className="col-span-7 bg-[#053F40] rounded-[20px]">
-          <h3 className="text-[38px] text-center font-semibold pt-[42px] pb-[32px]">
+      <div className="relative grid grid-cols-12 my-8 rounded-[20px] bg-[#040E20]/75 gap-2 px-2 pt-[80px] pb-[93px] 2xl:px-16 2xl:gap-14 xl:my-20 xl:gap-12 lg:my-16 lg:gap-8 md:px-10 md:gap-6 sm:my-12 sm:gap-4">
+        <div className="col-span-12 bg-[#053F40] rounded-[20px] lg:col-span-7">
+          <h3 className="text-2xl text-center font-semibold pt-10 pb-8 lg:text-4xl sm:text-3xl">
             Product Token Stake
           </h3>
-          <div className="flex flex-row justify-end items-center text-[22px] px-10 mb-6">
+          <div className="flex flex-row justify-end items-center text-base px-6 mb-6 2xl:px-12 xl:px-8 lg:text-xl sm:text-lg">
             <label className="font-semibold">Enter Base Amount :</label>
             <input
               className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed"
               onChange={handleInputChange}
-              value={baseAmount || ''}
+              value={stakeBaseAmount || ''}
             />
           </div>
-          <div className="flex flex-col gap-7 px-[49px]">
+          <div className="flex flex-col text-center gap-7 px-6 2xl:px-12 xl:px-8">
             {currentPoolData.productInfo.map((product) => (
               <ProductTokenStakeList
                 key={product.productId}
                 productId={Number(product.productId)}
-                amount={Number(product.ratio) * baseAmount}
+                consumable={!!product.consumable}
+                amount={Number(product.ratio) * stakeBaseAmount}
               />
             ))}
             <div className="pb-10 mx-auto">
               <Button
-                className="!w-[160px]"
+                className={`!w-[160px] ${
+                  isProductApproveAvailable ? '' : 'opacity-50'
+                }`}
                 text={isApproved ? 'Stake' : 'Approve'}
                 onClick={handleApprove}
+                disabled={!isProductApproveAvailable}
               />
             </div>
           </div>
         </div>
-        <div className="col-span-5 flex flex-col gap-16 h-full">
+        <div className="col-span-12 flex flex-col h-full gap-2 2xl:gap-14 xl:gap-12 lg:col-span-5 lg:gap-8 md:gap-6 sm:gap-4">
           <div className="bg-[#053F40] rounded-[20px] h-full pb-10">
-            <h3 className="text-[38px] text-center font-semibold pt-[42px] pb-[32px]">
+            <h3 className="text-2xl text-center font-semibold pt-10 pb-8 xl:text-4xl sm:text-3xl">
               Total Value Staked
             </h3>
-            <div className="flex flex-col mx-10 gap-4">
-              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-[28px] font-semibold">
+            <div className="flex flex-col gap-4 px-6 2xl:px-12 xl:px-8">
+              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl">
                 <p>Axe</p>
                 <p>19302</p>
               </div>
-              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-[28px] font-semibold">
+              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl">
                 <p>Axe</p>
                 <p>19302</p>
               </div>
-              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-[28px] font-semibold">
+              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl">
                 <p>Axe</p>
                 <p>19302</p>
               </div>
             </div>
           </div>
           <div className="bg-[#053F40] rounded-[20px] py-10">
-            <h3 className="text-[38px] text-center font-semibold pb-7">
+            <h3 className="text-2xl text-center font-semibold pt-8 pb-8 xl:text-4xl sm:text-3xl">
               Number of Stakers
             </h3>
-            <h3 className="text-[38px] text-center font-semibold">937643</h3>
+            <h3 className="text-2xl text-center font-semibold pb-8 xl:text-4xl sm:text-3xl">
+              {numberOfStakers}
+            </h3>
           </div>
         </div>
       </div>

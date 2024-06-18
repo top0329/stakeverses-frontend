@@ -232,6 +232,7 @@ function AddProductTokenModal() {
                   className="h-[50px] w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
                   name="productId"
                   onChange={handleInputChange}
+                  // onBlur={handleInputChange}
                   value={addProductTokenInfo.productId || ''}
                 />
                 {error.productId && (

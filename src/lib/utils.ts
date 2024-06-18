@@ -68,5 +68,8 @@ export const calcRemainingTime = (remainingTime: number) => {
   const currentTimeInMs = Date.now();
   const remainingTimeInMs = stakingEndTimeInMs - currentTimeInMs;
   const remainingDays = Math.ceil(remainingTimeInMs / (1000 * 60 * 60 * 24));
+  if(remainingDays < 0) {
+    return 0;
+  }
   return remainingDays;
 };
