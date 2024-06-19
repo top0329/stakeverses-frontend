@@ -30,6 +30,7 @@ function ProductTokenInfoCard({
       productId: productId,
       ratio: ratio,
       consumable: consumable,
+      imageUri: imageUri,
     });
   };
 

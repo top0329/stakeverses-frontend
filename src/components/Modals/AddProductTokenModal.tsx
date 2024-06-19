@@ -36,36 +36,36 @@ function AddProductTokenModal() {
 
   const modal = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const erc1155Data = await getERC1155Data(
-          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-          addProductTokenInfo.productId
-        );
-        if (erc1155Data) {
-          const { name, uri } = erc1155Data;
-          setAddProductTokenInfo({
-            ...addProductTokenInfo,
-            productName: name,
-            imageUri: uri,
-          });
-        } else {
-          setAddProductTokenInfo({
-            ...addProductTokenInfo,
-            productName: '',
-            imageUri: '',
-          });
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    if (addProductTokenInfo.productId) {
-      fetchData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addProductTokenInfo.productId]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const erc1155Data = await getERC1155Data(
+  //         (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
+  //         addProductTokenInfo.productId
+  //       );
+  //       if (erc1155Data) {
+  //         const { name, uri } = erc1155Data;
+  //         setAddProductTokenInfo({
+  //           ...addProductTokenInfo,
+  //           productName: name,
+  //           imageUri: uri,
+  //         });
+  //       } else {
+  //         setAddProductTokenInfo({
+  //           ...addProductTokenInfo,
+  //           productName: '',
+  //           imageUri: '',
+  //         });
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   if (addProductTokenInfo.productId) {
+  //     fetchData();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [addProductTokenInfo.productId]);
 
   useEffect(() => {
     if (
@@ -129,6 +129,72 @@ function AddProductTokenModal() {
         ...prevState!,
         [name]: value,
       }));
+    }
+  };
+
+  const handleInputBlur = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value, name } = event.target;
+    const erc1155Data = await getERC1155Data(
+      (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
+      Number(value)
+    );
+    if (erc1155Data) {
+      const { name, uri } = erc1155Data;
+      setAddProductTokenInfo({
+        ...addProductTokenInfo,
+        productName: name,
+        imageUri: uri,
+      });
+    } else {
+      setAddProductTokenInfo({
+        ...addProductTokenInfo,
+        productName: '',
+        imageUri: '',
+      });
+      setError({
+        ...error,
+        [name]: 'Product token not found!',
+      });
+    }
+    if (name === 'ratio' || name === 'productId') {
+      setAddProductTokenInfo((prevState) => ({
+        ...prevState!,
+        [name]: parseInt(value),
+      }));
+    } else {
+      setAddProductTokenInfo((prevState) => ({
+        ...prevState!,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleInputKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      const erc1155Data = await getERC1155Data(
+        (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
+        addProductTokenInfo.productId
+      );
+      if (erc1155Data) {
+        const { name, uri } = erc1155Data;
+        setAddProductTokenInfo({
+          ...addProductTokenInfo,
+          productName: name,
+          imageUri: uri,
+        });
+      } else {
+        setAddProductTokenInfo({
+          ...addProductTokenInfo,
+          productName: '',
+          imageUri: '',
+        });
+        setError({
+          ...error,
+          productId: 'Product token not found!',
+        });
+      }
     }
   };
 
@@ -232,7 +298,8 @@ function AddProductTokenModal() {
                   className="h-[50px] w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
                   name="productId"
                   onChange={handleInputChange}
-                  // onBlur={handleInputChange}
+                  onBlur={handleInputBlur}
+                  onKeyDown={handleInputKeyDown}
                   value={addProductTokenInfo.productId || ''}
                 />
                 {error.productId && (

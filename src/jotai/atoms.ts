@@ -29,6 +29,7 @@ export const selectedProductInfoAtom = atom<IProductTokenInfo>({
   productId: 0,
   ratio: 0,
   consumable: false,
+  imageUri: '',
 });
 export const selectedRewardInfoAtom = atom<IRewardTokenInfo>({
   tokenId: 0,

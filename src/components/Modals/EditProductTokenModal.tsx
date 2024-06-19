@@ -42,41 +42,42 @@ function EditProductTokenModal() {
       productId: selectedProductInfo.productId,
       ratio: selectedProductInfo.ratio,
       consumable: selectedProductInfo.consumable,
+      imageUri: selectedProductInfo.imageUri,
     });
     setInitialProductId(selectedProductInfo.productId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditProductTokenModalOpen]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const erc1155Data = await getERC1155Data(
-          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-          editProductTokenInfo.productId
-        );
-        if (erc1155Data) {
-          const { name, uri } = erc1155Data;
-          setEditProductTokenInfo({
-            ...editProductTokenInfo,
-            productName: name,
-            imageUri: uri,
-          });
-        } else {
-          setEditProductTokenInfo({
-            ...editProductTokenInfo,
-            productName: '',
-            imageUri: '',
-          });
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    if (editProductTokenInfo.productId) {
-      fetchData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editProductTokenInfo.productId]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const erc1155Data = await getERC1155Data(
+  //         (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
+  //         editProductTokenInfo.productId
+  //       );
+  //       if (erc1155Data) {
+  //         const { name, uri } = erc1155Data;
+  //         setEditProductTokenInfo({
+  //           ...editProductTokenInfo,
+  //           productName: name,
+  //           imageUri: uri,
+  //         });
+  //       } else {
+  //         setEditProductTokenInfo({
+  //           ...editProductTokenInfo,
+  //           productName: '',
+  //           imageUri: '',
+  //         });
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   if (editProductTokenInfo.productId) {
+  //     fetchData();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [editProductTokenInfo.productId]);
 
   useEffect(() => {
     if (
@@ -132,6 +133,74 @@ function EditProductTokenModal() {
         ...prevState!,
         [name]: value,
       }));
+    }
+  };
+
+  const handleInputBlur = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value, name } = event.target;
+    const erc1155Data = await getERC1155Data(
+      (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
+      Number(value)
+    );
+    if (erc1155Data) {
+      const { name, uri } = erc1155Data;
+      setEditProductTokenInfo({
+        ...editProductTokenInfo,
+        productName: name,
+        imageUri: uri,
+      });
+    } else {
+      setEditProductTokenInfo({
+        ...editProductTokenInfo,
+        productName: '',
+        imageUri: '',
+      });
+      setError({
+        ...error,
+        [name]: 'Product token not found!',
+      });
+    }
+    if (name === 'ratio' || name === 'productId') {
+      setEditProductTokenInfo((prevState) => ({
+        ...prevState!,
+        [name]: parseInt(value),
+      }));
+    } else {
+      setEditProductTokenInfo((prevState) => ({
+        ...prevState!,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleInputKeyDown = async (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === 'Enter') {
+      const erc1155Data = await getERC1155Data(
+        (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
+        editProductTokenInfo.productId
+      );
+      if (erc1155Data) {
+        const { name, uri } = erc1155Data;
+        setEditProductTokenInfo({
+          ...editProductTokenInfo,
+          productName: name,
+          imageUri: uri,
+        });
+      } else {
+        setEditProductTokenInfo({
+          ...editProductTokenInfo,
+          productName: '',
+          imageUri: '',
+        });
+        setError({
+          ...error,
+          productId: 'Product token not found!',
+        });
+      }
     }
   };
 
@@ -237,6 +306,8 @@ function EditProductTokenModal() {
                   className="h-[50px] w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
                   name="productId"
                   onChange={handleInputChange}
+                  onBlur={handleInputBlur}
+                  onKeyDown={handleInputKeyDown}
                   value={editProductTokenInfo.productId || ''}
                 />
                 {error.productId && (

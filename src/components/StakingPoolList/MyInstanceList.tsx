@@ -118,9 +118,9 @@ function MyInstanceList({
           ))}
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center gap-8 pt-8 w-full md:flex-row md:justify-between md:items-end">
-        <div className="flex flex-col justify-between items-center text-base gap-4 2xl:gap-14 xl:flex-row md:text-lg lg:text-xl">
-          <div className="flex flex-row justify-between items-end w-full gap-4 2xl:gap-14">
+      <div className="flex flex-col justify-center items-center gap-8 pt-8 w-full md:justify-between md:items-center">
+        <div className="flex flex-col justify-start items-center text-base gap-4 xl:gap-14 lg:flex-row md:text-lg lg:text-xl">
+          <div className="flex flex-row justify-between items-end w-full gap-4 xl:gap-14">
             <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Instance Id</p>
               <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
