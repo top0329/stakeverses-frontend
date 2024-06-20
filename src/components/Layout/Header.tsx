@@ -4,11 +4,45 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 
-import { ConnectWallet } from '@/components/Buttons/ConnectButton';
+import ConnectWallet from '@/components/Buttons/ConnectButton';
 import useWeb3 from '@/hooks/useWeb3';
 import useToast from '@/hooks/useToast';
 import StakeversesLogo from '@/assets/images/Stakeverses-logo.png';
+
+const VARIANTS = {
+  top: {
+    open: {
+      rotate: ['0deg', '0deg', '45deg'],
+      top: ['35%', '50%', '50%'],
+    },
+    closed: {
+      rotate: ['45deg', '0deg', '0deg'],
+      top: ['50%', '50%', '35%'],
+    },
+  },
+  middle: {
+    open: {
+      rotate: ['0deg', '0deg', '-45deg'],
+    },
+    closed: {
+      rotate: ['-45deg', '0deg', '0deg'],
+    },
+  },
+  bottom: {
+    open: {
+      rotate: ['0deg', '0deg', '45deg'],
+      bottom: ['35%', '50%', '50%'],
+      left: '50%',
+    },
+    closed: {
+      rotate: ['45deg', '0deg', '0deg'],
+      bottom: ['50%', '50%', '35%'],
+      left: 'calc(50% + 10px)',
+    },
+  },
+};
 
 function Header() {
   const { isConnected } = useWeb3();
@@ -19,6 +53,17 @@ function Header() {
   const [activeItem, setActiveItem] = useState<number>(0);
   const [isListButtonClicked, setIsListButtonClicked] =
     useState<boolean>(false);
+
+  const panelVariants = {
+    open: {
+      width: '100%',
+      height: isConnected ? '354px' : '294px',
+    },
+    closed: {
+      width: '100%',
+      height: '0px',
+    },
+  };
 
   useEffect(() => {
     path.includes('stakes') && setActiveItem(1);
@@ -37,7 +82,7 @@ function Header() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-[68px] h-auto mx-[20px] my-[20px] bg-white bg-opacity-15 rounded-[34px] border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:my-[40px] md:rounded-full">
+    <div className="relative flex flex-col justify-center items-center min-h-[68px] h-auto mx-[20px] my-[20px] bg-white bg-opacity-15 rounded-[34px] border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:my-[40px] md:rounded-full">
       <div className="flex justify-between items-center w-full min-h-[68px]">
         <Link href="/" onClick={() => setActiveItem(0)}>
           <Image
@@ -59,7 +104,11 @@ function Header() {
           >
             Stakes
             {activeItem === 1 && (
-              <div className="border border-[#26DDFF] w-full"></div>
+              <motion.div
+                layoutId="pill-tab"
+                transition={{ type: 'spring', duration: 0.5 }}
+                className="border border-[#26DDFF] w-full"
+              ></motion.div>
             )}
           </Link>
           {isConnected && (
@@ -74,7 +123,11 @@ function Header() {
             >
               My Portfolio
               {activeItem === 2 && (
-                <div className="border border-[#26DDFF] w-full"></div>
+                <motion.div
+                  layoutId="pill-tab"
+                  transition={{ type: 'spring', duration: 0.5 }}
+                  className="border border-[#26DDFF] w-full"
+                ></motion.div>
               )}
             </Link>
           )}
@@ -88,7 +141,11 @@ function Header() {
           >
             Create Instance
             {activeItem === 3 && (
-              <div className="border border-[#26DDFF] w-full"></div>
+              <motion.div
+                layoutId="pill-tab"
+                transition={{ type: 'spring', duration: 0.5 }}
+                className="border border-[#26DDFF] w-full"
+              ></motion.div>
             )}
           </div>
           <Link
@@ -102,98 +159,145 @@ function Header() {
           >
             FAQ
             {activeItem === 4 && (
-              <div className="border border-[#26DDFF] w-full"></div>
+              <motion.div
+                layoutId="pill-tab"
+                transition={{ type: 'spring', duration: 0.5 }}
+                className="border border-[#26DDFF] w-full"
+              ></motion.div>
             )}
           </Link>
           <ConnectWallet />
         </div>
-        <button
-          className="block mr-6 md:hidden"
-          onClick={() => setIsListButtonClicked(!isListButtonClicked)}
+        <MotionConfig
+          transition={{
+            duration: 0.5,
+            ease: 'easeInOut',
+          }}
         >
-          <hr
-            className={`w-7 border transition delay-100 ${
-              isListButtonClicked ? 'rotate-45' : ''
-            }`}
-          />
-          <hr
-            className={`w-7 border transition delay-100 ${
-              isListButtonClicked ? '-rotate-45 -mt-0.5' : 'mt-2'
-            }`}
-          />
-        </button>
-      </div>
-      {isListButtonClicked && (
-        <div className="flex flex-col justify-start items-start px-6 py-8 text-lg w-full h-full gap-8">
-          <Link
-            className={`truncate cursor-pointer ${
-              activeItem === 1
-                ? 'font-semibold text-[#26DDFF] space-y-0.5'
-                : 'font-medium'
-            }`}
-            href="/stakes"
-            onClick={() => {
-              setActiveItem(1);
-              setIsListButtonClicked(false);
-            }}
+          <motion.button
+            initial={false}
+            animate={isListButtonClicked ? 'open' : 'closed'}
+            className="relative h-[70px] w-10 block mr-6 md:hidden"
+            onClick={() => setIsListButtonClicked(!isListButtonClicked)}
           >
-            Stakes
-            {activeItem === 1 && (
-              <div className="border border-[#26DDFF] w-full"></div>
-            )}
-          </Link>
-          {isConnected && (
+            <motion.span
+              variants={VARIANTS.top}
+              className="absolute h-1 w-10 rounded-full bg-white"
+              style={{ y: '-50%', left: '50%', x: '-50%', top: '35%' }}
+            />
+            <motion.span
+              variants={VARIANTS.middle}
+              className="absolute h-1 w-10 rounded-full bg-white"
+              style={{ left: '50%', x: '-50%', top: '50%', y: '-50%' }}
+            />
+            <motion.span
+              variants={VARIANTS.bottom}
+              className="absolute h-1 w-5 rounded-full bg-white"
+              style={{
+                x: '-50%',
+                y: '50%',
+                bottom: '35%',
+                left: 'calc(50% + 10px)',
+              }}
+            />
+          </motion.button>
+        </MotionConfig>
+      </div>
+      <AnimatePresence>
+        {isListButtonClicked && (
+          <motion.div
+            variants={panelVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            className="flex flex-col justify-start items-start px-6 text-lg w-full h-full gap-8"
+          >
             <Link
-              className={`truncate cursor-pointer ${
-                activeItem === 2
+              className={`truncate cursor-pointer pt-8 ${
+                activeItem === 1
                   ? 'font-semibold text-[#26DDFF] space-y-0.5'
                   : 'font-medium'
               }`}
-              href="/my-portfolio"
+              href="/stakes"
               onClick={() => {
-                setActiveItem(2);
+                setActiveItem(1);
                 setIsListButtonClicked(false);
               }}
             >
-              My Portfolio
-              {activeItem === 2 && (
-                <div className="border border-[#26DDFF] w-full"></div>
+              Stakes
+              {activeItem === 1 && (
+                <motion.div
+                  layoutId="pill-tab"
+                  transition={{ type: 'spring', duration: 0.5 }}
+                  className="border border-[#26DDFF] w-full"
+                ></motion.div>
               )}
             </Link>
-          )}
-          <div
-            className={`truncate cursor-pointer ${
-              activeItem === 3
-                ? 'font-semibold text-[#26DDFF] space-y-0.5'
-                : 'font-medium'
-            }`}
-            onClick={handleCreateInstance}
-          >
-            Create Instance
-            {activeItem === 3 && (
-              <div className="border border-[#26DDFF] w-full"></div>
+            {isConnected && (
+              <Link
+                className={`truncate cursor-pointer ${
+                  activeItem === 2
+                    ? 'font-semibold text-[#26DDFF] space-y-0.5'
+                    : 'font-medium'
+                }`}
+                href="/my-portfolio"
+                onClick={() => {
+                  setActiveItem(2);
+                  setIsListButtonClicked(false);
+                }}
+              >
+                My Portfolio
+                {activeItem === 2 && (
+                  <motion.div
+                    layoutId="pill-tab"
+                    transition={{ type: 'spring', duration: 0.5 }}
+                    className="border border-[#26DDFF] w-full"
+                  ></motion.div>
+                )}
+              </Link>
             )}
-          </div>
-          <Link
-            className={`truncate cursor-pointer ${
-              activeItem === 4
-                ? 'font-semibold text-[#26DDFF] space-y-0.5'
-                : 'font-medium'
-            }`}
-            href="/faq"
-            onClick={() => {
-              setActiveItem(4);
-              setIsListButtonClicked(false);
-            }}
-          >
-            FAQ
-            {activeItem === 4 && (
-              <div className="border border-[#26DDFF] w-full"></div>
-            )}
-          </Link>
-          <ConnectWallet />
-        </div>
-      )}
+            <div
+              className={`truncate cursor-pointer ${
+                activeItem === 3
+                  ? 'font-semibold text-[#26DDFF] space-y-0.5'
+                  : 'font-medium'
+              }`}
+              onClick={handleCreateInstance}
+            >
+              Create Instance
+              {activeItem === 3 && (
+                <motion.div
+                  layoutId="pill-tab"
+                  transition={{ type: 'spring', duration: 0.5 }}
+                  className="border border-[#26DDFF] w-full"
+                ></motion.div>
+              )}
+            </div>
+            <Link
+              className={`truncate cursor-pointer ${
+                activeItem === 4
+                  ? 'font-semibold text-[#26DDFF] space-y-0.5'
+                  : 'font-medium'
+              }`}
+              href="/faq"
+              onClick={() => {
+                setActiveItem(4);
+                setIsListButtonClicked(false);
+              }}
+            >
+              FAQ
+              {activeItem === 4 && (
+                <motion.div
+                  layoutId="pill-tab"
+                  transition={{ type: 'spring', duration: 0.5 }}
+                  className="border border-[#26DDFF] w-full"
+                ></motion.div>
+              )}
+            </Link>
+            <ConnectWallet />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

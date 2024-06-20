@@ -70,6 +70,7 @@ export type Web3ContextType = {
     spender: string,
     approved: boolean
   ) => any;
+  web3: any;
 };
 
 export interface IRewardTokenListForCreate {

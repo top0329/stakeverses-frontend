@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import Web3 from 'web3';
 import { useAtom } from 'jotai';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
@@ -21,15 +20,10 @@ import {
   IRewardTokenInfoForStakeListProps,
 } from '@/types';
 
-let web3: any;
-if (typeof window !== 'undefined') {
-  web3 = new Web3(window.ethereum);
-}
-
 function PoolDetailsPage() {
   const router = useRouter();
   const { id } = useParams();
-  const { productStakingInstance } = useWeb3();
+  const { productStakingInstance, web3 } = useWeb3();
 
   const [currentPoolData, setCurrentPoolData] = useAtom(currentPoolDataAtom);
 
@@ -73,7 +67,7 @@ function PoolDetailsPage() {
     if (Object.keys(productStakingInstance).length > 0) {
       fetchPoolData();
     }
-  }, [id, productStakingInstance, setCurrentPoolData]);
+  }, [id, productStakingInstance, setCurrentPoolData, web3.eth.Contract]);
 
   return (
     <React.Fragment>

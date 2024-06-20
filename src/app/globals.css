@@ -12,23 +12,22 @@ body {
   }
 
   .btn {
-    @apply h-[50px] w-[160px] font-mono font-semibold text-white text-lg rounded-full border-2 border-white lg:h-[60px] lg:w-[200px] lg:text-xl xl:h-[70px] xl:w-[251px] xl:text-2xl;
+    @apply h-[50px] w-[160px] font-mono font-semibold text-white text-lg rounded-full border-2 border-white lg:h-[60px] lg:w-[200px] lg:text-xl xl:h-[70px] xl:w-[250px] xl:text-2xl;
   }
 
   .swiper-button-next::after {
     --swiper-navigation-size: 20px;
-    @apply text-white font-bold
+    @apply text-white font-bold;
   }
 
   .swiper-button-prev::after {
     --swiper-navigation-size: 20px;
-    @apply text-white font-bold
+    @apply text-white font-bold;
   }
 }
 
 ::-webkit-scrollbar {
   width: 8px;
-
 }
 
 ::-webkit-scrollbar-track {
@@ -100,7 +99,7 @@ body {
 
 .loader:before,
 .loader:after {
-  content: "";
+  content: '';
   position: absolute;
   border-radius: 50%;
   animation: pulsOut 1.8s ease-in-out infinite;
@@ -134,7 +133,6 @@ body {
 }
 
 @keyframes pulsOut {
-
   0%,
   50% {
     box-shadow: 0 0 0 0 #fff;

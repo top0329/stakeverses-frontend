@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import Web3 from 'web3';
 import { useAtom } from 'jotai';
 
 import Button from '@/components/Buttons';
@@ -13,15 +12,10 @@ import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myStakingDataListAtom } from '@/jotai/atoms';
 import { IStakingPoolListProps } from '@/types';
 
-let web3: any;
-if (typeof window !== 'undefined') {
-  web3 = new Web3(window.ethereum);
-}
-
 function ClaimPage() {
   const router = useRouter();
   const { id } = useParams();
-  const { account } = useWeb3();
+  const { account, web3 } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
 
   const [myStakingDataList] = useAtom(myStakingDataListAtom);

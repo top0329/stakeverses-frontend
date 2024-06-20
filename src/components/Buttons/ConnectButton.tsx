@@ -3,7 +3,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
 
-export const ConnectWallet = () => {
+export default function ConnectWallet() {
   return (
     <ConnectButton.Custom>
       {({
@@ -38,7 +38,7 @@ export const ConnectWallet = () => {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="btn bg-gradient-to-r from-[#192F3A] to-[#06C2C4]"
+                    className="btn !w-[180px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] lg:!w-[200px] xl:!w-[250px]"
                   >
                     Connect Wallet
                   </button>
@@ -82,7 +82,10 @@ export const ConnectWallet = () => {
                         </div>
                       )}
                     </button>
-                    <div className='flex items-center cursor-pointer h-full' onClick={openAccountModal}>
+                    <div
+                      className="flex items-center cursor-pointer h-full"
+                      onClick={openAccountModal}
+                    >
                       {account.address.substring(0, 6)}...
                       {account.address.substring(account.address.length - 4)}
                     </div>
@@ -95,4 +98,4 @@ export const ConnectWallet = () => {
       }}
     </ConnectButton.Custom>
   );
-};
+}

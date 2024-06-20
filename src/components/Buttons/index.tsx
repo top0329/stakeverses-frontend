@@ -25,7 +25,7 @@ const Button: FC<IButton> = ({
 const buttonClasses: Array<IButtonClass> = [
   {
     name: 'primary',
-    style: 'bg-gradient-to-r from-[#192F3A] to-[#06C2C4]',
+    style: 'bg-gradient-to-r from-[#192F3A] to-[#06C2C4] hover:from-[#192F3A] hover:to-[#192F3A]',
   },
   {
     name: 'outline',

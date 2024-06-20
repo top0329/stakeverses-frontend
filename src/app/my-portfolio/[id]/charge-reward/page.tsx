@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import Web3 from 'web3';
 import { useAtom } from 'jotai';
 
 import Button from '@/components/Buttons';
@@ -12,15 +11,10 @@ import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myCreatedInstanceDataListAtom } from '@/jotai/atoms';
 
-let web3: any;
-if (typeof window !== 'undefined') {
-  web3 = new Web3(window.ethereum);
-}
-
 function ChargeRewardPage() {
   const router = useRouter();
   const { id } = useParams();
-  const { account } = useWeb3();
+  const { account, web3 } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
 
   const [myCreatedInstanceDataList] = useAtom(myCreatedInstanceDataListAtom);

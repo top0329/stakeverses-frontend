@@ -19,6 +19,8 @@ import erc1155Abi from '@/abi/ERC1155ABI.json';
 
 declare let window: any;
 
+let web3: any;
+
 const Web3Context = createContext<Web3ContextType | null>(null);
 
 export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
@@ -29,7 +31,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const defaultProvider = new ethers.JsonRpcProvider(
     process.env.NEXT_PUBLIC_DEFAULTRPC
   );
-  const web3 = new Web3(window?.ethereum);
 
   const [provider, setProvider] = useState<ContractRunner>(defaultProvider);
   const [productStakingInstance, setProductStakingInstance] =
@@ -37,6 +38,9 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
 
   const init = useCallback(async () => {
     try {
+      if (typeof window !== 'undefined') {
+        web3 = new Web3(window.ethereum);
+      }
       if (!isConnected || !ethersProvider) {
         console.log('Not connected wallet');
       } else {
@@ -72,7 +76,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         console.log(err);
       }
     },
-    [address, web3.eth]
+    [address]
   );
 
   const erc1155Approve = useCallback(
@@ -90,7 +94,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         console.log(err);
       }
     },
-    [address, web3.eth]
+    [address]
   );
 
   const value = useMemo(
@@ -102,6 +106,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       productStakingInstance,
       erc20Approve,
       erc1155Approve,
+      web3,
     }),
     [
       address,

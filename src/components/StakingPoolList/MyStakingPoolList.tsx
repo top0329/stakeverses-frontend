@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Web3 from 'web3';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 import ProductTokenForStakeList from '@/components/ProductToken/ProductTokenForStakeList';
@@ -11,11 +10,6 @@ import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { IStakingPoolListProps } from '@/types';
 import { calcRemainingTime } from '@/lib/utils';
 
-let web3: any;
-if (typeof window !== 'undefined') {
-  web3 = new Web3(window.ethereum);
-}
-
 function MyStakingPoolList({
   instanceId,
   creator,
@@ -24,7 +18,7 @@ function MyStakingPoolList({
   rewardTokenInfo,
 }: IStakingPoolListProps) {
   const router = useRouter();
-  const { account } = useWeb3();
+  const { account, web3 } = useWeb3();
 
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [claimableReward, setClaimableReward] = useState<string[]>([]);
@@ -45,7 +39,7 @@ function MyStakingPoolList({
       setClaimableReward(_claimableReward);
     }
     fetchData();
-  }, [instanceAddress, account]);
+  }, [instanceAddress, account, web3.eth.Contract]);
 
   return (
     <div className="bg-[#053F40] px-4 py-9 rounded-[20px] md:px-6">

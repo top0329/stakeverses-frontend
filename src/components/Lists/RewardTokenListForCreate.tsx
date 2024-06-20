@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Web3 from 'web3';
 import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
@@ -22,7 +21,7 @@ function RewardTokenListForCreate({
   isApproved,
 }: IRewardTokenListForCreate) {
   const { openSpin, closeSpin } = useSpinner();
-  const { erc20Approve, erc1155Approve, isConnected, library } = useWeb3();
+  const { erc20Approve, erc1155Approve, isConnected, library, web3 } = useWeb3();
 
   const [rewardTokenInfo, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
 
@@ -60,7 +59,6 @@ function RewardTokenListForCreate({
   }, [isERC1155, tokenId, tokenAddress]);
 
   const handleApprove = async () => {
-    const web3 = new Web3(window.ethereum);
     try {
       if (isConnected && library) {
         openSpin('Approving');
