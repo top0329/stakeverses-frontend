@@ -6,20 +6,25 @@ import {
   sepolia,
   bscTestnet,
   polygon,
-  polygonMumbai,
   bsc,
+  polygonAmoy,
 } from 'wagmi/chains';
 import { Chain, getDefaultConfig } from '@rainbow-me/rainbowkit';
 
+import PolygonIcon from '@/assets/images/polygon-icon.png';
+
 const projectId = '3070123cded233b935f75e5531756a6a';
 
-const supportedChains: Chain[] = [
+const supportedChains: readonly [Chain, ...Chain[]] = [
   mainnet,
   sepolia,
   bsc,
   bscTestnet,
   polygon,
-  polygonMumbai,
+  {
+    ...polygonAmoy,
+    iconUrl: PolygonIcon.src,
+  },
 ];
 
 export const config = getDefaultConfig({

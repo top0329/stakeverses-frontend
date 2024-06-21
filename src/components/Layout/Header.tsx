@@ -10,6 +10,7 @@ import ConnectWallet from '@/components/Buttons/ConnectButton';
 import useWeb3 from '@/hooks/useWeb3';
 import useToast from '@/hooks/useToast';
 import StakeversesLogo from '@/assets/images/Stakeverses-logo.png';
+import { ThemeModeToggler } from '../Buttons/ThemeModeToggler';
 
 const VARIANTS = {
   top: {
@@ -82,7 +83,7 @@ function Header() {
   };
 
   return (
-    <div className="relative flex flex-col justify-center items-center min-h-[68px] h-auto mx-[20px] my-[20px] bg-white bg-opacity-15 rounded-[34px] border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:my-[40px] md:rounded-full">
+    <div className="relative flex flex-col justify-center items-center min-h-[68px] h-auto mx-[20px] my-[20px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] bg-opacity-15 rounded-[34px] border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:my-[40px] md:rounded-full dark:bg-gradient-to-r dark:from-[#2a2c30] dark:to-[#2a2c30] dark:bg-opacity-15">
       <div className="flex justify-between items-center w-full min-h-[68px]">
         <Link href="/" onClick={() => setActiveItem(0)}>
           <Image
@@ -166,6 +167,7 @@ function Header() {
               ></motion.div>
             )}
           </Link>
+          <ThemeModeToggler />
           <ConnectWallet />
         </div>
         <MotionConfig
@@ -174,33 +176,36 @@ function Header() {
             ease: 'easeInOut',
           }}
         >
-          <motion.button
-            initial={false}
-            animate={isListButtonClicked ? 'open' : 'closed'}
-            className="relative h-[70px] w-10 block mr-6 md:hidden"
-            onClick={() => setIsListButtonClicked(!isListButtonClicked)}
-          >
-            <motion.span
-              variants={VARIANTS.top}
-              className="absolute h-1 w-10 rounded-full bg-white"
-              style={{ y: '-50%', left: '50%', x: '-50%', top: '35%' }}
-            />
-            <motion.span
-              variants={VARIANTS.middle}
-              className="absolute h-1 w-10 rounded-full bg-white"
-              style={{ left: '50%', x: '-50%', top: '50%', y: '-50%' }}
-            />
-            <motion.span
-              variants={VARIANTS.bottom}
-              className="absolute h-1 w-5 rounded-full bg-white"
-              style={{
-                x: '-50%',
-                y: '50%',
-                bottom: '35%',
-                left: 'calc(50% + 10px)',
-              }}
-            />
-          </motion.button>
+          <div className="flex flex-row gap-4 md:hidden">
+            <ThemeModeToggler />
+            <motion.button
+              initial={false}
+              animate={isListButtonClicked ? 'open' : 'closed'}
+              className="relative h-[70px] w-10 mr-6"
+              onClick={() => setIsListButtonClicked(!isListButtonClicked)}
+            >
+              <motion.span
+                variants={VARIANTS.top}
+                className="absolute h-1 w-10 rounded-full bg-white"
+                style={{ y: '-50%', left: '50%', x: '-50%', top: '35%' }}
+              />
+              <motion.span
+                variants={VARIANTS.middle}
+                className="absolute h-1 w-10 rounded-full bg-white"
+                style={{ left: '50%', x: '-50%', top: '50%', y: '-50%' }}
+              />
+              <motion.span
+                variants={VARIANTS.bottom}
+                className="absolute h-1 w-5 rounded-full bg-white"
+                style={{
+                  x: '-50%',
+                  y: '50%',
+                  bottom: '35%',
+                  left: 'calc(50% + 10px)',
+                }}
+              />
+            </motion.button>
+          </div>
         </MotionConfig>
       </div>
       <AnimatePresence>

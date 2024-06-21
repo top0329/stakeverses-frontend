@@ -3,16 +3,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Icon } from '@iconify/react/dist/iconify.js';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 
 import Button from '@/components/Buttons';
 import HeroImage from '@/assets/images/hero.svg';
-import DiscordIcon from '@/assets/images/discord.svg';
-import TwitterIcon from '@/assets/images/twitter.svg';
-import TelegramIcon from '@/assets/images/telegram.svg';
-import OpenseaIcon from '@/assets/images/opensea.svg';
-import WhitepaperIcon from '@/assets/images/whitepaper.svg';
 import LandingImages from '@/assets/images/landing-images.svg';
 import EllipseImage from '@/assets/images/ellipse.svg';
 import PurpleJewelImage from '@/assets/images/purple-jewel.svg';
@@ -63,7 +59,7 @@ export default function Home() {
             <Button
               className="!w-[120px] md:!w-[180px] xl:!w-[250px] lg:!w-[200px]"
               text="Stake"
-              variant="primary"
+              variant="outline"
               onClick={() => router.push('/stakes')}
             />
             <Button
@@ -74,30 +70,29 @@ export default function Home() {
             />
           </div>
           <div className="flex justify-center gap-4 md:justify-start">
-            <Image
-              className="cursor-pointer"
-              src={DiscordIcon}
-              alt="discord-icon"
+            <Icon
+              className="p-1.5 rounded-full border-2 border-black cursor-pointer dark:border-[#00cfc9]"
+              icon="bxl:discord-alt"
+              width="54"
+              height="54"
             />
-            <Image
-              className="cursor-pointer"
-              src={TwitterIcon}
-              alt="twitter-icon"
+            <Icon
+              className="p-1.5 rounded-full border-2 border-black cursor-pointer dark:border-cyan"
+              icon="uil:twitter"
+              width="54"
+              height="54"
             />
-            <Image
-              className="cursor-pointer"
-              src={TelegramIcon}
-              alt="telegram-icon"
+            <Icon
+              className="p-1.5 rounded-full border-2 border-black cursor-pointer dark:border-cyan"
+              icon="ri:telegram-2-fill"
+              width="54"
+              height="54"
             />
-            <Image
-              className="cursor-pointer"
-              src={OpenseaIcon}
-              alt="opensea-icon"
-            />
-            <Image
-              className="cursor-pointer"
-              src={WhitepaperIcon}
-              alt="whitepaper-icon"
+            <Icon
+              className="p-2.5 rounded-full border-2 border-black cursor-pointer dark:border-cyan"
+              icon="fa:book"
+              width="54"
+              height="54"
             />
           </div>
         </div>
@@ -172,7 +167,7 @@ export default function Home() {
           }}
         >
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="flex flex-col justify-center items-center bg-[#010b0c] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8">
+            <div className="flex flex-col justify-center items-center bg-[#dcf5eb] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
               <Image
                 className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
@@ -196,7 +191,7 @@ export default function Home() {
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="flex flex-col justify-center items-center bg-[#010b0c] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8">
+            <div className="flex flex-col justify-center items-center bg-[#dcf5eb] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
               <Image
                 className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
@@ -220,7 +215,7 @@ export default function Home() {
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="flex flex-col justify-center items-center bg-[#010b0c] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8">
+            <div className="flex flex-col justify-center items-center bg-[#dcf5eb] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
               <Image
                 className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
@@ -244,7 +239,7 @@ export default function Home() {
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="flex flex-col justify-center items-center bg-[#010b0c] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8">
+            <div className="flex flex-col justify-center items-center bg-[#dcf5eb] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
               <Image
                 className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
@@ -268,17 +263,17 @@ export default function Home() {
             </div>
           </SwiperSlide>
         </Swiper>
-        <div className="swiper-button-prev bg-[#02F5FF]/10 text-white rounded-full p-6 md:p-10"></div>
-        <div className="swiper-button-next bg-[#02F5FF]/10 text-white rounded-full p-6 md:p-10"></div>
+        <div className="swiper-button-prev bg-[#055f76] rounded-full p-6 md:p-10 dark:bg-[#02F5FF]/10 dark:text-white"></div>
+        <div className="swiper-button-next bg-[#055f76] rounded-full p-6 md:p-10 dark:bg-[#02F5FF]/10 dark:text-white"></div>
       </div>
       <div className="relative flex">
         <Image
-          className="absolute z-10 -ml-[130px] w-[400px] -top-[300px] md:w-[600px] md:-top-[450px]"
+          className="absolute z-10 -ml-[130px] w-[400px] -top-[300px] md:w-[469px] md:-top-[350px] rotate-[-42.61deg]"
           src={SwordImage}
           alt="sword"
         />
         <Image
-          className="absolute z-10 right-0 w-[200px] md:w-[400px] -mr-[130px] -top-[250px] md:-top-[400px]"
+          className="absolute z-10 right-0 w-[200px] md:w-[400px] -mr-[130px] -top-[250px] md:-top-[350px]"
           src={GoldImage}
           alt="gold"
         />

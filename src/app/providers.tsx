@@ -1,5 +1,6 @@
 'use client';
 
+import { ThemeProvider } from 'next-themes';
 import { WagmiProvider, cookieToInitialState } from 'wagmi';
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -22,29 +23,31 @@ export default function Providers({ children, cookie }: Props) {
   const initialState = cookieToInitialState(config, cookie);
 
   return (
-    <StoreProvider>
-      <WagmiProvider config={config} initialState={initialState}>
-        <QueryClientProvider client={queryClient}>
-          <RainbowKitProvider
-            theme={darkTheme({
-              accentColor: '#0E76FD',
-              accentColorForeground: 'white',
-              borderRadius: 'large',
-              fontStack: 'system',
-              overlayBlur: 'small',
-            })}
-          >
-            <ToastProvider>
-              <SpinnerProvider>
-                <Web3Provider>
-                  <DevTools store={store} />
-                  {children}
-                </Web3Provider>
-              </SpinnerProvider>
-            </ToastProvider>
-          </RainbowKitProvider>
-        </QueryClientProvider>
-      </WagmiProvider>
-    </StoreProvider>
+    <ThemeProvider attribute="class" enableSystem={true}>
+      <StoreProvider>
+        <WagmiProvider config={config} initialState={initialState}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider
+              theme={darkTheme({
+                accentColor: '#0E76FD',
+                accentColorForeground: 'white',
+                borderRadius: 'large',
+                fontStack: 'system',
+                overlayBlur: 'small',
+              })}
+            >
+              <ToastProvider>
+                <SpinnerProvider>
+                  <Web3Provider>
+                    <DevTools store={store} />
+                    {children}
+                  </Web3Provider>
+                </SpinnerProvider>
+              </ToastProvider>
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </StoreProvider>
+    </ThemeProvider>
   );
 }

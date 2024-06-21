@@ -24,7 +24,7 @@ function Footer() {
   };
 
   return (
-    <div className="relative h-[700px] px-[20px] bg-gradient-footer text-base xl:px-[100px] 2xl:px-[136px] xl:text-lg xl:h-[477px] lg:h-[450px] md:px-[70px] md:h-[600px]">
+    <div className="relative h-[700px] px-[20px] bg-gradient-to-tr from-[#09B0B3] to-[#055F76] text-base xl:px-[100px] 2xl:px-[136px] xl:text-lg xl:h-[477px] lg:h-[450px] md:px-[70px] md:h-[600px] dark:bg-gradient-footer">
       <div className="grid grid-cols-12 gap-6 xl:gap-10 2xl:gap-16">
         <div className="grid col-span-12 gap-y-10 lg:col-span-3 lg:gap-y-20">
           <Link className="mt-9" href="/">

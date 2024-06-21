@@ -29,7 +29,7 @@ const buttonClasses: Array<IButtonClass> = [
   },
   {
     name: 'outline',
-    style: 'bg-transparent',
+    style: 'bg-transparent !text-black !border-black dark:!text-white dark:!border-white',
   },
 ];
 

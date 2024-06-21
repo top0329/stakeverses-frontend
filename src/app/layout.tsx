@@ -23,14 +23,11 @@ export default function RootLayout({
   const cookie = headers().get('cookie');
 
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} overflow-x-hidden`}
-        suppressHydrationWarning={true}
-      >
+    <html lang="en" suppressHydrationWarning={true}>
+      <body className={`${inter.className} overflow-x-hidden`}>
         <Providers cookie={cookie}>
           <Header />
-          <main className="relative px-[20px] 2xl:px-[130px] xl:px-[100px] lg:px-[70px]">
+          <main className="relative px-[20px] 2xl:px-[130px] xl:px-[100px] lg:px-[70px] text-black dark:text-white">
             {children}
           </main>
           <Footer />

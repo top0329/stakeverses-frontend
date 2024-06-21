@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -6,6 +6,7 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: ['class', '.dark'],
   theme: {
     screens: {
       xs: '460px',
@@ -19,6 +20,9 @@ const config: Config = {
       backgroundImage: {
         'gradient-footer':
           'linear-gradient(174.95deg, rgba(1, 12, 9, 0.5) 40.28%, #00B6E4 264.05%, #055F76 264.05%)',
+      },
+      colors: {
+        'cyan': '#00cfc9',
       },
     },
   },

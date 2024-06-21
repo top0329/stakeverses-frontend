@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gradient-to-r from-[#000309] to-[#000D0D] text-white;
+  @apply bg-gradient-to-r from-[#DCF5EB] to-[#DCF5EB] text-white dark:bg-gradient-to-r dark:from-[#000309] dark:to-[#000D0D];
 }
 
 @layer utilities {
@@ -17,12 +17,12 @@ body {
 
   .swiper-button-next::after {
     --swiper-navigation-size: 20px;
-    @apply text-white font-bold;
+    @apply text-cyan font-bold dark:text-white;
   }
 
   .swiper-button-prev::after {
     --swiper-navigation-size: 20px;
-    @apply text-white font-bold;
+    @apply text-cyan font-bold dark:text-white;
   }
 }
 
