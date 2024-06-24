@@ -7,7 +7,7 @@ function FAQPage() {
       <h1 className="mt-16 mb-10 text-3xl text-center font-semibold lg:mt-24 lg:mb-[60px] lg:text-4xl xl:text-5xl 2xl:text-6xl">
         FAQ
       </h1>
-      <ul className="bg-[#011e25] mb-20 px-4 py-10 rounded-[20px] xl:px-24 lg:px-16 md:px-12 sm:px-8 sm:py-14 md:py-16 xl:py-20">
+      <ul className="bg-[#267053] mb-20 px-4 py-10 text-white rounded-[20px] xl:px-24 lg:px-16 md:px-12 sm:px-8 sm:py-14 md:py-16 xl:py-20 dark:bg-[#011e25]">
         <li>
           <Accordion
             title="What is Stakeverses?"

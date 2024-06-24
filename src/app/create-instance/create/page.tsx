@@ -76,7 +76,7 @@ function CreateInstanceCreatePage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Create Instance
       </h1>
-      <div className="relative my-8 rounded-[20px] bg-[#040E20]/75 pt-8 xl:my-20 lg:my-16 sm:my-12">
+      <div className="relative my-8 rounded-[20px] bg-[#a0d8c2] text-white pt-8 xl:my-20 lg:my-16 sm:my-12 dark:bg-[#040E20]/75">
         <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 lg:flex-row sm:mx-6">
           <div className="w-full text-center">
             <h2 className="text-xl font-semibold mb-6 sm:text-2xl lg:text-3xl">
@@ -114,7 +114,7 @@ function CreateInstanceCreatePage() {
         </div>
         <div className="flex flex-row justify-center gap-4 mt-[50px] pb-[38px] xs:gap-10">
           <Button
-            className="!bg-[#192F3A] !w-32 xs:!w-52"
+            className="!bg-[#192F3A] !text-white !border-white !w-32 xs:!w-52"
             text="Back"
             variant="outline"
             onClick={() => router.push('/create-instance/reward')}

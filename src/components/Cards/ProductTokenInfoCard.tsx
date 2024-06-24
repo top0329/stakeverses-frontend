@@ -47,7 +47,7 @@ function ProductTokenInfoCard({
       <div className="flex flex-col justify-between items-center w-full h-full gap-4 2xl:gap-10 xl:flex-row">
         <div className="flex flex-col items-center gap-1">
           <Image
-            className="min-w-[205px] max-h-[205px] aspect-square border border-[#040E20] rounded-full"
+            className="min-w-[205px] max-h-[205px] aspect-square border border-white rounded-full dark:border-[#040E20]"
             src={imageUri || ''}
             width={205}
             height={205}
@@ -95,7 +95,7 @@ function ProductTokenInfoCard({
               onClick={handleEdit}
             />
             <Button
-              className="!w-[88px] !h-[34px] !text-[18px] !bg-[#2F3A42]"
+              className="!w-[88px] !h-[34px] !text-[18px] !bg-[#2F3A42] !text-white !border-white"
               text="Remove"
               variant="outline"
               onClick={handleRemove}

@@ -358,7 +358,7 @@ function AddRewardTokenModal() {
             <div className="flex flex-col justify-center items-center mx-5 my-8 gap-6 text-lg font-semibold lg:gap-10 lg:mx-[47px] md:flex-row md:items-between md:my-12 md:text-xl">
               {addRewardTokenInfo.imageUri === '' ||
               addRewardTokenInfo.imageUri === undefined ? (
-                <div className="min-w-[143px] max-w-[143px] aspect-square bg-slate-600 border border-[#040E20] rounded-full md:max-w-[243px] md:min-w-[243px]"></div>
+                <div className="min-w-[143px] max-w-[143px] aspect-square bg-slate-600 border border-white rounded-full md:max-w-[243px] md:min-w-[243px] dark:border-[#040E20]"></div>
               ) : (
                 <Image
                   className="col-span-4 min-w-[243px] aspect-square border border-[#040E20] rounded-full"
@@ -475,7 +475,7 @@ function AddRewardTokenModal() {
                 onClick={handleAddProductTokenClicked}
               />
               <Button
-                className="bg-[#192F3A] !w-[120px] md:!w-[200px] xs:!w-[160px]"
+                className="bg-[#192F3A] !text-white !border-white !w-[120px] md:!w-[200px] xs:!w-[160px]"
                 text="Cancel"
                 variant="outline"
                 onClick={handleCancelButtonClicked}

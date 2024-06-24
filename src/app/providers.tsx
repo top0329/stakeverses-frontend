@@ -39,7 +39,7 @@ export default function Providers({ children, cookie }: Props) {
               <ToastProvider>
                 <SpinnerProvider>
                   <Web3Provider>
-                    <DevTools store={store} />
+                    <DevTools store={store} />  
                     {children}
                   </Web3Provider>
                 </SpinnerProvider>

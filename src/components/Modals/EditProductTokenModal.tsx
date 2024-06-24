@@ -335,7 +335,7 @@ function EditProductTokenModal() {
                 onClick={handleEditProductTokenClicked}
               />
               <Button
-                className="bg-[#192F3A] !w-[120px] md:!w-[200px] xs:!w-[160px]"
+                className="!bg-[#192F3A] !text-white !border-white !w-[120px] md:!w-[200px] xs:!w-[160px]"
                 text="Cancel"
                 variant="outline"
                 onClick={handleCancelButtonClicked}

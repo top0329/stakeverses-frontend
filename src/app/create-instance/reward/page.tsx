@@ -53,7 +53,7 @@ function CreateInstanceRewardPage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Create Instance
       </h1>
-      <div className="relative my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 sm:my-12">
+      <div className="relative my-8 rounded-[20px] bg-[#a0d8c2] text-white xl:my-20 lg:my-16 sm:my-12 dark:bg-[#040E20]/75">
         <Subtitle text="Charge Reward Token" />
         <div className="flex flex-row justify-between items-center text-lg px-4 -mt-10 mb-6 lg:text-xl md:px-10">
           <Icon
@@ -100,7 +100,7 @@ function CreateInstanceRewardPage() {
             onClick={() => setIsAddRewardTokenModalOpen(true)}
           />
           <Button
-            className="!bg-[#192F3A] !w-[140px] xs:!w-[160px] xl:!w-[200px]"
+            className="!bg-[#192F3A] !w-[140px] xs:!w-[160px] xl:!w-[200px] !text-white !border-white"
             text="Next"
             variant="outline"
             onClick={handleNext}

@@ -52,7 +52,7 @@ function ClaimPage() {
       <h1 className="mt-16 mb-10 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Claim
       </h1>
-      <div className="relative flex flex-col py-10 px-2 rounded-[20px] bg-[#040E20]/75 gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20">
+      <div className="relative flex flex-col py-10 px-2 rounded-[20px] bg-[#a0d8c2] text-white gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75">
         {selectedPoolData?.rewardTokenInfo.map((rewardToken, idx) => (
           <RewardTokenListForClaim
             key={idx}
@@ -65,7 +65,7 @@ function ClaimPage() {
         <div className="flex justify-center items-center gap-10">
           <Button text="Claim" onClick={handleClaim} />
           <Button
-            className="!bg-[#192F3A]"
+            className="!bg-[#192F3A] !text-white !border-white"
             text="Cancel"
             variant="outline"
             onClick={() => router.push('/my-portfolio')}

@@ -74,7 +74,7 @@ function PoolDetailsPage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Stakes
       </h1>
-      <div className="relative px-2 my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 lg:px-4 md:px-8 sm:my-12 sm:px-2">
+      <div className="relative px-2 my-8 bg-[#0f2e22] text-white rounded-[20px] xl:my-20 lg:my-16 lg:px-4 md:px-8 sm:my-12 sm:px-2 dark:bg-[#040E20]/75">
         <Subtitle text="Pool Details" />
         <div className="mb-12">
           <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
@@ -232,7 +232,7 @@ function PoolDetailsPage() {
           </div>
         </div>
         <div className="bg-gradient-to-br from-[#192F3A] to-[#06C2C4] rounded-2xl p-0.5">
-          <div className="bg-gradient-to-r from-[#010c09] to-[#044756] rounded-2xl">
+          <div className="bg-gradient-to-r from-[#348080] to-[#044756] rounded-2xl dark:bg-gradient-to-r dark:from-[#010c09] dark:to-[#044756]">
             <div className="flex flex-row flex-wrap justify-between pt-10 px-6 text-base gap-2 lg:text-xl md:flex-nowrap sm:text-lg sm:px-16 md:px-10 xl:px-20 2xl:px-36">
               <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
                 <p className="truncate">Total Value Staked</p>

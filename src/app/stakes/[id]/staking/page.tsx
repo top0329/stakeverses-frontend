@@ -111,7 +111,7 @@ function StakingPage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Stakes
       </h1>
-      <div className="relative grid grid-cols-12 my-8 rounded-[20px] bg-[#040E20]/75 gap-2 px-2 pt-[80px] pb-[93px] 2xl:px-16 2xl:gap-14 xl:my-20 xl:gap-12 lg:my-16 lg:gap-8 md:px-10 md:gap-6 sm:my-12 sm:gap-4">
+      <div className="relative grid grid-cols-12 my-8 rounded-[20px] text-white bg-[#a0d8c2] gap-2 px-2 pt-[80px] pb-[93px] 2xl:px-16 2xl:gap-14 xl:my-20 xl:gap-12 lg:my-16 lg:gap-8 md:px-10 md:gap-6 sm:my-12 sm:gap-4 dark:bg-[#040E20]/75">
         <div className="col-span-12 bg-[#053F40] rounded-[20px] lg:col-span-7">
           <h3 className="text-2xl text-center font-semibold pt-10 pb-8 lg:text-4xl sm:text-3xl">
             Product Token Stake

@@ -39,9 +39,9 @@ function StakesPage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Stakes
       </h1>
-      <div className="relative my-8 rounded-[20px] bg-[#040E20]/75 xl:my-20 lg:my-16 sm:my-12">
+      <div className="relative my-8 rounded-[20px] xl:my-20 lg:my-16 sm:my-12 bg-[#a0d8c2] dark:bg-[#040E20]/75">
         <Subtitle text="Stakes List" />
-        <div className="flex flex-col gap-10 mx-2 pb-10 2xl:mx-16 md:mx-10">
+        <div className="flex flex-col gap-10 mx-2 pb-10 2xl:mx-16 md:mx-10 text-white">
           {stakingDataList.length > 0 ? (
             stakingDataList.map((stakingData) => (
               <StakingPoolList
