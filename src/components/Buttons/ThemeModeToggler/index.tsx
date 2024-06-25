@@ -39,7 +39,6 @@ export const ThemeModeToggler: React.FC<ThemeModeTogglerProps> = (props) => {
   };
 
   const SwitchIcon = isDarkMode ? SunIcon : MoonIcon;
-  // const SwitchIcon = isDarkMode ? MoonIcon : SunIcon;
 
   return (
     <button
