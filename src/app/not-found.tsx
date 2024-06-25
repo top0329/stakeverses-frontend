@@ -11,7 +11,7 @@ export default function NotFound() {
 
   return (
     <div className="flex flex-col justify-between items-center gap-6 py-10 md:flex-row sm:py-20">
-      <div className="flex flex-col gap-6 text-4xl w-full font-medium md:text-5xl sm:w-1/2 lg:text-6xl xl:text-7xl 2xl:text-8xl">
+      <div className="flex flex-col gap-6 text-5xl w-full font-medium sm:w-1/2 lg:text-6xl xl:text-7xl 2xl:text-8xl">
         <h1>Go Home,</h1>
         <h1>You&apos;re Drunk!</h1>
         <Button
