@@ -47,7 +47,7 @@ function RewardTokenListForPoolDetail({
   }, [isERC1155, tokenId, tokenAddress]);
 
   return (
-    <div className="flex flex-col py-2 px-4 bg-[#141D2D]/70 rounded-[20px] text-lg gap-2 2xl:text-xl">
+    <div className="flex flex-col py-2 px-4 text-white bg-[#47556e] rounded-[20px] text-lg gap-2 2xl:text-xl dark:bg-[#141D2D]/70">
       <div className="flex flex-row gap-4 lg:gap-2 md:gap-10 sm:gap-2">
         <div className="flex flex-col justify-center items-center gap-0">
           <Image

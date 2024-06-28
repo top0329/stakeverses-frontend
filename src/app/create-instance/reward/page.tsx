@@ -53,7 +53,7 @@ function CreateInstanceRewardPage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Create Instance
       </h1>
-      <div className="relative my-8 rounded-[20px] bg-[#a0d8c2] text-white xl:my-20 lg:my-16 sm:my-12 dark:bg-[#040E20]/75">
+      <div className="relative my-8 rounded-[20px] bg-[#e4f0fd] xl:my-20 lg:my-16 sm:my-12 dark:bg-[#040E20]/75">
         <Subtitle text="Charge Reward Token" />
         <div className="flex flex-row justify-between items-center text-lg px-4 -mt-10 mb-6 lg:text-xl md:px-10">
           <Icon
@@ -68,7 +68,7 @@ function CreateInstanceRewardPage() {
               Base Amount :
             </label>
             <input
-              className="w-20 ml-2 px-2 bg-transparent border-b-2 border-dashed xs:ml-4"
+              className="w-20 ml-2 px-2 bg-transparent border-b-2 border-black border-dashed xs:ml-4 dark:border-white"
               step={1}
               onChange={handleInputChange}
               value={baseAmount || ''}

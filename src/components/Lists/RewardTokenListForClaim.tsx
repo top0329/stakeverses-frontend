@@ -47,7 +47,7 @@ function RewardTokenListForClaim({
   }, [isERC1155, tokenId, tokenAddress]);
 
   return (
-    <div className="flex flex-row justify-start items-center text-lg bg-[#053F40] rounded-[20px] px-4 py-5 gap-4 lg:px-14 md:text-xl sm:justify-between sm:px-8">
+    <div className="flex flex-row justify-start items-center text-lg bg-[#47556e] rounded-[20px] px-4 py-5 gap-4 lg:px-14 md:text-xl sm:justify-between sm:px-8 dark:bg-[#053F40]">
       <div className="flex flex-col justify-center items-center gap-1 lg:flex-row lg:gap-4">
         <Image
           className="aspect-square min-w-[90px] rounded-full"

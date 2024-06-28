@@ -60,7 +60,7 @@ function ProductTokenForStakeList({
           {name}
         </div>
         <div
-          className={`absolute bottom-0 text-[10px] rounded-full bg-[#2F3A42] px-1 py-1 w-auto sm:px-1.5 ${
+          className={`absolute bottom-0 text-[10px] text-white rounded-full bg-[#2F3A42] px-1 py-1 w-auto sm:px-1.5 ${
             consumable ? 'block' : 'hidden'
           }`}
         >

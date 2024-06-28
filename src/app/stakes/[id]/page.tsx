@@ -74,7 +74,7 @@ function PoolDetailsPage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Stakes
       </h1>
-      <div className="relative px-2 my-8 bg-[#0f2e22] text-white rounded-[20px] xl:my-20 lg:my-16 lg:px-4 md:px-8 sm:my-12 sm:px-2 dark:bg-[#040E20]/75">
+      <div className="relative px-2 my-8 bg-[#e4f0fd] rounded-[20px] xl:my-20 lg:my-16 lg:px-4 md:px-8 sm:my-12 sm:px-2 dark:bg-[#040E20]/75">
         <Subtitle text="Pool Details" />
         <div className="mb-12">
           <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
@@ -232,36 +232,36 @@ function PoolDetailsPage() {
           </div>
         </div>
         <div className="bg-gradient-to-br from-[#192F3A] to-[#06C2C4] rounded-2xl p-0.5">
-          <div className="bg-gradient-to-r from-[#348080] to-[#044756] rounded-2xl dark:bg-gradient-to-r dark:from-[#010c09] dark:to-[#044756]">
+          <div className="bg-[#d1e2fe] rounded-2xl dark:bg-gradient-to-r dark:from-[#010c09] dark:to-[#044756]">
             <div className="flex flex-row flex-wrap justify-between pt-10 px-6 text-base gap-2 lg:text-xl md:flex-nowrap sm:text-lg sm:px-16 md:px-10 xl:px-20 2xl:px-36">
               <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
                 <p className="truncate">Total Value Staked</p>
-                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium">
+                <div className="w-full bg-transparent border border-black rounded-[15px] px-4 py-3 font-medium dark:border-white">
                   {totalStakingBaseAmount}
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
                 <p className="truncate">Remaining Reward</p>
-                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium">
+                <div className="w-full bg-transparent border border-black rounded-[15px] px-4 py-3 font-medium dark:border-white">
                   {remainingRewardAmount}
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
                 <p className="truncate">Number of Stakers</p>
-                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium">
+                <div className="w-full bg-transparent border border-black rounded-[15px] px-4 py-3 font-medium dark:border-white">
                   {numberOfStakers}
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 w-[48%] text-center md:w-[194px]">
                 <p className="truncate">Remaining Time</p>
-                <div className="w-full bg-transparent border rounded-[15px] px-4 py-3 font-medium">
+                <div className="w-full bg-transparent border border-black rounded-[15px] px-4 py-3 font-medium dark:border-white">
                   {calcRemainingTime(remainingTime)} days
                 </div>
               </div>
             </div>
             <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 lg:flex-row sm:mx-6">
               <div className="w-full text-center">
-                <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f3a38] to-[#0f484a] py-5 px-4 mt-20 rounded-[20px] h-[calc(100%-80px)]">
+                <div className="flex flex-col gap-5 bg-[#b9d2ff] py-5 px-4 mt-20 rounded-[20px] h-[calc(100%-80px)] dark:bg-gradient-to-r dark:from-[#0f3a38] dark:to-[#0f484a]">
                   <h2 className="text-xl -mt-20 font-semibold mb-6 sm:text-2xl lg:text-3xl">
                     Staking Tokens
                   </h2>
@@ -278,7 +278,7 @@ function PoolDetailsPage() {
                 </div>
               </div>
               <div className="w-full text-center">
-                <div className="flex flex-col gap-5 bg-gradient-to-r from-[#0f494c] to-[#10585e] py-5 px-4 mt-20 rounded-[20px] h-[calc(100%-80px)]">
+                <div className="flex flex-col gap-5 bg-[#b9d2ff] py-5 px-4 mt-20 rounded-[20px] h-[calc(100%-80px)] dark:bg-gradient-to-r dark:from-[#0f494c] dark:to-[#10585e]">
                   <h2 className="text-xl -mt-20 font-semibold mb-6 sm:text-2xl lg:text-3xl">
                     Reward Tokens
                   </h2>

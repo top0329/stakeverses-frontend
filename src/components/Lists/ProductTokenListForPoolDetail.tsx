@@ -37,7 +37,7 @@ function ProductTokenListForPoolDetail({
   }, [productId]);
 
   return (
-    <div className="relative flex flex-col text-lg px-4 py-6 bg-[#141D2D]/70 rounded-[20px] gap-2 2xl:text-xl lg:gap-2 md:gap-10 sm:flex-row">
+    <div className="relative flex flex-col text-white text-lg px-4 py-6 bg-[#47556e] rounded-[20px] gap-2 2xl:text-xl lg:gap-2 md:gap-10 sm:flex-row dark:bg-[#141D2D]/70">
       <div className="flex flex-row justify-between w-full gap-4 lg:gap-2 md:gap-10 sm:gap-2 xs:gap-10">
         <Image
           className="aspect-square min-w-[90px] rounded-full"

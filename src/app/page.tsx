@@ -167,7 +167,7 @@ export default function Home() {
           }}
         >
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="flex flex-col justify-center items-center bg-[#dcf5eb] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
+            <div className="flex flex-col justify-center items-center bg-white rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
               <Image
                 className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
@@ -191,7 +191,7 @@ export default function Home() {
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="flex flex-col justify-center items-center bg-[#dcf5eb] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
+            <div className="flex flex-col justify-center items-center bg-white rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
               <Image
                 className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
@@ -215,7 +215,7 @@ export default function Home() {
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="flex flex-col justify-center items-center bg-[#dcf5eb] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
+            <div className="flex flex-col justify-center items-center bg-white rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
               <Image
                 className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
@@ -239,7 +239,7 @@ export default function Home() {
             </div>
           </SwiperSlide>
           <SwiperSlide className="bg-gradient-to-r from-[#011717] to-[#055F76] rounded-xl">
-            <div className="flex flex-col justify-center items-center bg-[#dcf5eb] rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
+            <div className="flex flex-col justify-center items-center bg-white rounded-xl m-0.5 pt-20 pb-16 px-2 2xl:pt-28 2xl:pb-24 2xl:px-12 xl:pt-20 xl:pb-16 xl:px-4 lg:pt-28 lg:pb-24 lg:px-10 md:pt-20 md:pb-16 md:px-2 sm:pt-24 sm:pb-20 sm:px-8 dark:bg-[#010b0c]">
               <Image
                 className="w-20 h-12 mx-auto mb-12"
                 src={VectorImage}
@@ -263,8 +263,8 @@ export default function Home() {
             </div>
           </SwiperSlide>
         </Swiper>
-        <div className="swiper-button-prev !z-20 bg-[#055f76] !top-[107%] !left-[30%] rounded-full p-6 md:p-10 xs:!left-[2%] xs:!top-1/2 dark:bg-[#02F5FF]/10 dark:text-white"></div>
-        <div className="swiper-button-next !z-20 bg-[#055f76] !top-[107%] !right-[30%] rounded-full p-6 md:p-10 xs:!right-[2%] xs:!top-1/2 dark:bg-[#02F5FF]/10 dark:text-white"></div>
+        <div className="swiper-button-prev !z-20 bg-[#055f76]/60 !top-[107%] !left-[30%] rounded-full p-6 md:p-10 xs:!left-[2%] xs:!top-1/2 dark:bg-[#02F5FF]/10 dark:text-white"></div>
+        <div className="swiper-button-next !z-20 bg-[#055f76]/60 !top-[107%] !right-[30%] rounded-full p-6 md:p-10 xs:!right-[2%] xs:!top-1/2 dark:bg-[#02F5FF]/10 dark:text-white"></div>
       </div>
       <div className="relative flex">
         <Image

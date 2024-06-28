@@ -12,7 +12,9 @@ const Accordion: FC<IAccordion> = ({ title, content }) => {
       <button
         type="button"
         className={`flex justify-between items-center w-full py-5 text-left text-xl transition-colors delay-100 md:text-2xl lg:text-[28px] ${
-          isExpanded ? 'text-[#00BBDF] font-bold' : 'text-white font-medium'
+          isExpanded
+            ? 'text-[#00BBDF] font-bold'
+            : 'text-black font-medium dark:text-white'
         }`}
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -26,7 +28,7 @@ const Accordion: FC<IAccordion> = ({ title, content }) => {
           {title}
         </div>
         <Icon
-          className="flex min-w-10 text-white"
+          className="flex min-w-10 text-black dark:text-white"
           icon={
             isExpanded
               ? 'heroicons:minus-circle-16-solid'

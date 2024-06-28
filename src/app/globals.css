@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gradient-to-r from-[#DCF5EB] to-[#DCF5EB] text-white dark:bg-gradient-to-r dark:from-[#000309] dark:to-[#000D0D];
+  /* @apply bg-gradient-to-r from-[#DCF5EB] to-[#DCF5EB] text-white dark:bg-gradient-to-r dark:from-[#000309] dark:to-[#000D0D]; */
+  @apply bg-white text-white dark:bg-gradient-to-r dark:from-[#000309] dark:to-[#000D0D];
 }
 
 @layer utilities {
@@ -79,6 +80,20 @@ body {
   right: 0px;
   bottom: 0px;
   background-color: #040a0f;
+  z-index: 100000 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner-wrapper-light {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: #4e5a6e;
   z-index: 100000 !important;
   display: flex;
   flex-direction: column;

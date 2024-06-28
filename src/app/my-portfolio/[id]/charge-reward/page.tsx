@@ -48,14 +48,14 @@ function ChargeRewardPage() {
 
   return (
     <React.Fragment>
-      <h1 className="mt-16 mb-10 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
+      <h1 className="mt-16 mb-10 text-3xl text-center font-semibold lg:my-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Charge Reward Token
       </h1>
-      <div className="relative flex flex-col py-10 px-2 rounded-[20px] bg-[#a0d8c2] text-white gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75">
+      <div className="relative flex flex-col py-10 px-2 rounded-[20px] bg-[#e4f0fd] text-white gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75">
         <div className="flex flex-row justify-end items-center text-[22px] px-10 -mt-4 xl:-mt-10">
-          <label className="font-semibold truncate">Base Amount :</label>
+          <label className="text-black font-semibold truncate dark:text-white">Base Amount :</label>
           <input
-            className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed"
+            className="w-20 ml-4 px-2 bg-transparent border-b-2 border-black border-dashed dark:border-white"
             step={1}
             onChange={handleInputChange}
             value={baseAmount || ''}

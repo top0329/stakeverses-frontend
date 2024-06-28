@@ -51,7 +51,7 @@ function RewardTokenForStakeList({
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="text-[22px] rounded-full border border-white aspect-square min-w-[28px] text-center leading-6 mb-1">
+      <div className="text-[22px] rounded-full border border-black aspect-square min-w-[28px] text-center leading-6 mb-1 dark:border-white">
         {Number(ratio)}
       </div>
       <Image
@@ -68,7 +68,7 @@ function RewardTokenForStakeList({
       <div className="text-sm text-right lg:text-xl sm:text-lg xs:text-base">
         {name}
       </div>
-      <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#141D2D] rounded-xl px-1.5 py-1 border-2 border-[#2F3A42] break-words sm:text-xs lg:text-sm xs:px-2">
+      <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#c8dcff] rounded-xl px-1.5 py-1 border border-[#2F3A42] break-words sm:text-xs lg:text-sm xs:px-2 dark:bg-[#141D2D]">
         <span>{tokenAddress.slice(0, 11)}</span>
         <span>{tokenAddress.slice(11, 22)}</span>
         <span>{tokenAddress.slice(22, 33)}</span>

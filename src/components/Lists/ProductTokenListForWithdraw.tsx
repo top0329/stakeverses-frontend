@@ -36,7 +36,7 @@ function ProductTokenListForWithdraw({
   }, [productId]);
 
   return (
-    <div className="relative flex flex-row justify-between items-center text-xl bg-[#053F40] rounded-[20px] px-4 py-5 md:px-14 sm:px-8">
+    <div className="relative flex flex-row justify-between items-center text-xl bg-[#47556e] rounded-[20px] px-4 py-5 md:px-14 sm:px-8 dark:bg-[#053F40]">
       <Image
         className="aspect-square min-w-[90px] rounded-full"
         width={90}

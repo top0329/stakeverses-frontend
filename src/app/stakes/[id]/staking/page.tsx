@@ -111,15 +111,15 @@ function StakingPage() {
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Stakes
       </h1>
-      <div className="relative grid grid-cols-12 my-8 rounded-[20px] text-white bg-[#a0d8c2] gap-2 px-2 pt-[80px] pb-[93px] 2xl:px-16 2xl:gap-14 xl:my-20 xl:gap-12 lg:my-16 lg:gap-8 md:px-10 md:gap-6 sm:my-12 sm:gap-4 dark:bg-[#040E20]/75">
-        <div className="col-span-12 bg-[#053F40] rounded-[20px] lg:col-span-7">
+      <div className="relative grid grid-cols-12 my-8 rounded-[20px] bg-[#e4f0fd] gap-2 px-2 pt-[80px] pb-[93px] 2xl:px-16 2xl:gap-14 xl:my-20 xl:gap-12 lg:my-16 lg:gap-8 md:px-10 md:gap-6 sm:my-12 sm:gap-4 dark:bg-[#040E20]/75">
+        <div className="col-span-12 bg-[#d0e2fe] rounded-[20px] lg:col-span-7 dark:bg-[#053F40]">
           <h3 className="text-2xl text-center font-semibold pt-10 pb-8 lg:text-4xl sm:text-3xl">
             Product Token Stake
           </h3>
           <div className="flex flex-row justify-end items-center text-base px-6 mb-6 2xl:px-12 xl:px-8 lg:text-xl sm:text-lg">
             <label className="font-semibold">Enter Base Amount :</label>
             <input
-              className="w-20 ml-4 px-2 bg-transparent border-b-2 border-dashed"
+              className="w-20 ml-4 px-2 bg-transparent border-b-2 border-black border-dashed dark:border-white"
               onChange={handleInputChange}
               value={stakeBaseAmount || ''}
             />
@@ -146,26 +146,26 @@ function StakingPage() {
           </div>
         </div>
         <div className="col-span-12 flex flex-col h-full gap-2 2xl:gap-14 xl:gap-12 lg:col-span-5 lg:gap-8 md:gap-6 sm:gap-4">
-          <div className="bg-[#053F40] rounded-[20px] h-full pb-10">
+          <div className="bg-[#d0e2fe] rounded-[20px] h-full pb-10 dark:bg-[#053F40]">
             <h3 className="text-2xl text-center font-semibold pt-10 pb-8 xl:text-4xl sm:text-3xl">
               Total Value Staked
             </h3>
-            <div className="flex flex-col gap-4 px-6 2xl:px-12 xl:px-8">
-              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl">
+            <div className="flex flex-col text-white gap-4 px-6 2xl:px-12 xl:px-8">
+              <div className="flex flex-row justify-between items-center bg-[#47556e] rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl dark:bg-[#141D2D]/70">
                 <p>Axe</p>
                 <p>19302</p>
               </div>
-              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl">
+              <div className="flex flex-row justify-between items-center bg-[#47556e] rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl dark:bg-[#141D2D]/70">
                 <p>Axe</p>
                 <p>19302</p>
               </div>
-              <div className="flex flex-row justify-between items-center bg-[#141D2D]/70 rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl">
+              <div className="flex flex-row justify-between items-center bg-[#47556e] rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl dark:bg-[#141D2D]/70">
                 <p>Axe</p>
                 <p>19302</p>
               </div>
             </div>
           </div>
-          <div className="bg-[#053F40] rounded-[20px] py-10">
+          <div className="bg-[#d0e2fe] rounded-[20px] py-10 dark:bg-[#053F40]">
             <h3 className="text-2xl text-center font-semibold pt-8 pb-8 xl:text-4xl sm:text-3xl">
               Number of Stakers
             </h3>

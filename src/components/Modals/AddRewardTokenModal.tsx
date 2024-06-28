@@ -349,7 +349,7 @@ function AddRewardTokenModal() {
             animate={{ scale: 1, rotate: '0deg' }}
             exit={{ scale: 0, rotate: '0deg' }}
             ref={modal}
-            className="z-30 w-auto bg-gradient-to-r from-[#010e0c] to-[#05596d] text-white text-center rounded-[20px] border-2 border-white pb-8 lg:w-[826px] md:w-[670px] max-h-[90vh] overflow-auto modal-container"
+            className="z-30 w-auto bg-[#47556e] text-white text-center rounded-[20px] border-2 border-white pb-8 lg:w-[826px] md:w-[670px] max-h-[90vh] overflow-auto modal-container dark:bg-gradient-to-r dark:from-[#010e0c] dark:to-[#05596d]"
           >
             <h2 className="text-xl font-bold mt-7 mb-6 xl:text-4xl lg:3xl md:text-2xl">
               Add Reward Token

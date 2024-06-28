@@ -37,7 +37,7 @@ function StakingPoolList({
   }, [instanceAddress, web3.eth.Contract]);
 
   return (
-    <div className="bg-[#053F40] px-4 py-9 rounded-[20px] md:px-[50px]">
+    <div className="bg-[#e4f0fd] text-black px-4 py-9 rounded-[20px] md:px-[50px] dark:bg-[#053F40] dark:text-white">
       <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
         <div className="flex items-center justify-center gap-0 lg:gap-4 xl:gap-0">
           {productInfo
@@ -118,20 +118,20 @@ function StakingPoolList({
           <div className="flex flex-row justify-between items-end w-full gap-4 xl:gap-14">
             <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Instance Id</p>
-              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
+              <div className="w-full bg-[#c8dcff] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px] dark:bg-[#141D2D]">
                 {Number(instanceId)}
               </div>
             </div>
             <div className="flex flex-col items-center gap-2.5 w-32 text-center xs:w-40">
               <p className="truncate">Remaining time</p>
-              <div className="w-full bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px]">
+              <div className="w-full bg-[#c8dcff] border border-[#2F3A42] rounded-lg px-2 py-1 font-medium xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px] dark:bg-[#141D2D]">
                 {calcRemainingTime(remainingTime)} days
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center gap-2.5 w-auto text-center">
             <p className="truncate">Creator Address</p>
-            <div className="flex items-center w-full h-[34px] bg-[#141D2D] border border-[#2F3A42] rounded-lg px-2 py-1 text-xs tracking-[-1px] sm:text-sm xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px] xs:tracking-[0px]">
+            <div className="flex items-center w-full h-[34px] bg-[#c8dcff] border border-[#2F3A42] rounded-lg px-2 py-1 text-xs tracking-[-1px] sm:text-sm xs:px-4 xs:py-3 xs:h-[54px] xs:rounded-[15px] xs:tracking-[0px] dark:bg-[#141D2D]">
               {creator}
             </div>
           </div>
