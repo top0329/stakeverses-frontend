@@ -138,7 +138,7 @@ export default function Home() {
           believable.
         </h6>
       </div>
-      <div className="relative w-auto h-full -mx-6 px-16 text-center mb-[178px] 2xl:px-32 lg:-mx-10 md:px-28 md:-mx-0">
+      <div className="relative w-auto h-full -mx-6 px-6 text-center mb-[178px] 2xl:px-32 lg:-mx-10 md:px-28 md:-mx-0 xs:px-16">
         <Swiper
           navigation={{
             nextEl: '.swiper-button-next',
@@ -263,12 +263,12 @@ export default function Home() {
             </div>
           </SwiperSlide>
         </Swiper>
-        <div className="swiper-button-prev bg-[#055f76] rounded-full p-6 md:p-10 dark:bg-[#02F5FF]/10 dark:text-white"></div>
-        <div className="swiper-button-next bg-[#055f76] rounded-full p-6 md:p-10 dark:bg-[#02F5FF]/10 dark:text-white"></div>
+        <div className="swiper-button-prev !z-20 bg-[#055f76] !top-[107%] !left-[30%] rounded-full p-6 md:p-10 xs:!left-[2%] xs:!top-1/2 dark:bg-[#02F5FF]/10 dark:text-white"></div>
+        <div className="swiper-button-next !z-20 bg-[#055f76] !top-[107%] !right-[30%] rounded-full p-6 md:p-10 xs:!right-[2%] xs:!top-1/2 dark:bg-[#02F5FF]/10 dark:text-white"></div>
       </div>
       <div className="relative flex">
         <Image
-          className="absolute z-10 -ml-[130px] w-[400px] -top-[300px] md:w-[469px] md:-top-[350px] rotate-[-42.61deg]"
+          className="absolute -z-10 -ml-[130px] w-[400px] -top-[300px] md:w-[469px] md:-top-[350px] rotate-[-42.61deg]"
           src={SwordImage}
           alt="sword"
         />

@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-
-import NotFoundImage from '@/assets/images/not-found.svg';
-import Button from '@/components/Buttons';
 import { useRouter } from 'next/navigation';
+
+import Button from '@/components/Buttons';
+import NotFoundImage from '@/assets/images/not-found.svg';
 
 export default function NotFound() {
   const router = useRouter();
