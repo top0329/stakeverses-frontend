@@ -37,7 +37,7 @@ function StakingPoolList({
   }, [instanceAddress, web3.eth.Contract]);
 
   return (
-    <div className="bg-[#e4f0fd] text-black px-4 py-9 rounded-[20px] md:px-[50px] dark:bg-[#053F40] dark:text-white">
+    <div className="bg-[#e4f0fd] text-black px-4 py-9 rounded-[20px] border-2 border-[#7a9acb]/50 md:px-[50px] dark:bg-[#053F40] dark:text-white dark:border-none">
       <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
         <div className="flex items-center justify-center gap-0 lg:gap-4 xl:gap-0">
           {productInfo

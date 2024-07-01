@@ -7,11 +7,11 @@ function FAQPage() {
       <h1 className="mt-16 mb-10 text-3xl text-center font-semibold lg:my-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         FAQ
       </h1>
-      <ul className="bg-[#e4f0fd] mb-20 px-4 py-10 rounded-[20px] xl:px-24 lg:px-16 md:px-12 sm:px-8 sm:py-14 md:py-16 xl:py-20 dark:bg-[#011e25]">
+      <ul className="bg-[#e4f0fd] mb-20 px-4 py-10 rounded-[20px] border-2 border-[#7a9acb]/50 xl:px-24 lg:px-16 md:px-12 sm:px-8 sm:py-14 md:py-16 xl:py-20 dark:bg-[#011e25] dark:border-none">
         <li>
           <Accordion
             title="What is Stakeverses?"
-            content="Stakeverses is a staking platform for product tokens.  You can create product tokens from Factory Platform(Link to factorygam.org).?"
+            content="Stakeverses is a staking platform for product tokens.  You can create product tokens from Factory Platform(Link to factorygam.org)?"
           />
         </li>
         <li>

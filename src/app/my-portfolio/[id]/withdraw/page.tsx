@@ -53,7 +53,7 @@ function WithDrawPage() {
       <h1 className="mt-16 mb-10 text-3xl text-center font-semibold lg:my-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
         Withdraw
       </h1>
-      <div className="relative flex flex-col py-10 px-2 rounded-[20px] bg-[#e4f0fd] text-white gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75">
+      <div className="relative flex flex-col py-10 px-2 rounded-[20px] bg-[#e4f0fd] text-white gap-10 mb-20 border-2 border-[#7a9acb]/50 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75 dark:border-none">
         <div className="flex flex-col gap-10">
           <div className="text-black text-xl font-semibold lg:text-4xl md:text-3xl sm:text-2xl dark:text-white">
             Staked Token :

@@ -39,7 +39,7 @@ function ProductTokenForStakeList({
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex flex-col justify-center items-center h-16 gap-1">
-        <div className="text-[22px] rounded-full border border-white aspect-square min-w-[28px] text-center leading-6">
+        <div className="text-[22px] rounded-full border border-black aspect-square min-w-[28px] text-center leading-6 dark:border-white">
           {Number(ratio)}
         </div>
         <Image

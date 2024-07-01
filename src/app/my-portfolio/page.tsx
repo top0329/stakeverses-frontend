@@ -69,7 +69,7 @@ function MyPortfolioPage() {
         <div
           className={`flex justify-center items-center rounded-tl-[20px] w-[300px] h-[100px] text-center cursor-pointer lg:w-[400px] ${
             activeItem === 0
-              ? 'bg-[#f4f7f9] dark:bg-[#040E20]/75'
+              ? 'bg-[#117077] text-white dark:bg-[#040E20]/75'
               : 'bg-[#e4f0fd] dark:bg-[#272727]/40'
           }`}
           onClick={() => setActiveItem(0)}
@@ -79,7 +79,7 @@ function MyPortfolioPage() {
         <div
           className={`flex justify-center items-center rounded-tr-[20px] w-[300px] h-[100px] text-center cursor-pointer lg:w-[400px] ${
             activeItem === 1
-              ? 'bg-[#f4f7f9] dark:bg-[#040E20]/75'
+              ? 'bg-[#117077] text-white dark:bg-[#040E20]/75'
               : 'bg-[#e4f0fd] dark:bg-[#272727]/40'
           }`}
           onClick={() => setActiveItem(1)}
@@ -88,7 +88,7 @@ function MyPortfolioPage() {
         </div>
       </div>
       {activeItem === 0 && (
-        <div className="relative flex flex-col py-10 px-2 rounded-b-[20px] rounded-tr-[20px] bg-[#f4f7f9] gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75">
+        <div className="relative flex flex-col py-10 px-2 rounded-b-[20px] rounded-tr-[20px] bg-[#f4f7f9] gap-10 mb-20 border-2 border-[#C8C3C3]/50 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75 dark:border-none">
           {myCreatedInstanceDataList.length > 0 ? (
             myCreatedInstanceDataList.map((stakingData) => (
               <MyInstanceList
@@ -108,7 +108,7 @@ function MyPortfolioPage() {
         </div>
       )}
       {activeItem === 1 && (
-        <div className="relative flex flex-col py-10 px-2 rounded-b-[20px] rounded-tr-[20px] bg-[#f4f7f9] gap-10 mb-20 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75">
+        <div className="relative flex flex-col py-10 px-2 rounded-b-[20px] rounded-tr-[20px] bg-[#f4f7f9] gap-10 mb-20 border-2 border-[#C8C3C3]/50 2xl:px-16 md:px-10 md:py-14 xl:py-20 dark:bg-[#040E20]/75 dark:border-none">
           {myStakingDataList.length > 0 ? (
             myStakingDataList.map((stakingData) => (
               <MyStakingPoolList
