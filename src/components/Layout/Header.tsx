@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import AOS from 'aos';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 
 import ConnectWallet from '@/components/Buttons/ConnectButton';
@@ -67,6 +68,10 @@ function Header() {
   };
 
   useEffect(() => {
+    AOS.init();
+  }, []);
+
+  useEffect(() => {
     path.includes('stakes') && setActiveItem(1);
     path.includes('my-portfolio') && setActiveItem(2);
     path.includes('create-instance') && setActiveItem(3);
@@ -83,7 +88,15 @@ function Header() {
   };
 
   return (
-    <div className="relative flex flex-col justify-center items-center min-h-[68px] h-auto mx-[20px] my-[20px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] bg-opacity-15 rounded-[34px] border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:my-[40px] md:rounded-full dark:bg-gradient-to-r dark:from-[#2a2c30] dark:to-[#2a2c30] dark:bg-opacity-15">
+    <div
+      className="relative flex flex-col justify-center items-center min-h-[68px] h-auto mx-[20px] my-[20px] bg-gradient-to-r from-[#192F3A] to-[#06C2C4] bg-opacity-15 rounded-[34px] border border-white border-opacity-30 2xl:h-[98px] 2xl:mx-[130px] 2xl:my-[51px] xl:h-[88px] xl:mx-[100px] xl:my-[46px] lg:h-[78px] lg:mx-[70px] lg:my-[40px] md:h-[68px] md:my-[40px] md:rounded-full dark:bg-gradient-to-r dark:from-[#2a2c30] dark:to-[#2a2c30] dark:bg-opacity-15"
+      data-aos="fade-down"
+      data-aos-offset="200"
+      data-aos-delay="200"
+      data-aos-duration="500"
+      data-aos-easing="ease-in-out"
+      data-aos-once="true"
+    >
       <div className="flex justify-between items-center w-full min-h-[68px]">
         <Link href="/" onClick={() => setActiveItem(0)}>
           <Image

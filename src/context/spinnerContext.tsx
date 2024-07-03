@@ -27,7 +27,7 @@ const SpinnerProvider = ({ children }: { children: ReactElement }) => {
       {children}
       {isSpin && (
         <div
-          className="spinner-wrapper !bg-[#041431b9]"
+          className="spinner-wrapper"
           style={{ backgroundColor: '#041431b9' }}
         >
           <div className="loader"></div>

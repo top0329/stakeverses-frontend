@@ -6,6 +6,7 @@ import Providers from './providers';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import '@rainbow-me/rainbowkit/styles.css';
+import 'aos/dist/aos.css';
 import './globals.css';
 
 export const metadata: Metadata = {

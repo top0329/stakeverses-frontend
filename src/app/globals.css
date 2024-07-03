@@ -27,6 +27,19 @@ body {
   }
 }
 
+:root {
+  --spinner-bg-color-light: #4e5a6e; /* Light mode background color */
+  --spinner-bg-color-dark: #040a0f; /* Dark mode background color */
+}
+
+.dark {
+  --spinner-bg-color: var(--spinner-bg-color-dark);
+}
+
+.light {
+  --spinner-bg-color: var(--spinner-bg-color-light);
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -79,21 +92,7 @@ body {
   left: 0px;
   right: 0px;
   bottom: 0px;
-  background-color: #040a0f;
-  z-index: 100000 !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.spinner-wrapper-light {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  background-color: #4e5a6e;
+  background-color: var(--spinner-bg-color);;
   z-index: 100000 !important;
   display: flex;
   flex-direction: column;
