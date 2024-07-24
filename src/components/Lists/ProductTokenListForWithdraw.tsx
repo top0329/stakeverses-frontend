@@ -2,23 +2,27 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Address } from 'viem';
 
-import BreadImage from '@/assets/images/bread.svg';
-import { IProductTokenInfo } from '@/types';
+import useWeb3 from '@/hooks/useWeb3';
+import DefaultERC1155Image from '@/assets/images/erc1155.png';
 import getERC1155Data from '@/lib/getERC1155Data';
+import { IProductTokenInfo } from '@/types';
 
 function ProductTokenListForWithdraw({
   productId,
   consumable,
 }: IProductTokenInfo) {
-  const [imageUri, setImageUri] = useState<string>(BreadImage);
+  const { library, currentProductAddress } = useWeb3();
+
+  const [imageUri, setImageUri] = useState<string>(DefaultERC1155Image.src);
   const [name, setName] = useState<string>('');
 
   useEffect(() => {
     async function fetchData() {
       try {
         const erc1155Data = await getERC1155Data(
-          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-          Number(productId)
+          currentProductAddress as Address,
+          Number(productId),
+          library
         );
         if (erc1155Data) {
           const { name, uri } = erc1155Data;
@@ -32,8 +36,7 @@ function ProductTokenListForWithdraw({
     if (productId) {
       fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productId]);
+  }, [currentProductAddress, library, productId]);
 
   return (
     <div className="relative flex flex-row justify-between items-center text-xl bg-[#47556e] rounded-[20px] px-4 py-5 md:px-14 sm:px-8 dark:bg-[#053F40]">
@@ -45,7 +48,7 @@ function ProductTokenListForWithdraw({
         alt="product"
         unoptimized
         onError={() => {
-          setImageUri(BreadImage);
+          setImageUri(DefaultERC1155Image.src);
         }}
       />
       <div className="flex flex-col text-center">

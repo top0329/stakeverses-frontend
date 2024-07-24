@@ -4,16 +4,18 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
+import Button from '@/components/Buttons';
+import useWeb3 from '@/hooks/useWeb3';
+import useToast from '@/hooks/useToast';
+import getERC1155Data from '@/lib/getERC1155Data';
 import {
   isAddProductTokenModalOpenAtom,
   productTokenInfoAtom,
 } from '@/jotai/atoms';
-import Button from '@/components/Buttons';
-import useToast from '@/hooks/useToast';
-import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenInfo } from '@/types';
 
 function AddProductTokenModal() {
+  const { library, currentProductAddress } = useWeb3();
   const { showToast } = useToast();
 
   const [isAddProductTokenModalOpen, setIsAddProductTokenModalOpen] = useAtom(
@@ -108,7 +110,8 @@ function AddProductTokenModal() {
     const { value, name } = event.target;
     const erc1155Data = await getERC1155Data(
       (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-      Number(value)
+      Number(value),
+      library
     );
     if (erc1155Data) {
       const { name, uri } = erc1155Data;
@@ -146,8 +149,9 @@ function AddProductTokenModal() {
   ) => {
     if (event.key === 'Enter') {
       const erc1155Data = await getERC1155Data(
-        (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-        addProductTokenInfo.productId
+        currentProductAddress as Address,
+        addProductTokenInfo.productId,
+        library
       );
       if (erc1155Data) {
         const { name, uri } = erc1155Data;

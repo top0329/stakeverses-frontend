@@ -15,9 +15,10 @@ import {
   productTokenInfoAtom,
   rewardTokenInfoAtom,
 } from '@/jotai/atoms';
+import { getGasPrice } from '@/lib/getGasPrice';
 
 function CreateInstanceCreatePage() {
-  const { account, productStakingInstance, isConnected } = useWeb3();
+  const { account, productStakingInstance, chainId, web3, isConnected } = useWeb3();
   const { showToast } = useToast();
   const { openSpin, closeSpin } = useSpinner();
   const router = useRouter();
@@ -40,6 +41,7 @@ function CreateInstanceCreatePage() {
         rewardTokenInfo.length
       ) {
         openSpin('Creating Instance');
+        const gasPrice = await getGasPrice(web3, chainId!);
         const _productTokenInfo = productTokenInfo.map((product) => {
           const { imageUri, productName, ...rest } = product;
           return rest;
@@ -56,7 +58,7 @@ function CreateInstanceCreatePage() {
             'Stakeverse Token',
             'stk'
           )
-          .send({ from: account });
+          .send({ from: account, gasPrice });
         setBaseAmount(0);
         setProductTokenInfo([]);
         setRewardTokenInfo([]);

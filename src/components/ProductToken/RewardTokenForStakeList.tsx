@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Address } from 'viem';
 
-import getERC1155Data from '@/lib/getERC1155Data';
+import useWeb3 from '@/hooks/useWeb3';
 import DefaultERC20Image from '@/assets/images/erc20.png';
+import getERC1155Data from '@/lib/getERC1155Data';
 import getTokenData from '@/lib/getTokenData';
 import { IRewardTokenInfoForStakeListProps } from '@/types';
 
@@ -14,6 +15,8 @@ function RewardTokenForStakeList({
   isERC1155,
   claimableReward,
 }: IRewardTokenInfoForStakeListProps) {
+  const { library } = useWeb3();
+
   const [imageUri, setImageUri] = useState<string>(DefaultERC20Image.src);
   const [name, setName] = useState<string>('');
 
@@ -23,7 +26,8 @@ function RewardTokenForStakeList({
         if (isERC1155) {
           const erc1155Data = await getERC1155Data(
             tokenAddress as Address,
-            Number(tokenId)
+            Number(tokenId),
+            library
           );
           if (erc1155Data) {
             const { name, uri } = erc1155Data;
@@ -31,7 +35,10 @@ function RewardTokenForStakeList({
             setName(name);
           }
         } else {
-          const erc20Data = await getTokenData(tokenAddress as Address);
+          const erc20Data = await getTokenData(
+            tokenAddress as Address,
+            library
+          );
           if (erc20Data) {
             const { tokenName } = erc20Data;
             setImageUri(
@@ -47,7 +54,7 @@ function RewardTokenForStakeList({
     if (tokenAddress) {
       fetchData();
     }
-  }, [isERC1155, tokenAddress, tokenId, claimableReward]);
+  }, [isERC1155, tokenAddress, tokenId, claimableReward, library]);
 
   return (
     <div className="flex flex-col justify-center items-center">

@@ -12,11 +12,12 @@ import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myStakingDataListAtom } from '@/jotai/atoms';
 import { IStakingPoolListProps } from '@/types';
+import { getGasPrice } from '@/lib/getGasPrice';
 
 function WithDrawPage() {
   const router = useRouter();
   const { id } = useParams();
-  const { account, web3 } = useWeb3();
+  const { account, web3, chainId } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
 
   const [myStakingDataList] = useAtom(myStakingDataListAtom);
@@ -35,11 +36,12 @@ function WithDrawPage() {
   const handleWithdraw = async () => {
     try {
       openSpin('Withdrawing');
+      const gasPrice = await getGasPrice(web3, chainId!);
       const productStakingWeb3: any = new web3.eth.Contract(
         ProductStakingAbi,
         selectedPoolData?.instanceAddress
       );
-      await productStakingWeb3.methods.withdraw().send({ from: account });
+      await productStakingWeb3.methods.withdraw().send({ from: account, gasPrice });
       router.push('/my-portfolio');
     } catch (err) {
       console.log(err);

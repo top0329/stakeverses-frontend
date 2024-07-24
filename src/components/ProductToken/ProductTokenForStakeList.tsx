@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Address } from 'viem';
 
+import useWeb3 from '@/hooks/useWeb3';
 import DefaultERC1155Image from '@/assets/images/erc1155.png';
 import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenForStakeListProps } from '@/types';
@@ -11,6 +12,8 @@ function ProductTokenForStakeList({
   ratio,
   consumable,
 }: IProductTokenForStakeListProps) {
+  const { library, currentProductAddress } = useWeb3();
+
   const [imageUri, setImageUri] = useState<string>(DefaultERC1155Image.src);
   const [name, setName] = useState<string>('');
 
@@ -18,8 +21,9 @@ function ProductTokenForStakeList({
     async function fetchData() {
       try {
         const erc1155Data = await getERC1155Data(
-          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-          Number(productId)
+          currentProductAddress as Address,
+          Number(productId),
+          library
         );
         if (erc1155Data) {
           const { name, uri } = erc1155Data;
@@ -33,8 +37,7 @@ function ProductTokenForStakeList({
     if (productId) {
       fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productId]);
+  }, [currentProductAddress, library, productId]);
 
   return (
     <div className="flex flex-col gap-y-4">

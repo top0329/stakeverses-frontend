@@ -64,6 +64,8 @@ export type Web3ContextType = {
   isConnected?: boolean;
   library?: ContractRunner;
   productStakingInstance: any;
+  currentProductStakingInstanceAddress: string;
+  currentProductAddress: string;
   erc20Approve: (erc20Address: string, spender: string, amount: string) => any;
   erc1155Approve: (
     erc1155Address: string,

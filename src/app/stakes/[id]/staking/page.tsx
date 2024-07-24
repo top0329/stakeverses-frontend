@@ -15,9 +15,18 @@ import {
   isProductApproveAvailableAtom,
   stakeBaseAmountAtom,
 } from '@/jotai/atoms';
+import { getGasPrice } from '@/lib/getGasPrice';
 
 function StakingPage() {
-  const { erc1155Approve, isConnected, library, account, web3 } = useWeb3();
+  const {
+    erc1155Approve,
+    isConnected,
+    library,
+    account,
+    currentProductAddress,
+    chainId,
+    web3,
+  } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
   const { showToast } = useToast();
   const router = useRouter();
@@ -60,9 +69,10 @@ function StakingPage() {
     if (isApproved) {
       try {
         openSpin('Staking Product');
+        const gasPrice = await getGasPrice(web3, chainId!);
         await productStakingWeb3.methods
           .staking(stakeBaseAmount)
-          .send({ from: account });
+          .send({ from: account, gasPrice });
         setStakeBaseAmount(0);
         router.push('/my-portfolio');
       } catch (err) {
@@ -77,7 +87,7 @@ function StakingPage() {
           let receipt = null;
           while (receipt === null || receipt.status === undefined) {
             const res = erc1155Approve(
-              process.env.NEXT_PUBLIC_PRODUCTADDRESS!,
+              currentProductAddress,
               currentPoolData.instanceAddress,
               true
             );

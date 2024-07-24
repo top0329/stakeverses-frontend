@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Address } from 'viem';
 
-import BreadImage from '@/assets/images/bread.svg';
+import useWeb3 from '@/hooks/useWeb3';
+import DefaultERC1155Image from '@/assets/images/erc1155.png';
 import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenInfo } from '@/types';
 
@@ -11,15 +12,18 @@ function ProductTokenListForPoolDetail({
   consumable,
   amount,
 }: IProductTokenInfo) {
-  const [imageUri, setImageUri] = useState<string>(BreadImage);
+  const { library, currentProductAddress } = useWeb3();
+
+  const [imageUri, setImageUri] = useState<string>(DefaultERC1155Image.src);
   const [name, setName] = useState<string>('');
 
   useEffect(() => {
     async function fetchData() {
       try {
         const erc1155Data = await getERC1155Data(
-          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-          Number(productId)
+          currentProductAddress as Address,
+          Number(productId),
+          library
         );
         if (erc1155Data) {
           const { name, uri } = erc1155Data;
@@ -33,8 +37,7 @@ function ProductTokenListForPoolDetail({
     if (productId) {
       fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productId]);
+  }, [productId, library, currentProductAddress]);
 
   return (
     <div className="relative flex flex-col text-white text-lg px-4 py-6 bg-[#47556e] rounded-[20px] gap-2 2xl:text-xl lg:gap-2 md:gap-10 sm:flex-row dark:bg-[#141D2D]/70">
@@ -47,7 +50,7 @@ function ProductTokenListForPoolDetail({
           alt="product"
           unoptimized
           onError={() => {
-            setImageUri(BreadImage);
+            setImageUri(DefaultERC1155Image.src);
           }}
         />
         <div className="flex flex-row justify-between items-center w-full gap-1">

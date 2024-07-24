@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Address } from 'viem';
 
+import useWeb3 from '@/hooks/useWeb3';
 import getERC1155Data from '@/lib/getERC1155Data';
 import getTokenData from '@/lib/getTokenData';
 import DefaultERC20Image from '@/assets/images/erc20.png';
@@ -13,6 +14,8 @@ function RewardTokenListForClaim({
   amount,
   isERC1155,
 }: IRewardTokenListForCreate) {
+  const { library } = useWeb3();
+
   const [imageUri, setImageUri] = useState<string>(DefaultERC20Image.src);
   const [name, setName] = useState<string>('');
 
@@ -22,7 +25,8 @@ function RewardTokenListForClaim({
         if (isERC1155) {
           const erc1155Data = await getERC1155Data(
             (tokenAddress || '') as Address,
-            Number(tokenId)
+            Number(tokenId),
+            library
           );
           if (erc1155Data) {
             const { name, uri } = erc1155Data;
@@ -30,7 +34,10 @@ function RewardTokenListForClaim({
             setName(name);
           }
         } else {
-          const erc20Data = await getTokenData(tokenAddress as Address);
+          const erc20Data = await getTokenData(
+            tokenAddress as Address,
+            library
+          );
           if (erc20Data) {
             const { tokenName } = erc20Data;
             setImageUri(
@@ -44,7 +51,7 @@ function RewardTokenListForClaim({
       }
     }
     fetchData();
-  }, [isERC1155, tokenId, tokenAddress]);
+  }, [isERC1155, tokenId, tokenAddress, library]);
 
   return (
     <div className="flex flex-row justify-start items-center text-lg bg-[#47556e] rounded-[20px] px-4 py-5 gap-4 lg:px-14 md:text-xl sm:justify-between sm:px-8 dark:bg-[#053F40]">

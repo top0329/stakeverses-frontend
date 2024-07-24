@@ -4,16 +4,19 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
+import Button from '@/components/Buttons';
+import useWeb3 from '@/hooks/useWeb3';
+import getERC1155Data from '@/lib/getERC1155Data';
 import {
   isEditProductTokenModalOpenAtom,
   productTokenInfoAtom,
   selectedProductInfoAtom,
 } from '@/jotai/atoms';
-import Button from '@/components/Buttons';
-import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenInfo } from '@/types';
 
 function EditProductTokenModal() {
+  const { library, currentProductAddress } = useWeb3();
+
   const [isEditProductTokenModalOpen, setIsEditProductTokenModalOpen] = useAtom(
     isEditProductTokenModalOpenAtom
   );
@@ -111,8 +114,9 @@ function EditProductTokenModal() {
   ) => {
     const { value, name } = event.target;
     const erc1155Data = await getERC1155Data(
-      (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-      Number(value)
+      currentProductAddress as Address,
+      Number(value),
+      library
     );
     if (erc1155Data) {
       const { name, uri } = erc1155Data;
@@ -150,8 +154,9 @@ function EditProductTokenModal() {
   ) => {
     if (event.key === 'Enter') {
       const erc1155Data = await getERC1155Data(
-        (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-        editProductTokenInfo.productId
+        currentProductAddress as Address,
+        editProductTokenInfo.productId,
+        library
       );
       if (erc1155Data) {
         const { name, uri } = erc1155Data;

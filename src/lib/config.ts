@@ -4,9 +4,8 @@ import { http, createStorage, cookieStorage } from 'wagmi';
 import {
   mainnet,
   sepolia,
-  bscTestnet,
-  polygon,
   bsc,
+  polygon,
   polygonAmoy,
 } from 'wagmi/chains';
 import { Chain, getDefaultConfig } from '@rainbow-me/rainbowkit';
@@ -19,7 +18,6 @@ const supportedChains: readonly [Chain, ...Chain[]] = [
   mainnet,
   sepolia,
   bsc,
-  bscTestnet,
   polygon,
   {
     ...polygonAmoy,

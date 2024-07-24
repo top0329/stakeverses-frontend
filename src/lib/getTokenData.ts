@@ -3,10 +3,7 @@ import { ethers } from 'ethers';
 
 import erc20Abi from '@/abi/ERC20ABI.json';
 
-async function getTokenData(contractAddress: Address) {
-  const provider = new ethers.JsonRpcProvider(
-    process.env.NEXT_PUBLIC_DEFAULTRPC
-  );
+async function getTokenData(contractAddress: Address, provider: any) {
   const erc20Contract = new ethers.Contract(
     contractAddress,
     erc20Abi,

@@ -4,7 +4,8 @@ import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
 import Button from '@/components/Buttons';
-import EditRewardTokenModal from '../Modals/EditRewardTokenModal';
+import EditRewardTokenModal from '@/components/Modals/EditRewardTokenModal';
+import useWeb3 from '@/hooks/useWeb3';
 import getERC1155Data from '@/lib/getERC1155Data';
 import getTokenData from '@/lib/getTokenData';
 import DefaultERC20Image from '@/assets/images/erc20.png';
@@ -21,6 +22,7 @@ function RewardTokenInfoCard({
   ratio,
   isERC1155,
 }: IRewardTokenInfo) {
+  const { library } = useWeb3();
   const [, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
   const [, setIsEditRewardTokenModalOpen] = useAtom(
     isEditRewardTokenModalOpenAtom
@@ -36,7 +38,8 @@ function RewardTokenInfoCard({
         if (isERC1155) {
           const erc1155Data = await getERC1155Data(
             (tokenAddress || '') as Address,
-            Number(tokenId)
+            Number(tokenId),
+            library
           );
           if (erc1155Data) {
             const { name, uri } = erc1155Data;
@@ -44,7 +47,10 @@ function RewardTokenInfoCard({
             setName(name);
           }
         } else {
-          const erc20Data = await getTokenData(tokenAddress as Address);
+          const erc20Data = await getTokenData(
+            tokenAddress as Address,
+            library
+          );
           if (erc20Data) {
             const { tokenName } = erc20Data;
             setImageUri(
@@ -58,7 +64,7 @@ function RewardTokenInfoCard({
       }
     }
     fetchData();
-  }, [isERC1155, tokenId, tokenAddress]);
+  }, [isERC1155, tokenId, tokenAddress, library]);
 
   const handleEdit = () => {
     setIsEditRewardTokenModalOpen(true);

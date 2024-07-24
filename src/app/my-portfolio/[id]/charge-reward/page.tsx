@@ -10,11 +10,12 @@ import useWeb3 from '@/hooks/useWeb3';
 import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myCreatedInstanceDataListAtom } from '@/jotai/atoms';
+import { getGasPrice } from '@/lib/getGasPrice';
 
 function ChargeRewardPage() {
   const router = useRouter();
   const { id } = useParams();
-  const { account, web3 } = useWeb3();
+  const { account, web3, chainId } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
 
   const [myCreatedInstanceDataList] = useAtom(myCreatedInstanceDataListAtom);
@@ -29,6 +30,7 @@ function ChargeRewardPage() {
   const handleChargeReward = async () => {
     try {
       openSpin('Charging Reward');
+      const gasPrice = await getGasPrice(web3, chainId!);
       const productStakingWeb3: any = new web3.eth.Contract(
         ProductStakingAbi,
         myCreatedInstanceDataList.filter(
@@ -37,7 +39,7 @@ function ChargeRewardPage() {
       );
       await productStakingWeb3.methods
         .chargeReward(baseAmount)
-        .send({ from: account });
+        .send({ from: account, gasPrice });
       router.push('/my-portfolio');
     } catch (err) {
       console.log(err);

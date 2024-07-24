@@ -19,7 +19,7 @@ function ProductTokenStakeList({
   amount: number;
   consumable: boolean;
 }) {
-  const { account } = useWeb3();
+  const { account, library, currentProductAddress } = useWeb3();
 
   const [, setIsProductApproveAvailable] = useAtom<boolean>(
     isProductApproveAvailableAtom
@@ -33,12 +33,10 @@ function ProductTokenStakeList({
   useEffect(() => {
     async function fetchData() {
       try {
-        const provider = new ethers.JsonRpcProvider(
-          process.env.NEXT_PUBLIC_DEFAULTRPC
-        );
         const erc1155Data = await getERC1155Data(
-          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
-          Number(productId)
+          currentProductAddress as Address,
+          Number(productId),
+          library
         );
         if (erc1155Data) {
           const { name, uri } = erc1155Data;
@@ -46,9 +44,9 @@ function ProductTokenStakeList({
           setName(name);
         }
         const erc1155Contract = new ethers.Contract(
-          (process.env.NEXT_PUBLIC_PRODUCTADDRESS || '') as Address,
+          currentProductAddress as Address,
           erc1155Abi,
-          provider
+          library
         );
         const _balance = await erc1155Contract.balanceOf(
           account,
@@ -62,8 +60,7 @@ function ProductTokenStakeList({
     if (productId) {
       fetchData();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productId]);
+  }, [account, currentProductAddress, library, productId]);
 
   useEffect(() => {
     if (baseAmount > balance) {

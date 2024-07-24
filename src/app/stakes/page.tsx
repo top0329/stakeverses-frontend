@@ -26,7 +26,6 @@ function StakesPage() {
           return { ...stakeData, instanceId: id };
         })
       );
-      console.log(stakingData);
       setStakingDataList(stakingData);
     }
     if (Object.keys(productStakingInstance).length > 0) {

@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
 import Button from '../Buttons';
+import useWeb3 from '@/hooks/useWeb3';
 import useToast from '@/hooks/useToast';
 import getERC1155Data from '@/lib/getERC1155Data';
 import getTokenData from '@/lib/getTokenData';
@@ -17,6 +18,7 @@ import {
 import { IRewardTokenInfo } from '@/types';
 
 function AddRewardTokenModal() {
+  const { library } = useWeb3();
   const { showToast } = useToast();
 
   const [isAddRewardTokenModalOpen, setIsAddRewardTokenModalOpen] = useAtom(
@@ -82,7 +84,8 @@ function AddRewardTokenModal() {
         if (addRewardTokenInfo.isERC1155 === true) {
           const erc1155Data = await getERC1155Data(
             (addRewardTokenInfo.tokenAddress || '') as Address,
-            Number(addRewardTokenInfo.tokenId)
+            Number(addRewardTokenInfo.tokenId),
+            library
           );
           if (erc1155Data) {
             const { name, uri } = erc1155Data;
@@ -144,7 +147,8 @@ function AddRewardTokenModal() {
           ) {
             const erc1155Data = await getERC1155Data(
               (addRewardTokenInfo.tokenAddress || '') as Address,
-              Number(addRewardTokenInfo.tokenId)
+              Number(addRewardTokenInfo.tokenId),
+              library
             );
             if (erc1155Data) {
               const { name, uri } = erc1155Data;
@@ -195,7 +199,8 @@ function AddRewardTokenModal() {
             addRewardTokenInfo.tokenAddress !== ''
           ) {
             const erc20Data = await getTokenData(
-              addRewardTokenInfo.tokenAddress as Address
+              addRewardTokenInfo.tokenAddress as Address,
+              library
             );
             if (erc20Data) {
               const _tokenName = erc20Data.tokenName;

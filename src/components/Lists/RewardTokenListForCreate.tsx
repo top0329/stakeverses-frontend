@@ -21,7 +21,7 @@ function RewardTokenListForCreate({
   isApproved,
 }: IRewardTokenListForCreate) {
   const { openSpin, closeSpin } = useSpinner();
-  const { erc20Approve, erc1155Approve, isConnected, library, web3 } = useWeb3();
+  const { erc20Approve, erc1155Approve, isConnected, library, currentProductStakingInstanceAddress, web3 } = useWeb3();
 
   const [rewardTokenInfo, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
 
@@ -34,7 +34,8 @@ function RewardTokenListForCreate({
         if (isERC1155) {
           const erc1155Data = await getERC1155Data(
             (tokenAddress || '') as Address,
-            Number(tokenId)
+            Number(tokenId),
+            library
           );
           if (erc1155Data) {
             const { name, uri } = erc1155Data;
@@ -42,7 +43,10 @@ function RewardTokenListForCreate({
             setName(name);
           }
         } else {
-          const erc20Data = await getTokenData(tokenAddress as Address);
+          const erc20Data = await getTokenData(
+            tokenAddress as Address,
+            library
+          );
           if (erc20Data) {
             const { tokenName } = erc20Data;
             setImageUri(
@@ -56,7 +60,7 @@ function RewardTokenListForCreate({
       }
     }
     fetchData();
-  }, [isERC1155, tokenId, tokenAddress]);
+  }, [isERC1155, tokenId, tokenAddress, library]);
 
   const handleApprove = async () => {
     try {
@@ -68,7 +72,7 @@ function RewardTokenListForCreate({
           if (isERC1155) {
             res = erc1155Approve(
               tokenAddress!,
-              process.env.NEXT_PUBLIC_PRODUCTSTAKINGINSTANCEADDRESS!,
+              currentProductStakingInstanceAddress,
               true
             );
           } else {
@@ -76,7 +80,7 @@ function RewardTokenListForCreate({
             const decimals = await contract.methods.decimals().call();
             res = erc20Approve(
               tokenAddress!,
-              process.env.NEXT_PUBLIC_PRODUCTSTAKINGINSTANCEADDRESS!,
+              currentProductStakingInstanceAddress,
               (amount * 10 ** Number(decimals)).toString()
             );
           }

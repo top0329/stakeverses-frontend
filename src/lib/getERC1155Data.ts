@@ -6,12 +6,10 @@ import erc1155Abi from '@/abi/ERC1155ABI.json';
 
 export default async function getERC1155Data(
   contractAddress: Address | '',
-  tokenId: number
+  tokenId: number,
+  provider: any
 ) {
   if (contractAddress === '') return null;
-  const provider = new ethers.JsonRpcProvider(
-    process.env.NEXT_PUBLIC_DEFAULTRPC
-  );
   const erc1155Contract = new ethers.Contract(
     contractAddress,
     erc1155Abi,
