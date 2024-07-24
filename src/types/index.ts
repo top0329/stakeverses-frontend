@@ -66,6 +66,7 @@ export type Web3ContextType = {
   productStakingInstance: any;
   currentProductStakingInstanceAddress: string;
   currentProductAddress: string;
+  currentTokenDataUrl: string;
   erc20Approve: (erc20Address: string, spender: string, amount: string) => any;
   erc1155Approve: (
     erc1155Address: string,

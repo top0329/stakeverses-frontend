@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
@@ -21,7 +22,15 @@ function RewardTokenListForCreate({
   isApproved,
 }: IRewardTokenListForCreate) {
   const { openSpin, closeSpin } = useSpinner();
-  const { erc20Approve, erc1155Approve, isConnected, library, currentProductStakingInstanceAddress, web3 } = useWeb3();
+  const {
+    erc20Approve,
+    erc1155Approve,
+    isConnected,
+    library,
+    currentProductStakingInstanceAddress,
+    currentTokenDataUrl,
+    web3,
+  } = useWeb3();
 
   const [rewardTokenInfo, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
 
@@ -49,9 +58,16 @@ function RewardTokenListForCreate({
           );
           if (erc20Data) {
             const { tokenName } = erc20Data;
-            setImageUri(
-              `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${tokenAddress}/logo.png`
+            const response = await axios.get(
+              `${currentTokenDataUrl}/${tokenAddress}`
             );
+            let logo: string;
+            if (response.data.image.large) {
+              logo = response.data.image.large;
+            } else {
+              logo = DefaultERC20Image.src;
+            }
+            setImageUri(logo);
             setName(tokenName);
           }
         }
@@ -60,7 +76,7 @@ function RewardTokenListForCreate({
       }
     }
     fetchData();
-  }, [isERC1155, tokenId, tokenAddress, library]);
+  }, [isERC1155, tokenId, tokenAddress, library, currentTokenDataUrl]);
 
   const handleApprove = async () => {
     try {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
@@ -22,7 +23,7 @@ function RewardTokenInfoCard({
   ratio,
   isERC1155,
 }: IRewardTokenInfo) {
-  const { library } = useWeb3();
+  const { library, currentTokenDataUrl } = useWeb3();
   const [, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
   const [, setIsEditRewardTokenModalOpen] = useAtom(
     isEditRewardTokenModalOpenAtom
@@ -53,9 +54,16 @@ function RewardTokenInfoCard({
           );
           if (erc20Data) {
             const { tokenName } = erc20Data;
-            setImageUri(
-              `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${tokenAddress}/logo.png`
+            const response = await axios.get(
+              `${currentTokenDataUrl}/${tokenAddress}`
             );
+            let logo: string;
+            if (response.data.image.large) {
+              logo = response.data.image.large;
+            } else {
+              logo = DefaultERC20Image.src;
+            }
+            setImageUri(logo);
             setName(tokenName);
           }
         }
@@ -64,7 +72,7 @@ function RewardTokenInfoCard({
       }
     }
     fetchData();
-  }, [isERC1155, tokenId, tokenAddress, library]);
+  }, [isERC1155, tokenId, tokenAddress, library, currentTokenDataUrl]);
 
   const handleEdit = () => {
     setIsEditRewardTokenModalOpen(true);

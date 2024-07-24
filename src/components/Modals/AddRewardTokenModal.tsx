@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { Address } from 'viem';
@@ -18,7 +19,7 @@ import {
 import { IRewardTokenInfo } from '@/types';
 
 function AddRewardTokenModal() {
-  const { library } = useWeb3();
+  const { library, currentTokenDataUrl } = useWeb3();
   const { showToast } = useToast();
 
   const [isAddRewardTokenModalOpen, setIsAddRewardTokenModalOpen] = useAtom(
@@ -204,10 +205,19 @@ function AddRewardTokenModal() {
             );
             if (erc20Data) {
               const _tokenName = erc20Data.tokenName;
+              const response = await axios.get(
+                `${currentTokenDataUrl}/${addRewardTokenInfo.tokenAddress}`
+              );
+              let logo: string;
+              if (response.data.image.large) {
+                logo = response.data.image.large;
+              } else {
+                logo = DefaultERC20Image.src;
+              }
               setAddRewardTokenInfo({
                 ...addRewardTokenInfo,
                 tokenName: _tokenName,
-                imageUri: `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${addRewardTokenInfo.tokenAddress}/logo.png`,
+                imageUri: logo,
               });
             }
           }

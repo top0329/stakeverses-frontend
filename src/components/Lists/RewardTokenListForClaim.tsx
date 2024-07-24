@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { Address } from 'viem';
 
 import useWeb3 from '@/hooks/useWeb3';
@@ -14,7 +15,7 @@ function RewardTokenListForClaim({
   amount,
   isERC1155,
 }: IRewardTokenListForCreate) {
-  const { library } = useWeb3();
+  const { library, currentTokenDataUrl } = useWeb3();
 
   const [imageUri, setImageUri] = useState<string>(DefaultERC20Image.src);
   const [name, setName] = useState<string>('');
@@ -40,9 +41,16 @@ function RewardTokenListForClaim({
           );
           if (erc20Data) {
             const { tokenName } = erc20Data;
-            setImageUri(
-              `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${tokenAddress}/logo.png`
+            const response = await axios.get(
+              `${currentTokenDataUrl}/${tokenAddress}`
             );
+            let logo: string;
+            if (response.data.image.large) {
+              logo = response.data.image.large;
+            } else {
+              logo = DefaultERC20Image.src;
+            }
+            setImageUri(logo);
             setName(tokenName);
           }
         }
@@ -51,7 +59,7 @@ function RewardTokenListForClaim({
       }
     }
     fetchData();
-  }, [isERC1155, tokenId, tokenAddress, library]);
+  }, [isERC1155, tokenId, tokenAddress, library, currentTokenDataUrl]);
 
   return (
     <div className="flex flex-row justify-start items-center text-lg bg-[#47556e] rounded-[20px] px-4 py-5 gap-4 lg:px-14 md:text-xl sm:justify-between sm:px-8 dark:bg-[#053F40]">

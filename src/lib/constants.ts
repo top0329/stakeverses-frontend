@@ -21,3 +21,9 @@ export const productStakingInstanceAddress = {
   polygon: '0x6Aeb5002df026ed10193A1052D76081F5d043d1C'.toLocaleLowerCase(),
   amoy: '0x67a22B86482228b514e55D73931f763418eAaB2a'.toLocaleLowerCase(),
 };
+
+export const TOKEN_DETAIL_DATA_URL = {
+  main: 'https://api.coingecko.com/api/v3/coins/ethereum/contract',
+  bsc: 'https://api.coingecko.com/api/v3/coins/bsc/contract',
+  polygon: 'https://api.coingecko.com/api/v3/coins/polygon/contract',
+};
