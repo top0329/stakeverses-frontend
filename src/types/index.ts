@@ -17,9 +17,12 @@ export interface IButtonClass {
 }
 
 export interface IProductTokenForStakeListProps {
-  productId: string;
+  tokenId: string;
+  tokenAddress: string;
   ratio: string;
+  isERC1155?: boolean;
   consumable?: boolean;
+  isApproved?: boolean;
 }
 
 export interface IRewardTokenInfoForStakeListProps {
@@ -34,18 +37,20 @@ export interface IStakingPoolListProps {
   instanceId: string;
   creator: string;
   instanceAddress: string;
-  productInfo: IProductTokenForStakeListProps[];
+  stakingTokenInfo: IProductTokenForStakeListProps[];
   rewardTokenInfo: IRewardTokenInfoForStakeListProps[];
 }
 
 export interface IProductTokenInfo {
-  productName?: string;
+  tokenName?: string;
   imageUri?: string;
-  productAddress?: string;
-  productId: number;
+  tokenAddress?: string;
+  tokenId: number;
   ratio?: number;
+  isERC1155?: boolean;
   amount?: number;
   consumable?: boolean;
+  isApproved?: boolean;
 }
 
 export interface IRewardTokenInfo {
@@ -65,7 +70,6 @@ export type Web3ContextType = {
   library?: ContractRunner;
   productStakingInstance: any;
   currentProductStakingInstanceAddress: string;
-  currentProductAddress: string;
   currentTokenDataUrl: string;
   erc20Approve: (erc20Address: string, spender: string, amount: string) => any;
   erc1155Approve: (

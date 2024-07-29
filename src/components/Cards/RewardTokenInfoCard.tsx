@@ -24,6 +24,7 @@ function RewardTokenInfoCard({
   isERC1155,
 }: IRewardTokenInfo) {
   const { library, currentTokenDataUrl } = useWeb3();
+
   const [, setRewardTokenInfo] = useAtom(rewardTokenInfoAtom);
   const [, setIsEditRewardTokenModalOpen] = useAtom(
     isEditRewardTokenModalOpenAtom
@@ -54,6 +55,11 @@ function RewardTokenInfoCard({
           );
           if (erc20Data) {
             const { tokenName } = erc20Data;
+            if (!currentTokenDataUrl) {
+              setImageUri(DefaultERC20Image.src);
+              setName(tokenName);
+              return;
+            }
             const response = await axios.get(
               `${currentTokenDataUrl}/${tokenAddress}`
             );

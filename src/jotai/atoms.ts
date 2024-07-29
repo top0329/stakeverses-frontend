@@ -22,12 +22,13 @@ export const currentPoolDataAtom = atom<IStakingPoolListProps>({
   creator: '',
   instanceAddress: '',
   instanceId: '',
-  productInfo: [],
+  stakingTokenInfo: [],
   rewardTokenInfo: [],
 });
 export const selectedProductInfoAtom = atom<IProductTokenInfo>({
-  productId: 0,
+  tokenId: 0,
   ratio: 0,
+  isERC1155: false,
   consumable: false,
   imageUri: '',
 });

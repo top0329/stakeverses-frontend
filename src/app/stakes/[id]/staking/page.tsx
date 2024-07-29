@@ -13,24 +13,18 @@ import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import {
   currentPoolDataAtom,
   isProductApproveAvailableAtom,
+  productTokenInfoAtom,
   stakeBaseAmountAtom,
 } from '@/jotai/atoms';
 import { getGasPrice } from '@/lib/getGasPrice';
 
 function StakingPage() {
-  const {
-    erc1155Approve,
-    isConnected,
-    library,
-    account,
-    currentProductAddress,
-    chainId,
-    web3,
-  } = useWeb3();
+  const { account, chainId, web3 } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
   const { showToast } = useToast();
   const router = useRouter();
 
+  const [productTokenInfo] = useAtom(productTokenInfoAtom);
   const [currentPoolData] = useAtom(currentPoolDataAtom);
   const [stakeBaseAmount, setStakeBaseAmount] =
     useAtom<number>(stakeBaseAmountAtom);
@@ -38,7 +32,6 @@ function StakingPage() {
     isProductApproveAvailableAtom
   );
 
-  const [isApproved, setIsApproved] = useState<boolean>(false);
   const [numberOfStakers, setNumberOfStakers] = useState<number>(0);
 
   const productStakingWeb3: any = new web3.eth.Contract(
@@ -65,8 +58,11 @@ function StakingPage() {
     setStakeBaseAmount(Number(value));
   };
 
-  const handleApprove = async () => {
-    if (isApproved) {
+  const handleStake = async () => {
+    if (
+      productTokenInfo.filter((token) => token.isApproved).length ===
+      productTokenInfo.length
+    ) {
       try {
         openSpin('Staking Product');
         const gasPrice = await getGasPrice(web3, chainId!);
@@ -81,38 +77,7 @@ function StakingPage() {
         closeSpin();
       }
     } else {
-      try {
-        if (isConnected && library) {
-          openSpin('Approving');
-          let receipt = null;
-          while (receipt === null || receipt.status === undefined) {
-            const res = erc1155Approve(
-              currentProductAddress,
-              currentPoolData.instanceAddress,
-              true
-            );
-            receipt = await web3.eth.getTransactionReceipt(
-              (
-                await res
-              ).transactionHash
-            );
-          }
-          if (receipt && receipt.status !== undefined) {
-            if (receipt.status) {
-              setIsApproved(true);
-            } else {
-              setIsApproved(false);
-            }
-          } else {
-            alert('Transaction is still pending');
-            await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before checking again
-          }
-        } else showToast('warning', 'Please connect your wallet!');
-      } catch (err: any) {
-        console.log(err);
-      } finally {
-        closeSpin();
-      }
+      showToast('warning', 'Please approve all reward tokens!');
     }
   };
 
@@ -135,12 +100,15 @@ function StakingPage() {
             />
           </div>
           <div className="flex flex-col text-center gap-7 px-6 2xl:px-12 xl:px-8">
-            {currentPoolData.productInfo.map((product) => (
+            {currentPoolData.stakingTokenInfo.map((product, idx) => (
               <ProductTokenStakeList
-                key={product.productId}
-                productId={Number(product.productId)}
+                key={idx}
+                tokenId={Number(product.tokenId)}
+                tokenAddress={product.tokenAddress}
+                isERC1155={!!product.isERC1155}
                 consumable={!!product.consumable}
                 amount={Number(product.ratio) * stakeBaseAmount}
+                isApproved={product.isApproved}
               />
             ))}
             <div className="pb-10 mx-auto">
@@ -148,8 +116,8 @@ function StakingPage() {
                 className={`!w-[160px] ${
                   isProductApproveAvailable ? '' : 'opacity-50'
                 }`}
-                text={isApproved ? 'Stake' : 'Approve'}
-                onClick={handleApprove}
+                text="Stake"
+                onClick={handleStake}
                 disabled={!isProductApproveAvailable}
               />
             </div>

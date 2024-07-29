@@ -58,6 +58,11 @@ function RewardTokenListForCreate({
           );
           if (erc20Data) {
             const { tokenName } = erc20Data;
+            if (!currentTokenDataUrl) {
+              setImageUri(DefaultERC20Image.src);
+              setName(tokenName);
+              return;
+            }
             const response = await axios.get(
               `${currentTokenDataUrl}/${tokenAddress}`
             );
@@ -189,10 +194,6 @@ function RewardTokenListForCreate({
           } justify-between items-center gap-2`}
         >
           <p className="truncate min-w-20 tracking-[-1px]">Address: </p>
-          {/* <p className="flex flex-col justify-start items-start text-sm w-auto">
-            <span>{tokenAddress?.slice(0, 21)}</span>
-            <span>{tokenAddress?.slice(21)}</span>
-          </p> */}
           <p className="flex flex-col justify-start items-start text-sm break-all w-auto">
             {tokenAddress}
           </p>

@@ -1,15 +1,5 @@
 [
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "productTokenAddress",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
   {
     "anonymous": false,
     "inputs": [
@@ -47,15 +37,16 @@
         "components": [
           {
             "internalType": "address",
-            "name": "productAddress",
+            "name": "tokenAddress",
             "type": "address"
           },
-          { "internalType": "uint256", "name": "productId", "type": "uint256" },
+          { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
           { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+          { "internalType": "bool", "name": "isERC1155", "type": "bool" },
           { "internalType": "bool", "name": "consumable", "type": "bool" }
         ],
-        "internalType": "struct IStakingInfo.ProductInfo[]",
-        "name": "productInfos",
+        "internalType": "struct IStakingInfo.StakingTokenInfo[]",
+        "name": "stakingTokenInfos",
         "type": "tuple[]"
       },
       {
@@ -77,9 +68,7 @@
         "internalType": "uint256",
         "name": "rewardBaseAmount",
         "type": "uint256"
-      },
-      { "internalType": "string", "name": "stkName", "type": "string" },
-      { "internalType": "string", "name": "stkSymbol", "type": "string" }
+      }
     ],
     "name": "createStakingInstance",
     "outputs": [],
@@ -98,16 +87,6 @@
     "name": "currentInstanceId",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "staker", "type": "address" },
-      { "internalType": "uint256", "name": "instanceId", "type": "uint256" }
-    ],
-    "name": "devRegisterStaker",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -184,14 +163,15 @@
         "components": [
           {
             "internalType": "address",
-            "name": "productAddress",
+            "name": "tokenAddress",
             "type": "address"
           },
-          { "internalType": "uint256", "name": "productId", "type": "uint256" },
+          { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
           { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+          { "internalType": "bool", "name": "isERC1155", "type": "bool" },
           { "internalType": "bool", "name": "consumable", "type": "bool" }
         ],
-        "internalType": "struct IStakingInfo.ProductInfo[]",
+        "internalType": "struct IStakingInfo.StakingTokenInfo[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -242,19 +222,20 @@
             "components": [
               {
                 "internalType": "address",
-                "name": "productAddress",
+                "name": "tokenAddress",
                 "type": "address"
               },
               {
                 "internalType": "uint256",
-                "name": "productId",
+                "name": "tokenId",
                 "type": "uint256"
               },
               { "internalType": "uint256", "name": "ratio", "type": "uint256" },
+              { "internalType": "bool", "name": "isERC1155", "type": "bool" },
               { "internalType": "bool", "name": "consumable", "type": "bool" }
             ],
-            "internalType": "struct IStakingInfo.ProductInfo[]",
-            "name": "productInfo",
+            "internalType": "struct IStakingInfo.StakingTokenInfo[]",
+            "name": "stakingTokenInfo",
             "type": "tuple[]"
           },
           {
@@ -282,13 +263,6 @@
         "type": "tuple"
       }
     ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "idStakingStatus",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -325,6 +299,16 @@
     "name": "isInstancePaused",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "staker", "type": "address" },
+      { "internalType": "uint256", "name": "instanceId", "type": "uint256" }
+    ],
+    "name": "registerStaker",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

@@ -6,18 +6,10 @@ export const defaultRPC = {
   amoy: 'https://rpc-amoy.polygon.technology',
 };
 
-export const productAddress = {
-  mainnet: '0x44c6a7158dDc30906A4F59Fd7d04196e22C03fbb'.toLocaleLowerCase(),
-  bsc: '0x44c6a7158dDc30906A4F59Fd7d04196e22C03fbb'.toLocaleLowerCase(),
-  sepolia: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1'.toLocaleLowerCase(),
-  polygon: '0x4eF7388B30e8f75BC9142218F3f7D3C8f61dFb12'.toLocaleLowerCase(),
-  amoy: '0x2a54bC9eBd293D218ccbbB23556067B391B8d568'.toLocaleLowerCase(),
-};
-
 export const productStakingInstanceAddress = {
   mainnet: '0x0192a27706e006a0e40f5e63c9ca6479f3cd11a2'.toLocaleLowerCase(),
   bsc: '0x0192a27706e006A0E40f5E63C9cA6479F3CD11A2'.toLocaleLowerCase(),
-  sepolia: '0xBDC34eF830C8aE8B962905E3858619980d29727D'.toLocaleLowerCase(),
+  sepolia: '0x7c8551901E769B8c975C004aE5a57D23Bdf6c99F'.toLocaleLowerCase(),
   polygon: '0x6Aeb5002df026ed10193A1052D76081F5d043d1C'.toLocaleLowerCase(),
   amoy: '0x67a22B86482228b514e55D73931f763418eAaB2a'.toLocaleLowerCase(),
 };

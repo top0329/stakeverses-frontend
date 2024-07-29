@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { Address } from 'viem';
 
 import useWeb3 from '@/hooks/useWeb3';
+import DefaultERC20Image from '@/assets/images/erc20.png';
 import DefaultERC1155Image from '@/assets/images/erc1155.png';
+import getTokenData from '@/lib/getTokenData';
 import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenInfo } from '@/types';
 
 function ProductTokenListForPoolDetail({
-  productId,
+  tokenId,
+  tokenAddress,
+  isERC1155,
   consumable,
   amount,
 }: IProductTokenInfo) {
-  const { library, currentProductAddress } = useWeb3();
+  const { library, currentTokenDataUrl } = useWeb3();
 
   const [imageUri, setImageUri] = useState<string>(DefaultERC1155Image.src);
   const [name, setName] = useState<string>('');
@@ -20,24 +25,58 @@ function ProductTokenListForPoolDetail({
   useEffect(() => {
     async function fetchData() {
       try {
-        const erc1155Data = await getERC1155Data(
-          currentProductAddress as Address,
-          Number(productId),
-          library
-        );
-        if (erc1155Data) {
-          const { name, uri } = erc1155Data;
-          setImageUri(uri);
-          setName(name);
+        if (isERC1155) {
+          const erc1155Data = await getERC1155Data(
+            (tokenAddress || '') as Address,
+            Number(tokenId),
+            library
+          );
+          if (erc1155Data) {
+            const { name, uri } = erc1155Data;
+            setImageUri(uri);
+            setName(name);
+          }
+        } else {
+          const erc20Data = await getTokenData(
+            tokenAddress as Address,
+            library
+          );
+          if (erc20Data) {
+            const { tokenName } = erc20Data;
+            if (!currentTokenDataUrl) {
+              setImageUri(DefaultERC20Image.src);
+              setName(tokenName);
+              return;
+            }
+            const response = await axios.get(
+              `${currentTokenDataUrl}/${tokenAddress}`
+            );
+            let logo: string;
+            if (response.data.image.large) {
+              logo = response.data.image.large;
+            } else {
+              logo = DefaultERC20Image.src;
+            }
+            setImageUri(logo);
+            setName(tokenName);
+          }
         }
       } catch (err) {
         console.log(err);
       }
     }
-    if (productId) {
+    if (tokenAddress) {
       fetchData();
     }
-  }, [productId, library, currentProductAddress]);
+  }, [
+    library,
+    tokenId,
+    tokenAddress,
+    isERC1155,
+    currentTokenDataUrl,
+    consumable,
+    amount,
+  ]);
 
   return (
     <div className="relative flex flex-col text-white text-lg px-4 py-6 bg-[#47556e] rounded-[20px] gap-2 2xl:text-xl lg:gap-2 md:gap-10 sm:flex-row dark:bg-[#141D2D]/70">
@@ -55,14 +94,20 @@ function ProductTokenListForPoolDetail({
         />
         <div className="flex flex-row justify-between items-center w-full gap-1">
           <div className="flex flex-col">
-            <p className="truncate tracking-[-1px]">Product Name</p>
+            <p className="truncate tracking-[-1px]">Token Name</p>
             <p className="font-semibold">{name}</p>
           </div>
-          <div className="flex-col hidden sm:flex">
-            <p className="truncate tracking-[-1px]">Product Id</p>
-            <p className="font-semibold">{productId}</p>
+          <div className="hidden flex-col md:flex">
+            <p className="truncate tracking-[-1px]">Token Address</p>
+            <p className="text-sm w-48 break-all">{tokenAddress || ''}</p>
           </div>
-          <div className="flex-col hidden sm:flex">
+          {isERC1155 && (
+            <div className="flex flex-col">
+              <p className="truncate tracking-[-1px]">Token Id</p>
+              <p className="font-semibold">{tokenId}</p>
+            </div>
+          )}
+          <div className="hidden flex-col md:flex">
             <p className="tracking-[-1px]">Amount</p>
             <p className="font-semibold">{amount}</p>
           </div>
@@ -71,7 +116,7 @@ function ProductTokenListForPoolDetail({
       <div className="flex flex-row justify-between gap-2">
         <div className="flex flex-row gap-2 sm:hidden">
           <p className="truncate">Product Id: </p>
-          <p className="font-semibold">{productId}</p>
+          <p className="font-semibold">{tokenId}</p>
         </div>
         <div className="flex flex-row gap-2 sm:hidden">
           <p>Amount: </p>

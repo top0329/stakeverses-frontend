@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
+import { Address } from 'viem';
 
 import Button from '../Buttons';
 import useToast from '@/hooks/useToast';
+import useWeb3 from '@/hooks/useWeb3';
+import DefaultERC20Image from '@/assets/images/erc20.png';
+import DefaultERC1155Image from '@/assets/images/erc1155.png';
+import getTokenData from '@/lib/getTokenData';
+import getERC1155Data from '@/lib/getERC1155Data';
 import {
   isEditRewardTokenModalOpenAtom,
   rewardTokenInfoAtom,
@@ -13,6 +20,7 @@ import {
 import { IRewardTokenInfo } from '@/types';
 
 function EditRewardTokenModal() {
+  const { library, currentTokenDataUrl } = useWeb3();
   const { showToast } = useToast();
 
   const [isEditRewardTokenModalOpen, setIsEditRewardTokenModalOpen] = useAtom(
@@ -57,6 +65,200 @@ function EditRewardTokenModal() {
   }, [isEditRewardTokenModalOpen]);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        if (editRewardTokenInfo.isERC1155 === true) {
+          if (
+            rewardTokenInfo
+              .filter((item) => item.isERC1155 === true)
+              .some(
+                (item) =>
+                  item.tokenAddress === editRewardTokenInfo.tokenAddress &&
+                  item.tokenId === editRewardTokenInfo.tokenId
+              ) &&
+            initialRewardTokenId !== editRewardTokenInfo.tokenId &&
+            initialRewardTokenAddress !== editRewardTokenInfo.tokenAddress
+          ) {
+            setError({
+              ...error,
+              tokenId: 'This token has already been added!',
+            });
+          } else if (
+            editRewardTokenInfo.tokenId === undefined ||
+            Number.isNaN(editRewardTokenInfo.tokenId)
+          ) {
+            setEditRewardTokenInfo({
+              ...editRewardTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+            setError({
+              ...error,
+              tokenId: 'Enter the token id!',
+            });
+          } else {
+            const erc1155Data = await getERC1155Data(
+              (editRewardTokenInfo.tokenAddress || '') as Address,
+              Number(editRewardTokenInfo.tokenId),
+              library
+            );
+            if (erc1155Data) {
+              const { name, uri } = erc1155Data;
+              setEditRewardTokenInfo({
+                ...editRewardTokenInfo,
+                tokenName: name,
+                imageUri: uri,
+              });
+            }
+            if (
+              rewardTokenInfo
+                .filter((item) => item.isERC1155 === true)
+                .some(
+                  (item) =>
+                    item.tokenAddress === editRewardTokenInfo.tokenAddress &&
+                    item.tokenId === editRewardTokenInfo.tokenId
+                )
+            ) {
+              setError({
+                ...error,
+                tokenId: 'This token has already been added!',
+              });
+            } else if (
+              editRewardTokenInfo.tokenId === undefined ||
+              Number.isNaN(editRewardTokenInfo.tokenId)
+            ) {
+              setEditRewardTokenInfo({
+                ...editRewardTokenInfo,
+                tokenName: '',
+                imageUri: '',
+              });
+              setError({
+                ...error,
+                tokenId: 'Enter the token id!',
+              });
+            } else {
+              setError({
+                ...error,
+                tokenAddress: '',
+                tokenId: '',
+              });
+            }
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editRewardTokenInfo.tokenId]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (editRewardTokenInfo.isERC1155 === true) {
+          if (
+            rewardTokenInfo
+              .filter((item) => item.isERC1155 === true)
+              .some(
+                (item) =>
+                  item.tokenAddress === editRewardTokenInfo.tokenAddress &&
+                  item.tokenId === editRewardTokenInfo.tokenId
+              )
+          ) {
+            setError({
+              ...error,
+              tokenId: 'This token has already been added!',
+            });
+          } else if (
+            editRewardTokenInfo.tokenAddress === undefined ||
+            editRewardTokenInfo.tokenAddress === ''
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'Enter the token address!',
+            });
+            setEditRewardTokenInfo({
+              ...editRewardTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+          } else {
+            setError({
+              ...error,
+              tokenAddress: '',
+              tokenId: '',
+            });
+          }
+        }
+        if (editRewardTokenInfo.isERC1155 === false) {
+          if (
+            rewardTokenInfo.some(
+              (item) => item.tokenAddress === editRewardTokenInfo.tokenAddress
+            )
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'This token has already been added!',
+            });
+          } else if (
+            editRewardTokenInfo.tokenAddress === undefined ||
+            editRewardTokenInfo.tokenAddress === ''
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'Enter the token address!',
+            });
+            setEditRewardTokenInfo({
+              ...editRewardTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+          } else {
+            const erc20Data = await getTokenData(
+              editRewardTokenInfo.tokenAddress as Address,
+              library
+            );
+            if (erc20Data) {
+              const _tokenName = erc20Data.tokenName;
+              if (!currentTokenDataUrl) {
+                setEditRewardTokenInfo({
+                  ...editRewardTokenInfo,
+                  tokenName: _tokenName,
+                  imageUri: DefaultERC20Image.src,
+                });
+                return;
+              }
+              const response = await axios.get(
+                `${currentTokenDataUrl}/${editRewardTokenInfo.tokenAddress}`
+              );
+              let logo: string;
+              if (response.data.image.large) {
+                logo = response.data.image.large;
+              } else {
+                logo = DefaultERC20Image.src;
+              }
+              setEditRewardTokenInfo({
+                ...editRewardTokenInfo,
+                tokenName: _tokenName,
+                imageUri: logo,
+              });
+            }
+            setError({
+              ...error,
+              tokenAddress: '',
+            });
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editRewardTokenInfo.tokenAddress]);
+
+  useEffect(() => {
     if (editRewardTokenInfo.isERC1155 === true) {
       if (
         editRewardTokenInfo.ratio === undefined ||
@@ -93,116 +295,6 @@ function EditRewardTokenModal() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editRewardTokenInfo.ratio]);
 
-  useEffect(() => {
-    if (editRewardTokenInfo.isERC1155 === true) {
-      if (
-        rewardTokenInfo
-          .filter((item) => item.isERC1155 === true)
-          .some(
-            (item) =>
-              item.tokenAddress === editRewardTokenInfo.tokenAddress &&
-              item.tokenId === editRewardTokenInfo.tokenId
-          ) &&
-        initialRewardTokenId !== editRewardTokenInfo.tokenId &&
-        initialRewardTokenAddress !== editRewardTokenInfo.tokenAddress
-      ) {
-        setError({
-          ...error,
-          tokenId: 'This token has already been added!',
-        });
-      } else if (
-        editRewardTokenInfo.tokenId === undefined ||
-        Number.isNaN(editRewardTokenInfo.tokenId)
-      ) {
-        setEditRewardTokenInfo({
-          ...editRewardTokenInfo,
-          tokenName: '',
-          imageUri: '',
-        });
-        setError({
-          ...error,
-          tokenId: 'Enter the token id!',
-        });
-      } else {
-        setError({
-          ...error,
-          tokenAddress: '',
-          tokenId: '',
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editRewardTokenInfo.tokenId]);
-
-  useEffect(() => {
-    if (editRewardTokenInfo.isERC1155 === true) {
-      if (
-        rewardTokenInfo
-          .filter((item) => item.isERC1155 === true)
-          .some(
-            (item) =>
-              item.tokenAddress === editRewardTokenInfo.tokenAddress &&
-              item.tokenId === editRewardTokenInfo.tokenId
-          )
-      ) {
-        setError({
-          ...error,
-          tokenId: 'This token has already been added!',
-        });
-      } else if (
-        editRewardTokenInfo.tokenAddress === undefined ||
-        editRewardTokenInfo.tokenAddress === ''
-      ) {
-        setError({
-          ...error,
-          tokenAddress: 'Enter the token address!',
-        });
-        setEditRewardTokenInfo({
-          ...editRewardTokenInfo,
-          tokenName: '',
-          imageUri: '',
-        });
-      } else {
-        setError({
-          ...error,
-          tokenAddress: '',
-          tokenId: '',
-        });
-      }
-    }
-    if (editRewardTokenInfo.isERC1155 === false) {
-      if (
-        rewardTokenInfo.some(
-          (item) => item.tokenAddress === editRewardTokenInfo.tokenAddress
-        )
-      ) {
-        setError({
-          ...error,
-          tokenAddress: 'This token has already been added!',
-        });
-      } else if (
-        editRewardTokenInfo.tokenAddress === undefined ||
-        editRewardTokenInfo.tokenAddress === ''
-      ) {
-        setError({
-          ...error,
-          tokenAddress: 'Enter the token address!',
-        });
-        setEditRewardTokenInfo({
-          ...editRewardTokenInfo,
-          tokenName: '',
-          imageUri: '',
-        });
-      } else {
-        setError({
-          ...error,
-          tokenAddress: '',
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editRewardTokenInfo.tokenAddress]);
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     if (name === 'ratio' || name === 'tokenId') {
@@ -233,7 +325,7 @@ function EditRewardTokenModal() {
     }
   };
 
-  const handleAddProductTokenClicked = () => {
+  const handleEditProductTokenClicked = () => {
     if (
       (editRewardTokenInfo.isERC1155 === false &&
         editRewardTokenInfo.tokenAddress &&
@@ -319,12 +411,20 @@ function EditRewardTokenModal() {
                 <div className="min-w-[143px] max-w-[143px] aspect-square bg-slate-600 border border-white rounded-full md:max-w-[243px] md:min-w-[243px] dark:border-[#040E20]"></div>
               ) : (
                 <Image
-                  className="min-w-[143px] max-w-[143px] aspect-square border border-[#040E20] rounded-full md:max-w-[243px] md:min-w-[243px]"
+                  className="col-span-4 min-w-[243px] aspect-square border border-[#040E20] rounded-full"
                   width={243}
                   height={243}
                   src={editRewardTokenInfo.imageUri}
-                  alt="product"
+                  alt="reward"
                   unoptimized
+                  onError={() => {
+                    setEditRewardTokenInfo({
+                      ...editRewardTokenInfo,
+                      imageUri: editRewardTokenInfo.isERC1155
+                        ? DefaultERC1155Image.src
+                        : DefaultERC20Image.src,
+                    });
+                  }}
                 />
               )}
               <div className="flex flex-col justify-between gap-4 w-full xsgap-2">
@@ -422,7 +522,7 @@ function EditRewardTokenModal() {
               <Button
                 className="!w-[120px] md:!w-[200px] xs:!w-[160px]"
                 text="Update"
-                onClick={handleAddProductTokenClicked}
+                onClick={handleEditProductTokenClicked}
               />
               <Button
                 className="bg-[#192F3A] !text-white !border-white !w-[120px] md:!w-[200px] xs:!w-[160px]"

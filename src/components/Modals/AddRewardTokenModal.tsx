@@ -42,6 +42,8 @@ function AddRewardTokenModal() {
     ratio: '',
   });
 
+  const modal = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (addRewardTokenInfo.isERC1155 === true) {
       if (
@@ -205,6 +207,14 @@ function AddRewardTokenModal() {
             );
             if (erc20Data) {
               const _tokenName = erc20Data.tokenName;
+              if (!currentTokenDataUrl) {
+                setAddRewardTokenInfo({
+                  ...addRewardTokenInfo,
+                  tokenName: _tokenName,
+                  imageUri: DefaultERC20Image.src,
+                });
+                return;
+              }
               const response = await axios.get(
                 `${currentTokenDataUrl}/${addRewardTokenInfo.tokenAddress}`
               );
@@ -258,8 +268,6 @@ function AddRewardTokenModal() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addRewardTokenInfo.tokenAddress]);
 
-  const modal = useRef<HTMLDivElement>(null);
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     if (name === 'ratio' || name === 'tokenId') {
@@ -290,7 +298,7 @@ function AddRewardTokenModal() {
     }
   };
 
-  const handleAddProductTokenClicked = () => {
+  const handleAddRewardTokenClicked = () => {
     if (
       (addRewardTokenInfo.isERC1155 === false &&
         addRewardTokenInfo.tokenAddress &&
@@ -356,7 +364,7 @@ function AddRewardTokenModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-slate-900/20 backdrop-blur p-8 fixed inset-0 z-10 grid place-items-center overflow-y-scroll cursor-pointer"
+            className="bg-slate-900/20 backdrop-blur p-8 fixed inset-0 z-10 grid place-items-center overflow-y-auto cursor-pointer"
             onClick={handleCancelButtonClicked}
           ></motion.div>
           <motion.div
@@ -392,7 +400,7 @@ function AddRewardTokenModal() {
                   }}
                 />
               )}
-              <div className="flex flex-col justify-between gap-4 w-full xsgap-2">
+              <div className="flex flex-col justify-between gap-4 w-full xs:gap-2">
                 <div className="flex flex-row justify-center items-center text-base gap-16 sm:text-lg lg:text-xl">
                   <div className="flex flex-row items-center gap-4">
                     <input
@@ -487,7 +495,7 @@ function AddRewardTokenModal() {
               <Button
                 className="!w-[120px] md:!w-[200px] xs:!w-[160px]"
                 text="Add"
-                onClick={handleAddProductTokenClicked}
+                onClick={handleAddRewardTokenClicked}
               />
               <Button
                 className="bg-[#192F3A] !text-white !border-white !w-[120px] md:!w-[200px] xs:!w-[160px]"

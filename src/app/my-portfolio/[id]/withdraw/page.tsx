@@ -24,13 +24,33 @@ function WithDrawPage() {
 
   const [selectedPoolData, setSelectedPoolData] =
     useState<IStakingPoolListProps | null>(null);
+  const [baseAmount, setBaseAmount] = useState(0);
+  const [claimableRewardArray, setClaimableRewardArray] = useState([]);
 
   useEffect(() => {
-    setSelectedPoolData(
-      myStakingDataList.filter(
-        (item) => Number(item.instanceId) === Number(id)
-      )[0]
-    );
+    async function fetchData() {
+      const productStakingWeb3: any = new web3.eth.Contract(
+        ProductStakingAbi,
+        myStakingDataList.filter(
+          (item) => Number(item.instanceId) === Number(id)
+        )[0].instanceAddress
+      );
+      const _claimableRewardArray = await productStakingWeb3.methods
+        .getClaimableReward(account)
+        .call();
+      const withdrawData = await productStakingWeb3.methods
+        .stakingUser(account)
+        .call();
+      setClaimableRewardArray(_claimableRewardArray);
+      setBaseAmount(Number(withdrawData.totalAmount));
+      setSelectedPoolData(
+        myStakingDataList.filter(
+          (item) => Number(item.instanceId) === Number(id)
+        )[0]
+      );
+    }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, myStakingDataList]);
 
   const handleWithdraw = async () => {
@@ -41,7 +61,9 @@ function WithDrawPage() {
         ProductStakingAbi,
         selectedPoolData?.instanceAddress
       );
-      await productStakingWeb3.methods.withdraw().send({ from: account, gasPrice });
+      await productStakingWeb3.methods
+        .withdraw()
+        .send({ from: account, gasPrice });
       router.push('/my-portfolio');
     } catch (err) {
       console.log(err);
@@ -60,11 +82,14 @@ function WithDrawPage() {
           <div className="text-black text-xl font-semibold lg:text-4xl md:text-3xl sm:text-2xl dark:text-white">
             Staked Token :
           </div>
-          {selectedPoolData?.productInfo.map((productToken) => (
+          {selectedPoolData?.stakingTokenInfo.map((stakingToken) => (
             <ProductTokenListForWithdraw
-              key={productToken.productId}
-              productId={Number(productToken.productId)}
-              consumable={productToken.consumable}
+              key={stakingToken.tokenId}
+              tokenId={Number(stakingToken.tokenId)}
+              tokenAddress={stakingToken.tokenAddress}
+              amount={Number(stakingToken.ratio) * baseAmount}
+              isERC1155={stakingToken.isERC1155}
+              consumable={stakingToken.consumable}
             />
           ))}
         </div>
@@ -72,12 +97,14 @@ function WithDrawPage() {
           <div className="text-black text-xl font-semibold lg:text-4xl md:text-3xl sm:text-2xl dark:text-white">
             Reward Token :
           </div>
-          {selectedPoolData?.rewardTokenInfo.map((rewardToken) => (
+          {selectedPoolData?.rewardTokenInfo.map((rewardToken, idx) => (
             <RewardTokenListForClaim
-              key={rewardToken.tokenId}
+              key={idx}
               tokenId={Number(rewardToken.tokenId)}
               tokenAddress={rewardToken.tokenAddress}
-              amount={Number(rewardToken.ratio)}
+              amount={
+                Number(rewardToken.ratio) * Number(claimableRewardArray[idx])
+              }
               isERC1155={rewardToken.isERC1155}
             />
           ))}

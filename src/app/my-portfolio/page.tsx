@@ -96,7 +96,7 @@ function MyPortfolioPage() {
                 instanceId={stakingData.instanceId}
                 creator={stakingData.creator}
                 instanceAddress={stakingData.instanceAddress}
-                productInfo={stakingData.productInfo}
+                stakingTokenInfo={stakingData.stakingTokenInfo}
                 rewardTokenInfo={stakingData.rewardTokenInfo}
               />
             ))
@@ -116,7 +116,7 @@ function MyPortfolioPage() {
                 instanceId={stakingData.instanceId}
                 creator={stakingData.creator}
                 instanceAddress={stakingData.instanceAddress}
-                productInfo={stakingData.productInfo}
+                stakingTokenInfo={stakingData.stakingTokenInfo}
                 rewardTokenInfo={stakingData.rewardTokenInfo}
               />
             ))

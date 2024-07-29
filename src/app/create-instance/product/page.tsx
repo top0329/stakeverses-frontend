@@ -58,11 +58,13 @@ function CreateInstanceProductPage() {
             <React.Fragment>
               {productTokenInfo.map((productToken) => (
                 <ProductTokenInfoCard
-                  key={productToken.productId}
-                  productName={productToken.productName}
+                  key={productToken.tokenId}
+                  tokenName={productToken.tokenName}
                   imageUri={productToken.imageUri}
-                  productId={productToken.productId}
+                  tokenAddress={productToken.tokenAddress}
+                  tokenId={productToken.tokenId}
                   ratio={productToken.ratio}
+                  isERC1155={productToken.isERC1155}
                   consumable={productToken.consumable}
                 />
               ))}

@@ -67,7 +67,8 @@ function PoolDetailsPage() {
     if (Object.keys(productStakingInstance).length > 0) {
       fetchPoolData();
     }
-  }, [id, productStakingInstance, setCurrentPoolData, web3.eth.Contract]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, productStakingInstance, setCurrentPoolData]);
 
   return (
     <React.Fragment>
@@ -79,8 +80,8 @@ function PoolDetailsPage() {
         <div className="mb-12">
           <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
             <div className="flex items-center justify-center gap-0 lg:gap-4 xl:gap-0">
-              {currentPoolData.productInfo.length > 0 &&
-                currentPoolData.productInfo
+              {currentPoolData.stakingTokenInfo.length > 0 &&
+                currentPoolData.stakingTokenInfo
                   .filter(
                     (product: IProductTokenForStakeListProps) =>
                       product.consumable === false
@@ -92,10 +93,12 @@ function PoolDetailsPage() {
                     ) => (
                       <React.Fragment key={index}>
                         <ProductTokenForStakeList
-                          productId={product.productId}
+                          tokenId={product.tokenId}
+                          tokenAddress={product.tokenAddress}
+                          isERC1155={product.isERC1155}
                           ratio={product.ratio}
                         />
-                        {currentPoolData.productInfo.filter(
+                        {currentPoolData.stakingTokenInfo.filter(
                           (product: IProductTokenForStakeListProps) =>
                             product.consumable === true
                         ).length !== 0 && (
@@ -106,8 +109,8 @@ function PoolDetailsPage() {
                       </React.Fragment>
                     )
                   )}
-              {currentPoolData.productInfo.length > 0 &&
-              currentPoolData.productInfo.filter(
+              {currentPoolData.stakingTokenInfo.length > 0 &&
+              currentPoolData.stakingTokenInfo.filter(
                 (product: IProductTokenForStakeListProps) =>
                   product.consumable === true
               ).length > 0 ? (
@@ -115,7 +118,7 @@ function PoolDetailsPage() {
                   <p className="text-3xl font-medium -mt-16 px-0.5 lg:text-5xl">
                     &#40;
                   </p>
-                  {currentPoolData.productInfo
+                  {currentPoolData.stakingTokenInfo
                     .filter(
                       (product: IProductTokenForStakeListProps) =>
                         product.consumable === true
@@ -127,11 +130,14 @@ function PoolDetailsPage() {
                       ) => (
                         <React.Fragment key={index}>
                           <ProductTokenForStakeList
-                            productId={product.productId}
+                            tokenId={product.tokenId}
+                            tokenAddress={product.tokenAddress}
+                            isERC1155={product.isERC1155}
                             ratio={product.ratio}
                             consumable
                           />
-                          {index !== currentPoolData.productInfo.length - 1 && (
+                          {index !==
+                            currentPoolData.stakingTokenInfo.length - 1 && (
                             <p className="text-2xl font-medium -mt-16 px-0 sm:text-3xl sm:px-0.5">
                               +
                             </p>
@@ -265,16 +271,24 @@ function PoolDetailsPage() {
                   <h2 className="text-xl -mt-20 font-semibold mb-6 sm:text-2xl lg:text-3xl">
                     Staking Tokens
                   </h2>
-                  {currentPoolData.productInfo.map(
-                    (product: IProductTokenForStakeListProps) => (
-                      <ProductTokenListForPoolDetail
-                        key={product.productId}
-                        productId={Number(product.productId)}
-                        amount={totalStakingBaseAmount * Number(product.ratio)}
-                        consumable={product.consumable}
-                      />
-                    )
-                  )}
+                  {currentPoolData.stakingTokenInfo.length > 0 &&
+                    currentPoolData.stakingTokenInfo.map(
+                      (
+                        product: IProductTokenForStakeListProps,
+                        idx: number
+                      ) => (
+                        <ProductTokenListForPoolDetail
+                          key={idx}
+                          tokenId={Number(product.tokenId)}
+                          tokenAddress={product.tokenAddress}
+                          isERC1155={product.isERC1155}
+                          amount={
+                            totalStakingBaseAmount * Number(product.ratio)
+                          }
+                          consumable={product.consumable}
+                        />
+                      )
+                    )}
                 </div>
               </div>
               <div className="w-full text-center">

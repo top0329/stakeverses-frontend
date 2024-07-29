@@ -18,7 +18,8 @@ import {
 import { getGasPrice } from '@/lib/getGasPrice';
 
 function CreateInstanceCreatePage() {
-  const { account, productStakingInstance, chainId, web3, isConnected } = useWeb3();
+  const { account, productStakingInstance, chainId, web3, isConnected } =
+    useWeb3();
   const { showToast } = useToast();
   const { openSpin, closeSpin } = useSpinner();
   const router = useRouter();
@@ -43,20 +44,18 @@ function CreateInstanceCreatePage() {
         openSpin('Creating Instance');
         const gasPrice = await getGasPrice(web3, chainId!);
         const _productTokenInfo = productTokenInfo.map((product) => {
-          const { imageUri, productName, ...rest } = product;
+          const { imageUri, tokenName, ...rest } = product;
           return rest;
         });
         const _rewardTokenInfo = rewardTokenInfo.map((rewardToken) => {
-          const { imageUri, tokenName, ...rest } = rewardToken;
+          const { imageUri, tokenName, isApproved, ...rest } = rewardToken;
           return rest;
         });
         await productStakingInstance.methods
           .createStakingInstance(
             _productTokenInfo,
             _rewardTokenInfo,
-            baseAmount,
-            'Stakeverse Token',
-            'stk'
+            baseAmount
           )
           .send({ from: account, gasPrice });
         setBaseAmount(0);
@@ -87,9 +86,10 @@ function CreateInstanceCreatePage() {
             <div className="flex flex-col gap-5 text-white bg-[#d0e2fe] py-5 px-4 rounded-[20px] h-[90%] border-2 border-[#7a9acb]/50 dark:bg-gradient-to-r dark:from-[#0f3a38] dark:to-[#0f484a] dark:border-none">
               {productTokenInfo.map((productToken) => (
                 <ProductTokenListForCreate
-                  key={productToken.productId}
-                  productAddress={productToken.productAddress}
-                  productId={productToken.productId}
+                  key={productToken.tokenId}
+                  tokenAddress={productToken.tokenAddress}
+                  tokenId={productToken.tokenId}
+                  isERC1155={productToken.isERC1155}
                   ratio={productToken.ratio}
                   consumable={productToken.consumable}
                 />

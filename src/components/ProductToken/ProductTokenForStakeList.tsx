@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { Address } from 'viem';
 
 import useWeb3 from '@/hooks/useWeb3';
 import DefaultERC1155Image from '@/assets/images/erc1155.png';
+import DefaultERC20Image from '@/assets/images/erc20.png';
+import getTokenData from '@/lib/getTokenData';
 import getERC1155Data from '@/lib/getERC1155Data';
 import { IProductTokenForStakeListProps } from '@/types';
 
 function ProductTokenForStakeList({
-  productId,
+  tokenId,
+  tokenAddress,
   ratio,
+  isERC1155,
   consumable,
 }: IProductTokenForStakeListProps) {
-  const { library, currentProductAddress } = useWeb3();
+  const { library, currentTokenDataUrl } = useWeb3();
 
   const [imageUri, setImageUri] = useState<string>(DefaultERC1155Image.src);
   const [name, setName] = useState<string>('');
@@ -20,24 +25,50 @@ function ProductTokenForStakeList({
   useEffect(() => {
     async function fetchData() {
       try {
-        const erc1155Data = await getERC1155Data(
-          currentProductAddress as Address,
-          Number(productId),
-          library
-        );
-        if (erc1155Data) {
-          const { name, uri } = erc1155Data;
-          setImageUri(uri);
-          setName(name);
+        if (isERC1155) {
+          const erc1155Data = await getERC1155Data(
+            tokenAddress as Address,
+            Number(tokenId),
+            library
+          );
+          if (erc1155Data) {
+            const { name, uri } = erc1155Data;
+            setImageUri(uri);
+            setName(name);
+          }
+        } else {
+          const erc20Data = await getTokenData(
+            tokenAddress as Address,
+            library
+          );
+          if (erc20Data) {
+            const { tokenName } = erc20Data;
+            if (!currentTokenDataUrl) {
+              setImageUri(DefaultERC20Image.src);
+              setName(tokenName);
+              return;
+            }
+            const response = await axios.get(
+              `${currentTokenDataUrl}/${tokenAddress}`
+            );
+            let logo: string;
+            if (response.data.image.large) {
+              logo = response.data.image.large;
+            } else {
+              logo = DefaultERC20Image.src;
+            }
+            setImageUri(logo);
+            setName(tokenName);
+          }
         }
       } catch (err) {
         console.log(err);
       }
     }
-    if (productId) {
+    if (tokenAddress) {
       fetchData();
     }
-  }, [currentProductAddress, library, productId]);
+  }, [currentTokenDataUrl, isERC1155, library, tokenAddress, tokenId]);
 
   return (
     <div className="flex flex-col gap-y-4">

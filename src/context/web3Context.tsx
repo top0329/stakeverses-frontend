@@ -16,7 +16,7 @@ import { useEthersProvider, useEthersSigner } from '@/lib/utils';
 import ProductStakingInstanceAbi from '@/abi/ProductStakingInstanceAbi.json';
 import erc20Abi from '@/abi/ERC20ABI.json';
 import erc1155Abi from '@/abi/ERC1155ABI.json';
-import { defaultRPC, productAddress, productStakingInstanceAddress, TOKEN_DETAIL_DATA_URL } from '@/lib/constants';
+import { defaultRPC, productStakingInstanceAddress, TOKEN_DETAIL_DATA_URL } from '@/lib/constants';
 import { getGasPrice } from '@/lib/getGasPrice';
 
 declare let window: any;
@@ -49,8 +49,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
     useState<Contract>({} as Contract);
     const [currentProductStakingInstanceAddress, setCurrentProductStakingInstanceAddress] =
       useState<string>('');
-    const [currentProductAddress, setCurrentProductAddress] =
-      useState<string>('');
     const [currentTokenDataUrl, setCurrentTokenDataUrl] = useState<string>('');
 
   const init = useCallback(async () => {
@@ -72,7 +70,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
         setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.mainnet);
-        setCurrentProductAddress(productAddress.mainnet);
         setCurrentTokenDataUrl(TOKEN_DETAIL_DATA_URL.main);
       } else if (chainId === 11155111) {
         const _productStakingInstanceWeb3: any = new web3.eth.Contract(
@@ -81,7 +78,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
         setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.sepolia);
-        setCurrentProductAddress(productAddress.sepolia);
       } else if(chainId === 56) {
         const _productStakingInstanceWeb3: any = new web3.eth.Contract(
           ProductStakingInstanceAbi,
@@ -89,7 +85,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
         setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.bsc);
-        setCurrentProductAddress(productAddress.bsc);
         setCurrentTokenDataUrl(TOKEN_DETAIL_DATA_URL.bsc);
       } else if(chainId === 137) {
         const _productStakingInstanceWeb3: any = new web3.eth.Contract(
@@ -98,7 +93,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
         setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.polygon);
-        setCurrentProductAddress(productAddress.polygon);
         setCurrentTokenDataUrl(TOKEN_DETAIL_DATA_URL.polygon);
       } else if(chainId === 80002) {
         const _productStakingInstanceWeb3: any = new web3.eth.Contract(
@@ -107,7 +101,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
         setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.amoy);
-        setCurrentProductAddress(productAddress.amoy);
       }
     } catch (err) {
       console.log(err);
@@ -166,7 +159,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       library: provider ?? signer,
       productStakingInstance,
       currentProductStakingInstanceAddress,
-      currentProductAddress,
       currentTokenDataUrl,
       erc20Approve,
       erc1155Approve,
@@ -179,7 +171,6 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       provider,
       signer,
       productStakingInstance,
-      currentProductAddress,
       currentProductStakingInstanceAddress,
       currentTokenDataUrl,
       erc20Approve,

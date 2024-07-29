@@ -14,7 +14,7 @@ function MyStakingPoolList({
   instanceId,
   creator,
   instanceAddress,
-  productInfo,
+  stakingTokenInfo,
   rewardTokenInfo,
 }: IStakingPoolListProps) {
   const router = useRouter();
@@ -45,37 +45,42 @@ function MyStakingPoolList({
     <div className="bg-[#e4f0fd] px-4 py-9 rounded-[20px] border-2 border-[#7a9acb]/50 md:px-6 dark:bg-[#053F40] dark:border-none">
       <div className="flex flex-col items-center justify-center pt-6 gap-2 xl:flex-row xl:gap-0 xl:pt-0">
         <div className="flex items-center justify-center gap-0 lg:gap-4 xl:gap-0">
-          {productInfo
+          {stakingTokenInfo
             .filter((product) => product.consumable === false)
             .map((product, index) => (
               <React.Fragment key={index}>
                 <ProductTokenForStakeList
-                  productId={product.productId}
+                  tokenId={product.tokenId}
+                  tokenAddress={product.tokenAddress}
+                  isERC1155={product.isERC1155}
                   ratio={product.ratio}
                 />
-                {productInfo.filter((product) => product.consumable === true)
-                  .length !== 0 && (
+                {stakingTokenInfo.filter(
+                  (product) => product.consumable === true
+                ).length !== 0 && (
                   <p className="text-3xl font-medium -mt-16 px-0.5">+</p>
                 )}
               </React.Fragment>
             ))}
-          {productInfo.filter((product) => product.consumable === true).length >
-          0 ? (
+          {stakingTokenInfo.filter((product) => product.consumable === true)
+            .length > 0 ? (
             <React.Fragment>
               <p className="text-3xl font-medium -mt-16 px-0.5 lg:text-5xl">
                 &#40;
               </p>
-              {productInfo
+              {stakingTokenInfo
                 .filter((product) => product.consumable === true)
                 .map((product, index) => (
                   <React.Fragment key={index}>
                     <ProductTokenForStakeList
-                      productId={product.productId}
+                      tokenId={product.tokenId}
+                      tokenAddress={product.tokenAddress}
+                      isERC1155={product.isERC1155}
                       ratio={product.ratio}
                       consumable
                     />
                     {index !==
-                      productInfo.filter(
+                      stakingTokenInfo.filter(
                         (product) => product.consumable === true
                       ).length -
                         1 && (
@@ -147,13 +152,17 @@ function MyStakingPoolList({
             className="!w-[140px] xl:!w-[220px] !h-14"
             text="Withdraw"
             variant="primary"
-            onClick={() => router.push('/my-portfolio/1/withdraw')}
+            onClick={() =>
+              router.push(`/my-portfolio/${Number(instanceId)}/withdraw`)
+            }
           />
           <Button
             className="!w-[120px] xl:!w-[140px] !h-14"
             text="Claim"
             variant="primary"
-            onClick={() => router.push('/my-portfolio/1/claim')}
+            onClick={() =>
+              router.push(`/my-portfolio/${Number(instanceId)}/claim`)
+            }
           />
         </div>
       </div>

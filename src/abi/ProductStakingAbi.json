@@ -5,12 +5,12 @@
         "components": [
           {
             "internalType": "address",
-            "name": "productAddress",
+            "name": "tokenAddress",
             "type": "address"
           },
           {
             "internalType": "uint256",
-            "name": "productId",
+            "name": "tokenId",
             "type": "uint256"
           },
           {
@@ -20,12 +20,17 @@
           },
           {
             "internalType": "bool",
+            "name": "isERC1155",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
             "name": "consumable",
             "type": "bool"
           }
         ],
-        "internalType": "struct IStakingInfo.ProductInfo[]",
-        "name": "productInfos",
+        "internalType": "struct IStakingInfo.StakingTokenInfo[]",
+        "name": "stakingTokenInfos",
         "type": "tuple[]"
       },
       {
@@ -59,21 +64,6 @@
         "internalType": "uint256",
         "name": "rewardBaseAmountValue",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "productTokenAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "stkName",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "stkSymbol",
-        "type": "string"
       },
       {
         "internalType": "address",
@@ -205,24 +195,6 @@
   },
   {
     "inputs": [],
-    "name": "devGetPeriods",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "devGetRemainingTokens",
     "outputs": [
       {
@@ -281,12 +253,17 @@
   },
   {
     "inputs": [],
-    "name": "getStakers",
+    "name": "getPeriods",
     "outputs": [
       {
-        "internalType": "address[]",
+        "internalType": "uint256",
         "name": "",
-        "type": "address[]"
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -294,12 +271,12 @@
   },
   {
     "inputs": [],
-    "name": "getStkTokenAddress",
+    "name": "getStakers",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "address[]",
         "name": "",
-        "type": "address"
+        "type": "address[]"
       }
     ],
     "stateMutability": "view",
@@ -384,40 +361,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "productTokens",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "productAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "productId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "ratio",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "consumable",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "rewardBaseAmount",
     "outputs": [
@@ -494,6 +437,45 @@
     "name": "staking",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "stakingTokens",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ratio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isERC1155",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "consumable",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

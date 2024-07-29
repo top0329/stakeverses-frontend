@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { Address } from 'viem';
 
 import Button from '@/components/Buttons';
 import useWeb3 from '@/hooks/useWeb3';
+import useToast from '@/hooks/useToast';
+import DefaultERC20Image from '@/assets/images/erc20.png';
+import DefaultERC1155Image from '@/assets/images/erc1155.png';
+import getTokenData from '@/lib/getTokenData';
 import getERC1155Data from '@/lib/getERC1155Data';
 import {
   isEditProductTokenModalOpenAtom,
@@ -15,7 +20,8 @@ import {
 import { IProductTokenInfo } from '@/types';
 
 function EditProductTokenModal() {
-  const { library, currentProductAddress } = useWeb3();
+  const { library, currentTokenDataUrl } = useWeb3();
+  const { showToast } = useToast();
 
   const [isEditProductTokenModalOpen, setIsEditProductTokenModalOpen] = useAtom(
     isEditProductTokenModalOpenAtom
@@ -25,74 +31,269 @@ function EditProductTokenModal() {
 
   const [editProductTokenInfo, setEditProductTokenInfo] =
     useState<IProductTokenInfo>({
-      productName: '',
-      productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-      productId: 0,
-      ratio: 0,
+      tokenName: '',
       imageUri: '',
+      tokenAddress: '',
+      tokenId: 0,
+      ratio: 0,
+      isERC1155: false,
       consumable: false,
     });
   const [error, setError] = useState({
-    productId: '',
+    tokenAddress: '',
+    tokenId: '',
     ratio: '',
   });
-  const [initialProductId, setInitialProductId] = useState<number>(0);
+  const [initialTokenId, setInitialTokenId] = useState<number>(0);
+  const [initialTokenAddress, setInitialTokenAddress] = useState<string>('');
 
   const modal = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setEditProductTokenInfo({
-      ...editProductTokenInfo,
-      productId: selectedProductInfo.productId,
-      ratio: selectedProductInfo.ratio,
-      consumable: selectedProductInfo.consumable,
+      tokenName: selectedProductInfo.tokenName,
       imageUri: selectedProductInfo.imageUri,
+      tokenAddress: selectedProductInfo.tokenAddress,
+      tokenId: selectedProductInfo.tokenId,
+      ratio: selectedProductInfo.ratio,
+      isERC1155: selectedProductInfo.isERC1155,
+      consumable: selectedProductInfo.consumable,
     });
-    setInitialProductId(selectedProductInfo.productId);
+    setInitialTokenId(selectedProductInfo.tokenId || 0);
+    setInitialTokenAddress(selectedProductInfo.tokenAddress || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditProductTokenModalOpen]);
 
   useEffect(() => {
-    if (
-      productTokenInfo.some(
-        (item) => item.productId === editProductTokenInfo.productId
-      ) &&
-      initialProductId !== editProductTokenInfo.productId
-    ) {
-      setError({
-        ...error,
-        productId: 'This product token has already been added!',
-      });
-    } else if (
-      editProductTokenInfo.productId === undefined ||
-      Number.isNaN(editProductTokenInfo.productId)
-    ) {
-      setEditProductTokenInfo({
-        ...editProductTokenInfo,
-        productName: '',
-        imageUri: '',
-      });
-      setError({
-        ...error,
-        productId: 'Enter the product id!',
-      });
-    } else {
-      setError({
-        ...error,
-        productId: '',
-      });
+    async function fetchData() {
+      try {
+        if (editProductTokenInfo.isERC1155 === true) {
+          if (
+            productTokenInfo
+              .filter((item) => item.isERC1155 === true)
+              .some(
+                (item) =>
+                  item.tokenAddress === editProductTokenInfo.tokenAddress &&
+                  item.tokenId === editProductTokenInfo.tokenId
+              ) &&
+            initialTokenId !== editProductTokenInfo.tokenId &&
+            initialTokenAddress !== editProductTokenInfo.tokenAddress
+          ) {
+            setError({
+              ...error,
+              tokenId: 'This token has already been added!',
+            });
+          } else if (
+            editProductTokenInfo.tokenId === undefined ||
+            Number.isNaN(editProductTokenInfo.tokenId)
+          ) {
+            setEditProductTokenInfo({
+              ...editProductTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+            setError({
+              ...error,
+              tokenId: 'Enter the token id!',
+            });
+          } else {
+            const erc1155Data = await getERC1155Data(
+              (editProductTokenInfo.tokenAddress || '') as Address,
+              Number(editProductTokenInfo.tokenId),
+              library
+            );
+            if (erc1155Data) {
+              const { name, uri } = erc1155Data;
+              setEditProductTokenInfo({
+                ...editProductTokenInfo,
+                tokenName: name,
+                imageUri: uri,
+              });
+            }
+            if (
+              productTokenInfo
+                .filter((item) => item.isERC1155 === true)
+                .some(
+                  (item) =>
+                    item.tokenAddress === editProductTokenInfo.tokenAddress &&
+                    item.tokenId === editProductTokenInfo.tokenId
+                )
+            ) {
+              setError({
+                ...error,
+                tokenId: 'This token has already been added!',
+              });
+            } else if (
+              editProductTokenInfo.tokenId === undefined ||
+              Number.isNaN(editProductTokenInfo.tokenId)
+            ) {
+              setEditProductTokenInfo({
+                ...editProductTokenInfo,
+                tokenName: '',
+                imageUri: '',
+              });
+              setError({
+                ...error,
+                tokenId: 'Enter the token id!',
+              });
+            } else {
+              setError({
+                ...error,
+                tokenAddress: '',
+                tokenId: '',
+              });
+            }
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
-    if (
-      editProductTokenInfo.ratio === undefined ||
-      Number.isNaN(editProductTokenInfo.ratio)
-    ) {
-      setError({
-        ...error,
-        ratio: 'Enter the ratio!',
-      });
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editProductTokenInfo.tokenId]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        if (editProductTokenInfo.isERC1155 === true) {
+          if (
+            productTokenInfo
+              .filter((item) => item.isERC1155 === true)
+              .some(
+                (item) =>
+                  item.tokenAddress === editProductTokenInfo.tokenAddress &&
+                  item.tokenId === editProductTokenInfo.tokenId
+              )
+          ) {
+            setError({
+              ...error,
+              tokenId: 'This token has already been added!',
+            });
+          } else if (
+            editProductTokenInfo.tokenAddress === undefined ||
+            editProductTokenInfo.tokenAddress === ''
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'Enter the token address!',
+            });
+            setEditProductTokenInfo({
+              ...editProductTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+          } else {
+            setError({
+              ...error,
+              tokenAddress: '',
+              tokenId: '',
+            });
+          }
+        }
+        if (editProductTokenInfo.isERC1155 === false) {
+          if (
+            productTokenInfo.some(
+              (item) => item.tokenAddress === editProductTokenInfo.tokenAddress
+            )
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'This token has already been added!',
+            });
+          } else if (
+            editProductTokenInfo.tokenAddress === undefined ||
+            editProductTokenInfo.tokenAddress === ''
+          ) {
+            setError({
+              ...error,
+              tokenAddress: 'Enter the token address!',
+            });
+            setEditProductTokenInfo({
+              ...editProductTokenInfo,
+              tokenName: '',
+              imageUri: '',
+            });
+          } else {
+            const erc20Data = await getTokenData(
+              editProductTokenInfo.tokenAddress as Address,
+              library
+            );
+            if (erc20Data) {
+              const _tokenName = erc20Data.tokenName;
+              if (!currentTokenDataUrl) {
+                setEditProductTokenInfo({
+                  ...editProductTokenInfo,
+                  tokenName: _tokenName,
+                  imageUri: DefaultERC20Image.src,
+                });
+                return;
+              }
+              const response = await axios.get(
+                `${currentTokenDataUrl}/${editProductTokenInfo.tokenAddress}`
+              );
+              let logo: string;
+              if (response.data.image.large) {
+                logo = response.data.image.large;
+              } else {
+                logo = DefaultERC20Image.src;
+              }
+              setEditProductTokenInfo({
+                ...editProductTokenInfo,
+                tokenName: _tokenName,
+                imageUri: logo,
+              });
+            }
+            setError({
+              ...error,
+              tokenAddress: '',
+            });
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editProductTokenInfo.tokenAddress]);
+
+  useEffect(() => {
+    if (editProductTokenInfo.isERC1155 === true) {
+      if (
+        editProductTokenInfo.ratio === undefined ||
+        Number.isNaN(editProductTokenInfo.ratio)
+      ) {
+        setError({
+          ...error,
+          ratio: 'Enter the ratio!',
+        });
+      } else {
+        setError({
+          ...error,
+          ratio: '',
+        });
+      }
+    }
+    if (editProductTokenInfo.isERC1155 === false) {
+      if (
+        editProductTokenInfo.ratio === undefined ||
+        Number.isNaN(editProductTokenInfo.ratio)
+      ) {
+        setError({
+          ...error,
+          ratio: 'Enter the ratio!',
+        });
+      } else {
+        setError({
+          ...error,
+          tokenAddress: '',
+          ratio: '',
+        });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editProductTokenInfo.productId, editProductTokenInfo.ratio]);
+  }, [editProductTokenInfo.ratio]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
@@ -109,73 +310,18 @@ function EditProductTokenModal() {
     }
   };
 
-  const handleInputBlur = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value, name } = event.target;
-    const erc1155Data = await getERC1155Data(
-      currentProductAddress as Address,
-      Number(value),
-      library
-    );
-    if (erc1155Data) {
-      const { name, uri } = erc1155Data;
-      setEditProductTokenInfo({
-        ...editProductTokenInfo,
-        productName: name,
-        imageUri: uri,
+  const handleRadioClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.id;
+    if (value === 'erc20') {
+      setEditProductTokenInfo((prev) => {
+        return { ...prev, isERC1155: false };
       });
-    } else {
-      setEditProductTokenInfo({
-        ...editProductTokenInfo,
-        productName: '',
-        imageUri: '',
+      setError({ tokenAddress: '', tokenId: '', ratio: '' });
+    } else if (value === 'erc1155') {
+      setEditProductTokenInfo((prev) => {
+        return { ...prev, isERC1155: true };
       });
-      setError({
-        ...error,
-        [name]: 'Product token not found!',
-      });
-    }
-    if (name === 'ratio' || name === 'productId') {
-      setEditProductTokenInfo((prevState) => ({
-        ...prevState!,
-        [name]: parseInt(value),
-      }));
-    } else {
-      setEditProductTokenInfo((prevState) => ({
-        ...prevState!,
-        [name]: value,
-      }));
-    }
-  };
-
-  const handleInputKeyDown = async (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (event.key === 'Enter') {
-      const erc1155Data = await getERC1155Data(
-        currentProductAddress as Address,
-        editProductTokenInfo.productId,
-        library
-      );
-      if (erc1155Data) {
-        const { name, uri } = erc1155Data;
-        setEditProductTokenInfo({
-          ...editProductTokenInfo,
-          productName: name,
-          imageUri: uri,
-        });
-      } else {
-        setEditProductTokenInfo({
-          ...editProductTokenInfo,
-          productName: '',
-          imageUri: '',
-        });
-        setError({
-          ...error,
-          productId: 'Product token not found!',
-        });
-      }
+      setError({ tokenAddress: '', tokenId: '', ratio: '' });
     }
   };
 
@@ -187,47 +333,68 @@ function EditProductTokenModal() {
   };
 
   const handleEditProductTokenClicked = () => {
-    if (
-      editProductTokenInfo.productId &&
-      editProductTokenInfo.ratio &&
-      (!productTokenInfo.some(
-        (item) => item.productId === editProductTokenInfo.productId
-      ) ||
-        initialProductId === editProductTokenInfo.productId)
+    if(!productTokenInfo.some(
+          (item) =>
+            item === editProductTokenInfo
+        )
+    // if (
+    //   (editProductTokenInfo.isERC1155 === false &&
+    //     editProductTokenInfo.tokenAddress &&
+    //     editProductTokenInfo.ratio &&
+    //     !productTokenInfo.some(
+    //       (item) => item.tokenAddress === editProductTokenInfo.tokenAddress
+    //     )) ||
+    //   (editProductTokenInfo.isERC1155 === true &&
+    //     editProductTokenInfo.tokenAddress &&
+    //     editProductTokenInfo.tokenId &&
+    //     editProductTokenInfo.ratio &&
+    //     !productTokenInfo.some(
+    //       (item) =>
+    //         item.tokenAddress === editProductTokenInfo.tokenAddress &&
+    //         item.tokenId === editProductTokenInfo.tokenId
+    //     ))
     ) {
-      console.log('here is in');
-      console.log(editProductTokenInfo);
-      setProductTokenInfo((prev) => {
-        return prev.map((product) => {
-          if (product.productId === initialProductId) {
-            return { ...product, ...editProductTokenInfo };
-          }
-          return product;
-        });
-      });
+      const tokenIndex = productTokenInfo.findIndex(
+        (item) =>
+          item.tokenAddress === initialTokenAddress &&
+          item.tokenId === initialTokenId
+      );
+      if (tokenIndex !== -1) {
+        setProductTokenInfo((prev) => [
+          ...prev.slice(0, tokenIndex),
+          editProductTokenInfo,
+          ...prev.slice(tokenIndex + 1),
+        ]);
+      }
       setEditProductTokenInfo({
-        productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-        productName: '',
+        tokenName: '',
         imageUri: '',
-        productId: 0,
+        tokenAddress: '',
+        tokenId: 0,
         ratio: 0,
-        consumable: false,
+        isERC1155: false,
+      });
+      setError({
+        tokenAddress: '',
+        tokenId: '',
+        ratio: '',
       });
       setIsEditProductTokenModalOpen(false);
-      setError({ productId: '', ratio: '' });
+    } else {
+      showToast('warning', 'Fill in all the information!');
     }
   };
 
   const handleCancelButtonClicked = () => {
     setEditProductTokenInfo({
-      productAddress: '0xaaF0e2a505F074d8080B834c33a9ff44DD7946F1',
-      productName: '',
+      tokenAddress: '',
+      tokenName: '',
       imageUri: '',
-      productId: 0,
+      tokenId: 0,
       ratio: 0,
       consumable: false,
     });
-    setError({ productId: '', ratio: '' });
+    setError({ tokenId: '', tokenAddress: '', ratio: '' });
     setIsEditProductTokenModalOpen(false);
   };
 
@@ -239,7 +406,7 @@ function EditProductTokenModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-slate-900/20 backdrop-blur p-8 fixed inset-0 z-10 grid place-items-center overflow-y-scroll cursor-pointer"
+            className="bg-slate-900/20 backdrop-blur p-8 fixed inset-0 z-10 grid place-items-center overflow-y-auto cursor-pointer"
             onClick={handleCancelButtonClicked}
           ></motion.div>
           <motion.div
@@ -259,45 +426,92 @@ function EditProductTokenModal() {
                 <div className="min-w-[143px] max-w-[143px] aspect-square bg-slate-600 border border-[#040E20] rounded-full md:max-w-[243px] md:min-w-[243px]"></div>
               ) : (
                 <Image
-                  className="min-w-[143px] max-w-[143px] aspect-square border border-[#040E20] rounded-full md:max-w-[243px] md:min-w-[243px]"
+                  className="col-span-4 min-w-[243px] aspect-square border border-[#040E20] rounded-full"
                   width={243}
                   height={243}
                   src={editProductTokenInfo.imageUri}
-                  alt="product"
+                  alt="reward"
                   unoptimized
+                  onError={() => {
+                    setEditProductTokenInfo({
+                      ...editProductTokenInfo,
+                      imageUri: editProductTokenInfo.isERC1155
+                        ? DefaultERC1155Image.src
+                        : DefaultERC20Image.src,
+                    });
+                  }}
                 />
               )}
               <div className="flex flex-col justify-between gap-4 w-full xsgap-2">
+                <div className="flex flex-row justify-center items-center text-base gap-16 sm:text-lg lg:text-xl">
+                  <div className="flex flex-row items-center gap-4">
+                    <input
+                      id="erc20"
+                      className="w-5 h-5"
+                      type="radio"
+                      checked={!editProductTokenInfo.isERC1155}
+                      onChange={handleRadioClick}
+                    />
+                    <label>ERC20</label>
+                  </div>
+                  <div className="flex flex-row items-center gap-4">
+                    <input
+                      id="erc1155"
+                      className="w-5 h-5"
+                      type="radio"
+                      checked={editProductTokenInfo.isERC1155}
+                      onChange={handleRadioClick}
+                    />
+                    <label>ERC1155</label>
+                  </div>
+                </div>
                 <div className="flex flex-col justify-between items-start w-full xs:flex-row xs:items-center">
-                  <label className="truncate tracking-[-1px]">
-                    Product Name
-                  </label>
+                  <label className="truncate tracking-[-1px]">Token Name</label>
                   <input
-                    id="product-token-name"
+                    id="token-name"
                     className="h-[50px] w-full bg-[#A3A3A3]/50 border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
-                    value={editProductTokenInfo.productName}
+                    value={editProductTokenInfo.tokenName}
                     disabled
                   />
                 </div>
                 <div className="flex flex-col justify-between items-start w-full xs:flex-row xs:items-center">
-                  <label className="truncate tracking-[-1px]">Token Id</label>
+                  <label className="truncate tracking-[-1px]">
+                    Token Address
+                  </label>
                   <div className="w-full xs:w-auto">
                     <input
-                      id="product-token-id"
+                      id="token-address"
                       className="h-[50px] w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
-                      name="productId"
+                      name="tokenAddress"
                       onChange={handleInputChange}
-                      onBlur={handleInputBlur}
-                      onKeyDown={handleInputKeyDown}
-                      value={editProductTokenInfo.productId || ''}
+                      value={editProductTokenInfo.tokenAddress}
                     />
-                    {error.productId && (
+                    {error.tokenAddress && (
                       <div className="text-red-600 text-xs text-left pl-2 pt-1">
-                        {error.productId}
+                        {error.tokenAddress}
                       </div>
                     )}
                   </div>
                 </div>
+                {editProductTokenInfo.isERC1155 && (
+                  <div className="flex flex-col justify-between items-start w-full xs:flex-row xs:items-center">
+                    <label className="truncate tracking-[-1px]">Token Id</label>
+                    <div className="w-full xs:w-auto">
+                      <input
+                        id="token-id"
+                        className="h-[50px] w-full bg-[#141D2D] border border-[#2F3A42] rounded-[15px] px-4 py-2 lg:w-[260px] xs:w-[200px]"
+                        name="tokenId"
+                        onChange={handleInputChange}
+                        value={editProductTokenInfo.tokenId || ''}
+                      />
+                      {error.tokenId && (
+                        <div className="text-red-600 text-xs text-left pl-2 pt-1">
+                          {error.tokenId}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
                 <div className="flex flex-col justify-between items-start w-full xs:flex-row xs:items-center">
                   <label className="tracking-[-1px]">Ratio</label>
                   <div className="w-full xs:w-auto">
