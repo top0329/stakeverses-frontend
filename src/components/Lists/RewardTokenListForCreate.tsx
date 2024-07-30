@@ -171,12 +171,12 @@ function RewardTokenListForCreate({
             <p className="truncate tracking-[-1px]">Token Name</p>
             <p className="font-semibold">{name}</p>
           </div>
-          <div className="hidden flex-col gap-1 2xl:flex lg:hidden sm:flex">
+          <div className="hidden flex-col gap-1 2xl:flex xl:hidden sm:flex">
             <p className="truncate tracking-[-1px]">Token Address</p>
             <p className="text-sm w-48 break-all">{tokenAddress || ''}</p>
           </div>
           {isERC1155 && (
-            <div className="hidden flex-col gap-2 2xl:flex lg:hidden sm:flex">
+            <div className="hidden flex-col gap-2 2xl:flex xl:hidden sm:flex">
               <p className="truncate tracking-[-1px]">Token Id</p>
               <p className="font-semibold">{tokenId}</p>
             </div>
@@ -187,7 +187,7 @@ function RewardTokenListForCreate({
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-between w-full 2xl:hidden lg:flex sm:hidden">
+      <div className="flex flex-row justify-between w-full 2xl:hidden xl:flex sm:hidden">
         <div
           className={`flex ${
             isERC1155 ? 'flex-col' : 'flex-row'

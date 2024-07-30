@@ -110,7 +110,7 @@ function RewardTokenInfoCard({
   };
 
   return (
-    <div className="col-span-12 flex items-center bg-[#47556e] text-white rounded-[20px] px-4 py-8 text-xl md:px-8 xs:col-span-6 dark:bg-[#053F40]">
+    <div className="col-span-12 flex items-center bg-[#47556e] text-white rounded-[20px] px-4 py-8 text-xl md:px-8 sm:col-span-6 dark:bg-[#053F40]">
       <div className="flex flex-col justify-between items-center w-full h-full gap-4 2xl:gap-10 xl:flex-row">
         <div className="flex flex-col items-center gap-1">
           <Image

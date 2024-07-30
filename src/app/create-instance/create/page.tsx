@@ -51,12 +51,33 @@ function CreateInstanceCreatePage() {
           const { imageUri, tokenName, isApproved, ...rest } = rewardToken;
           return rest;
         });
+        console.log({
+          stakingTokenInfos: _productTokenInfo,
+          rewardInfos: _rewardTokenInfo,
+          rewardBaseAmount: baseAmount,
+        });
+        console.log(
+          JSON.stringify(
+            {
+              stakingTokenInfos: _productTokenInfo,
+              rewardInfos: _rewardTokenInfo,
+              rewardBaseAmount: baseAmount,
+            },
+            null,
+            2
+          )
+        );
         await productStakingInstance.methods
           .createStakingInstance(
             _productTokenInfo,
             _rewardTokenInfo,
             baseAmount
           )
+          // .createStakingInstance({
+          //   stakingTokenInfos: _productTokenInfo,
+          //   rewardInfos: _rewardTokenInfo,
+          //   rewardBaseAmount: baseAmount,
+          // })
           .send({ from: account, gasPrice });
         setBaseAmount(0);
         setProductTokenInfo([]);
@@ -78,7 +99,7 @@ function CreateInstanceCreatePage() {
         Create Instance
       </h1>
       <div className="relative my-8 rounded-[20px] bg-[#e4f0fd] pt-8 border-2 border-[#7a9acb]/50 xl:my-20 lg:my-16 sm:my-12 dark:bg-[#040E20]/75 dark:border-none">
-        <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 lg:flex-row sm:mx-6">
+        <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 xl:flex-row sm:mx-6">
           <div className="w-full text-center">
             <h2 className="text-xl font-semibold mb-6 sm:text-2xl lg:text-3xl">
               Staking Tokens

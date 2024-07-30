@@ -265,7 +265,7 @@ function PoolDetailsPage() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 lg:flex-row sm:mx-6">
+            <div className="flex flex-col items-stretch justify-between gap-4 mt-10 mx-2 pb-10 xl:mx-8 xl:gap-7 2xl:flex-row sm:mx-6">
               <div className="w-full text-center">
                 <div className="flex flex-col gap-5 bg-[#d0e2fe] py-5 px-4 mt-20 rounded-[20px] h-[calc(100%-80px)] border border-[#7a9acb]/50 dark:bg-gradient-to-r dark:from-[#0f3a38] dark:to-[#0f484a] dark:border-none">
                   <h2 className="text-xl -mt-20 font-semibold mb-6 sm:text-2xl lg:text-3xl">

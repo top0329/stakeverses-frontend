@@ -99,7 +99,7 @@ function StakingPage() {
               value={stakeBaseAmount || ''}
             />
           </div>
-          <div className="flex flex-col text-center gap-7 px-6 2xl:px-12 xl:px-8">
+          <div className="flex flex-col text-center gap-4 px-2 sm:px-6 sm:gap-7 2xl:px-12 xl:px-8">
             {currentPoolData.stakingTokenInfo.map((product, idx) => (
               <ProductTokenStakeList
                 key={idx}
@@ -124,11 +124,11 @@ function StakingPage() {
           </div>
         </div>
         <div className="col-span-12 flex flex-col h-full gap-2 2xl:gap-14 xl:gap-12 lg:col-span-5 lg:gap-8 md:gap-6 sm:gap-4">
-          <div className="bg-[#d0e2fe] rounded-[20px] h-full pb-10 border-2 border-[#7a9acb]/50 dark:bg-[#053F40] dark:border-none">
-            <h3 className="text-2xl text-center font-semibold pt-10 pb-8 xl:text-4xl sm:text-3xl">
+          <div className="bg-[#d0e2fe] rounded-[20px] h-full pb-4 border-2 border-[#7a9acb]/50 dark:bg-[#053F40] dark:border-none sm:pb-10">
+            <h3 className="text-2xl text-center font-semibold pt-6 pb-4 xl:text-4xl sm:text-3xl sm:pt-10 sm:pb-8">
               Total Value Staked
             </h3>
-            <div className="flex flex-col text-white gap-4 px-6 2xl:px-12 xl:px-8">
+            <div className="flex flex-col text-white gap-4 px-2 sm:px-6 2xl:px-12 xl:px-8">
               <div className="flex flex-row justify-between items-center bg-[#47556e] rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl dark:bg-[#141D2D]/70">
                 <p>Axe</p>
                 <p>19302</p>
@@ -143,11 +143,11 @@ function StakingPage() {
               </div>
             </div>
           </div>
-          <div className="bg-[#d0e2fe] rounded-[20px] py-10 border-2 border-[#7a9acb]/50 dark:bg-[#053F40] dark:border-none">
-            <h3 className="text-2xl text-center font-semibold pt-8 pb-8 xl:text-4xl sm:text-3xl">
+          <div className="bg-[#d0e2fe] rounded-[20px] py-4 border-2 border-[#7a9acb]/50 dark:bg-[#053F40] dark:border-none sm:py-10">
+            <h3 className="text-2xl text-center font-semibold pt-4 pb-4 xl:text-4xl sm:text-3xl sm:pt-8 sm:pb-8">
               Number of Stakers
             </h3>
-            <h3 className="text-2xl text-center font-semibold pb-8 xl:text-4xl sm:text-3xl">
+            <h3 className="text-2xl text-center font-semibold pb-4 xl:text-4xl sm:text-3xl sm:pb-8">
               {numberOfStakers}
             </h3>
           </div>

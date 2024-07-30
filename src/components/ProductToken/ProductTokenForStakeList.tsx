@@ -93,8 +93,14 @@ function ProductTokenForStakeList({
         <div className="text-sm text-right lg:text-xl sm:text-lg xs:text-base">
           {name}
         </div>
+        <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#c8dcff] rounded-xl px-1.5 py-1 border border-[#2F3A42] break-words sm:text-xs lg:text-sm xs:px-2 dark:bg-[#141D2D]">
+          <span>{tokenAddress.slice(0, 11)}</span>
+          <span>{tokenAddress.slice(11, 22)}</span>
+          <span>{tokenAddress.slice(22, 33)}</span>
+          <span>{tokenAddress.slice(33)}</span>
+        </div>
         <div
-          className={`absolute bottom-0 text-[10px] text-white rounded-full bg-[#2F3A42] px-1 py-1 w-auto sm:px-1.5 ${
+          className={`absolute -bottom-0.5 text-[10px] text-white rounded-full bg-[#2F3A42] px-1 py-1 w-auto sm:px-1.5 ${
             consumable ? 'block' : 'hidden'
           }`}
         >

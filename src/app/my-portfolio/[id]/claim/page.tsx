@@ -10,8 +10,8 @@ import useWeb3 from '@/hooks/useWeb3';
 import useSpinner from '@/hooks/useSpinner';
 import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import { myStakingDataListAtom } from '@/jotai/atoms';
-import { IStakingPoolListProps } from '@/types';
 import { getGasPrice } from '@/lib/getGasPrice';
+import { IStakingPoolListProps } from '@/types';
 
 function ClaimPage() {
   const router = useRouter();
@@ -23,14 +23,29 @@ function ClaimPage() {
 
   const [selectedPoolData, setSelectedPoolData] =
     useState<IStakingPoolListProps | null>(null);
+  const [claimableRewardArray, setClaimableRewardArray] = useState([]);
 
   useEffect(() => {
-    setSelectedPoolData(
-      myStakingDataList.filter(
-        (item) => Number(item.instanceId) === Number(id)
-      )[0]
-    );
-  }, [id, myStakingDataList]);
+    async function fetchData() {
+      const productStakingWeb3: any = new web3.eth.Contract(
+        ProductStakingAbi,
+        myStakingDataList.filter(
+          (item) => Number(item.instanceId) === Number(id)
+        )[0].instanceAddress
+      );
+      const _claimableRewardArray = await productStakingWeb3.methods
+        .getClaimableReward(account)
+        .call();
+      setClaimableRewardArray(_claimableRewardArray);
+      setSelectedPoolData(
+        myStakingDataList.filter(
+          (item) => Number(item.instanceId) === Number(id)
+        )[0]
+      );
+    }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, id, myStakingDataList]);
 
   const handleClaim = async () => {
     try {
@@ -40,7 +55,9 @@ function ClaimPage() {
         ProductStakingAbi,
         selectedPoolData?.instanceAddress
       );
-      await productStakingWeb3.methods.claim(account).send({ from: account, gasPrice });
+      await productStakingWeb3.methods
+        .claim(account)
+        .send({ from: account, gasPrice });
       router.push('/my-portfolio');
     } catch (err) {
       console.log(err);
@@ -60,7 +77,9 @@ function ClaimPage() {
             key={idx}
             tokenId={Number(rewardToken.tokenId)}
             tokenAddress={rewardToken.tokenAddress}
-            amount={Number(rewardToken.ratio)}
+            amount={
+              Number(rewardToken.ratio) * Number(claimableRewardArray[idx])
+            }
             isERC1155={rewardToken.isERC1155}
           />
         ))}

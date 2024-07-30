@@ -208,8 +208,8 @@ function ProductTokenStakeList({
   };
 
   return (
-    <div className="relative flex flex-col text-white text-lg px-4 py-6 bg-[#47556e] rounded-[20px] gap-2 2xl:text-xl lg:gap-2 md:gap-10 dark:bg-[#141D2D]/70">
-      <div className="flex flex-row justify-between w-full gap-4 xl:gap-6 lg:gap-2 md:gap-6 sm:gap-2 xs:gap-10">
+    <div className="relative flex flex-col text-white text-lg px-4 py-6 bg-[#47556e] rounded-[20px] gap-2 2xl:text-xl dark:bg-[#141D2D]/70">
+      <div className="flex flex-row justify-between w-full gap-2 xl:gap-6 lg:gap-2 md:gap-6 sm:gap-2 xs:gap-10">
         <Image
           className="aspect-square min-w-[90px] rounded-full"
           width={90}
@@ -222,30 +222,40 @@ function ProductTokenStakeList({
           }}
         />
         <div className="flex flex-row justify-between items-center w-full gap-1">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <p className="truncate tracking-[-1px]">Token Name</p>
             <p className="font-semibold">{name}</p>
           </div>
           {isERC1155 && (
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
               <p className="truncate tracking-[-1px]">Token Id</p>
               <p className="font-semibold">{tokenId}</p>
             </div>
           )}
-          <div className="flex-col flex">
+          <div className="flex-col hidden gap-2 xs:flex">
             <p className="tracking-[-1px]">Balance</p>
             <p className="font-semibold">{balance}</p>
           </div>
-          <div className="flex-col hidden sm:flex">
+          <div className="flex-col hidden gap-2 xs:flex">
             <p className="tracking-[-1px]">Amount</p>
             <p className="font-semibold">{amount}</p>
           </div>
         </div>
       </div>
+      <div className="flex flex-row justify-between xs:hidden">
+        <div className="flex-col flex gap-2">
+          <p className="tracking-[-1px]">Balance</p>
+          <p className="font-semibold">{balance}</p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="tracking-[-1px]">Amount</p>
+          <p className="font-semibold">{amount}</p>
+        </div>
+      </div>
       <div className="flex flex-row justify-between gap-6">
         <p className="text-sm break-all">Token Address: {tokenAddress}</p>
         <Button
-          className={`!w-[160px] !h-10 mb-4 ${isApproved && 'opacity-50'}`}
+          className={`!min-w-[100px] !h-10 ${isApproved && 'opacity-50'}`}
           text="Approve"
           onClick={handleApprove}
           disabled={isApproved}
