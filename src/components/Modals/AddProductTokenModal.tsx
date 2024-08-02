@@ -331,6 +331,7 @@ function AddProductTokenModal() {
         tokenId: 0,
         ratio: 0,
         isERC1155: false,
+        consumable: false,
       });
       setError({
         tokenAddress: '',

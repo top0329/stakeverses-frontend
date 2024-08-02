@@ -9,7 +9,7 @@ export const defaultRPC = {
 export const productStakingInstanceAddress = {
   mainnet: '0x0192a27706e006a0e40f5e63c9ca6479f3cd11a2'.toLocaleLowerCase(),
   bsc: '0x0192a27706e006A0E40f5E63C9cA6479F3CD11A2'.toLocaleLowerCase(),
-  sepolia: '0x7c8551901E769B8c975C004aE5a57D23Bdf6c99F'.toLocaleLowerCase(),
+  sepolia: '0xe51Cf613d5D4A9DAF521F65E6C300E659D4F3A7D'.toLocaleLowerCase(),
   polygon: '0x6Aeb5002df026ed10193A1052D76081F5d043d1C'.toLocaleLowerCase(),
   amoy: '0x67a22B86482228b514e55D73931f763418eAaB2a'.toLocaleLowerCase(),
 };

@@ -93,6 +93,9 @@ function RewardTokenForStakeList({
         }}
       />
       <div className="text-sm text-right lg:text-xl sm:text-lg xs:text-base">
+        {isERC1155 && `Id: ${tokenId}`}
+      </div>
+      <div className="text-sm text-right lg:text-xl sm:text-lg xs:text-base">
         {name}
       </div>
       <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#c8dcff] rounded-xl px-1.5 py-1 border border-[#2F3A42] break-words sm:text-xs lg:text-sm xs:px-2 dark:bg-[#141D2D]">

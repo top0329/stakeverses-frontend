@@ -39,12 +39,11 @@ function PoolDetailsPage() {
       const _poolData = await productStakingInstance.methods
         .getStakingInfo(id)
         .call();
-      const _poolStatus =
-        await productStakingInstance.methods.getInstancePausingStatus(id);
       const productStakingWeb3: any = new web3.eth.Contract(
         ProductStakingAbi,
         _poolData?.instanceAddress
       );
+      const _poolStatus = await productStakingWeb3.methods.paused().call();
       const _numberOfStakers = await productStakingWeb3.methods
         .getStakers()
         .call();
@@ -52,10 +51,10 @@ function PoolDetailsPage() {
         .totalStakingBaseAmount()
         .call();
       const _remainingTime = await productStakingWeb3.methods
-        .devGetStakingEndTime()
+        .getStakingEndTime()
         .call();
       const _remainingRewardAmount = await productStakingWeb3.methods
-        .devGetRemainingTokens()
+        .getRemainingTokens()
         .call();
       setCurrentPoolData(_poolData);
       setPoolStatus(_poolStatus);
@@ -102,7 +101,7 @@ function PoolDetailsPage() {
                           (product: IProductTokenForStakeListProps) =>
                             product.consumable === true
                         ).length !== 0 && (
-                          <p className="text-3xl font-medium -mt-16 px-0.5">
+                          <p className="text-2xl font-medium -mt-16 px-0 -mx-1 2xl:-mx-0 xl:-mx-2 md:-mx-0 sm:text-3xl sm:px-0.5">
                             +
                           </p>
                         )}
@@ -137,8 +136,11 @@ function PoolDetailsPage() {
                             consumable
                           />
                           {index !==
-                            currentPoolData.stakingTokenInfo.length - 1 && (
-                            <p className="text-2xl font-medium -mt-16 px-0 sm:text-3xl sm:px-0.5">
+                            currentPoolData.stakingTokenInfo.filter(
+                              (product) => product.consumable === true
+                            ).length -
+                              1 && (
+                            <p className="text-2xl font-medium -mt-16 px-0 -mx-1 2xl:-mx-0 xl:-mx-2 md:-mx-0 sm:text-3xl sm:px-0.5">
                               +
                             </p>
                           )}
@@ -148,8 +150,8 @@ function PoolDetailsPage() {
                   <p className="text-3xl font-medium -mt-16 px-0.5 lg:text-5xl">
                     &#41;
                   </p>
-                  <p className="text-sm -mt-14 px-0.5 whitespace-nowrap lg:text-xl md:text-lg">
-                    * 1min
+                  <p className="text-sm -mt-14 px-0.5 tracking-[-1px] whitespace-nowrap -mx-1 xl:-mx-0 md:-mx-0 lg:text-xl md:text-lg">
+                    * 1D
                   </p>
                 </React.Fragment>
               ) : null}
@@ -222,10 +224,10 @@ function PoolDetailsPage() {
                 <p className="truncate">Pool State</p>
                 <div
                   className={`w-full bg-transparent border border-[#2F3A42] rounded-[15px] px-4 py-3 font-medium ${
-                    poolStatus ? 'text-green-500' : 'text-red-500'
+                    !poolStatus ? 'text-green-500' : 'text-red-500'
                   }`}
                 >
-                  {poolStatus ? 'Active' : 'Inactive'}
+                  {!poolStatus ? 'Active' : 'Inactive'}
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2.5 text-center w-auto">

@@ -71,7 +71,7 @@ function ProductTokenListForWithdraw({
   }, [currentTokenDataUrl, isERC1155, library, tokenAddress, tokenId]);
 
   return (
-    <div className="relative flex flex-row justify-between items-center text-xl bg-[#47556e] rounded-[20px] px-4 py-5 md:px-14 sm:px-8 dark:bg-[#053F40]">
+    <div className="relative flex flex-row justify-between items-center text-xl bg-[#47556e] rounded-[20px] px-4 py-5 gap-4 md:px-14 sm:px-8 dark:bg-[#053F40]">
       <div className="flex flex-col justify-center items-center gap-1 lg:flex-row lg:gap-4">
         <Image
           className="aspect-square min-w-[90px] rounded-full"

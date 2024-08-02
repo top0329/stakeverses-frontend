@@ -29,7 +29,7 @@ function StakingPoolList({
         instanceAddress
       );
       const _remainingTime = await productStakingWeb3.methods
-        .devGetStakingEndTime()
+        .getStakingEndTime()
         .call();
       setRemainingTime(Number(_remainingTime));
     }
@@ -50,6 +50,7 @@ function StakingPoolList({
                     tokenAddress={product.tokenAddress}
                     isERC1155={product.isERC1155}
                     ratio={product.ratio}
+                    consumable={product.consumable}
                   />
                   {stakingTokenInfo.filter(
                     (product) => product.consumable === true
@@ -73,7 +74,7 @@ function StakingPoolList({
                       tokenAddress={product.tokenAddress}
                       isERC1155={product.isERC1155}
                       ratio={product.ratio}
-                      consumable
+                      consumable={product.consumable}
                     />
                     {index !==
                       stakingTokenInfo.filter(
@@ -90,7 +91,7 @@ function StakingPoolList({
                 &#41;
               </p>
               <p className="text-sm -mt-14 px-0 whitespace-nowrap tracking-[-1px] lg:text-xl md:text-lg xs:tracking-[0px] xs:px-0.5">
-                * 1min
+                * 1D
               </p>
             </React.Fragment>
           ) : null}

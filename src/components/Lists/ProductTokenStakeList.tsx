@@ -18,7 +18,6 @@ import {
   baseAmountAtom,
   currentPoolDataAtom,
   isProductApproveAvailableAtom,
-  productTokenInfoAtom,
 } from '@/jotai/atoms';
 
 function ProductTokenStakeList({
@@ -47,12 +46,12 @@ function ProductTokenStakeList({
   } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
 
-  const [productTokenInfo, setProductTokenInfo] = useAtom(productTokenInfoAtom);
+  // const [productTokenInfo, setProductTokenInfo] = useAtom(productTokenInfoAtom);
   const [, setIsProductApproveAvailable] = useAtom<boolean>(
     isProductApproveAvailableAtom
   );
   const [baseAmount] = useAtom<number>(baseAmountAtom);
-  const [currentPoolData] = useAtom(currentPoolDataAtom);
+  const [currentPoolData, setCurrentPoolData] = useAtom(currentPoolDataAtom);
 
   const [imageUri, setImageUri] = useState<string>(DefaultERC1155Image.src);
   const [name, setName] = useState<string>('');
@@ -122,7 +121,7 @@ function ProductTokenStakeList({
     if (tokenAddress) {
       fetchData();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     account,
     currentTokenDataUrl,
@@ -145,11 +144,11 @@ function ProductTokenStakeList({
     try {
       if (isConnected && library) {
         openSpin('Approving');
-        let receipt = null;
+        let receipt: { status?: boolean } = {};
         while (receipt === null || receipt.status === undefined) {
           let res: any;
           if (isERC1155) {
-            res = erc1155Approve(
+            res = await erc1155Approve(
               tokenAddress!,
               currentPoolData.instanceAddress,
               true
@@ -157,43 +156,49 @@ function ProductTokenStakeList({
           } else {
             const contract = new web3.eth.Contract(ERC20Abi, tokenAddress);
             const decimals = await contract.methods.decimals().call();
-            res = erc20Approve(
+            res = await erc20Approve(
               tokenAddress!,
               currentPoolData.instanceAddress,
               (amount * 10 ** Number(decimals)).toString()
             );
           }
-          receipt = await web3.eth.getTransactionReceipt(
-            (
-              await res
-            ).transactionHash
-          );
+          if (res.approved) {
+            receipt.status = true;
+          } else {
+            receipt = await web3.eth.getTransactionReceipt(
+              (
+                await res
+              ).transactionHash
+            );
+          }
         }
         if (receipt && receipt.status !== undefined) {
           if (receipt.status) {
-            setProductTokenInfo(
-              productTokenInfo.map((token) => {
+            setCurrentPoolData((prevPoolData) => ({
+              ...prevPoolData,
+              stakingTokenInfo: prevPoolData.stakingTokenInfo.map((token) => {
                 if (
-                  token.tokenId === tokenId &&
+                  Number(token.tokenId) === tokenId &&
                   token.tokenAddress === tokenAddress
                 ) {
                   return { ...token, isApproved: true };
                 }
                 return token;
-              })
-            );
+              }),
+            }));
           } else {
-            setProductTokenInfo(
-              productTokenInfo.map((token) => {
+            setCurrentPoolData((prevPoolData) => ({
+              ...prevPoolData,
+              stakingTokenInfo: prevPoolData.stakingTokenInfo.map((token) => {
                 if (
-                  token.tokenId === tokenId &&
+                  Number(token.tokenId) === tokenId &&
                   token.tokenAddress === tokenAddress
                 ) {
                   return { ...token, isApproved: false };
                 }
                 return token;
-              })
-            );
+              }),
+            }));
           }
         } else {
           alert('Transaction is still pending');
@@ -252,8 +257,8 @@ function ProductTokenStakeList({
           <p className="font-semibold">{amount}</p>
         </div>
       </div>
-      <div className="flex flex-row justify-between gap-6">
-        <p className="text-sm break-all">Token Address: {tokenAddress}</p>
+      <div className="flex flex-row justify-between items-center gap-6">
+        <p className="text-sm break-all">Address: {tokenAddress}</p>
         <Button
           className={`!min-w-[100px] !h-10 ${isApproved && 'opacity-50'}`}
           text="Approve"

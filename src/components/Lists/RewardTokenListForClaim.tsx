@@ -107,7 +107,7 @@ function RewardTokenListForClaim({
               <div className="font-semibold">{tokenId}</div>
             </div>
           )}
-          <div className="flex flex-col text-center">
+          <div className="flex flex-col text-center gap-2">
             <div className="truncate tracking-[-1px]">
               <span className="hidden md:block">Token Amount</span>
               <span className="block md:hidden">Amount</span>

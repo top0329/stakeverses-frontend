@@ -51,33 +51,12 @@ function CreateInstanceCreatePage() {
           const { imageUri, tokenName, isApproved, ...rest } = rewardToken;
           return rest;
         });
-        console.log({
-          stakingTokenInfos: _productTokenInfo,
-          rewardInfos: _rewardTokenInfo,
-          rewardBaseAmount: baseAmount,
-        });
-        console.log(
-          JSON.stringify(
-            {
-              stakingTokenInfos: _productTokenInfo,
-              rewardInfos: _rewardTokenInfo,
-              rewardBaseAmount: baseAmount,
-            },
-            null,
-            2
-          )
-        );
         await productStakingInstance.methods
           .createStakingInstance(
             _productTokenInfo,
             _rewardTokenInfo,
             baseAmount
           )
-          // .createStakingInstance({
-          //   stakingTokenInfos: _productTokenInfo,
-          //   rewardInfos: _rewardTokenInfo,
-          //   rewardBaseAmount: baseAmount,
-          // })
           .send({ from: account, gasPrice });
         setBaseAmount(0);
         setProductTokenInfo([]);

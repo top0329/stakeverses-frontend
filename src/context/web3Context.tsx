@@ -16,7 +16,11 @@ import { useEthersProvider, useEthersSigner } from '@/lib/utils';
 import ProductStakingInstanceAbi from '@/abi/ProductStakingInstanceAbi.json';
 import erc20Abi from '@/abi/ERC20ABI.json';
 import erc1155Abi from '@/abi/ERC1155ABI.json';
-import { defaultRPC, productStakingInstanceAddress, TOKEN_DETAIL_DATA_URL } from '@/lib/constants';
+import {
+  defaultRPC,
+  productStakingInstanceAddress,
+  TOKEN_DETAIL_DATA_URL,
+} from '@/lib/constants';
 import { getGasPrice } from '@/lib/getGasPrice';
 
 declare let window: any;
@@ -47,9 +51,11 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const [provider, setProvider] = useState<ContractRunner>(defaultProvider);
   const [productStakingInstance, setProductStakingInstance] =
     useState<Contract>({} as Contract);
-    const [currentProductStakingInstanceAddress, setCurrentProductStakingInstanceAddress] =
-      useState<string>('');
-    const [currentTokenDataUrl, setCurrentTokenDataUrl] = useState<string>('');
+  const [
+    currentProductStakingInstanceAddress,
+    setCurrentProductStakingInstanceAddress,
+  ] = useState<string>('');
+  const [currentTokenDataUrl, setCurrentTokenDataUrl] = useState<string>('');
 
   const init = useCallback(async () => {
     try {
@@ -69,7 +75,9 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
           productStakingInstanceAddress.mainnet
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
-        setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.mainnet);
+        setCurrentProductStakingInstanceAddress(
+          productStakingInstanceAddress.mainnet
+        );
         setCurrentTokenDataUrl(TOKEN_DETAIL_DATA_URL.main);
       } else if (chainId === 11155111) {
         const _productStakingInstanceWeb3: any = new web3.eth.Contract(
@@ -77,30 +85,38 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
           productStakingInstanceAddress.sepolia
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
-        setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.sepolia);
-      } else if(chainId === 56) {
+        setCurrentProductStakingInstanceAddress(
+          productStakingInstanceAddress.sepolia
+        );
+      } else if (chainId === 56) {
         const _productStakingInstanceWeb3: any = new web3.eth.Contract(
           ProductStakingInstanceAbi,
           productStakingInstanceAddress.bsc
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
-        setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.bsc);
+        setCurrentProductStakingInstanceAddress(
+          productStakingInstanceAddress.bsc
+        );
         setCurrentTokenDataUrl(TOKEN_DETAIL_DATA_URL.bsc);
-      } else if(chainId === 137) {
+      } else if (chainId === 137) {
         const _productStakingInstanceWeb3: any = new web3.eth.Contract(
           ProductStakingInstanceAbi,
           productStakingInstanceAddress.polygon
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
-        setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.polygon);
+        setCurrentProductStakingInstanceAddress(
+          productStakingInstanceAddress.polygon
+        );
         setCurrentTokenDataUrl(TOKEN_DETAIL_DATA_URL.polygon);
-      } else if(chainId === 80002) {
+      } else if (chainId === 80002) {
         const _productStakingInstanceWeb3: any = new web3.eth.Contract(
           ProductStakingInstanceAbi,
           productStakingInstanceAddress.amoy
         );
         setProductStakingInstance(_productStakingInstanceWeb3);
-        setCurrentProductStakingInstanceAddress(productStakingInstanceAddress.amoy);
+        setCurrentProductStakingInstanceAddress(
+          productStakingInstanceAddress.amoy
+        );
       }
     } catch (err) {
       console.log(err);
@@ -120,7 +136,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
         if (gasPrice) {
           const tx = await erc20Contract.methods
             .approve(spender, amount)
-            .send({ from: address, gasPrice: gasPrice.toString() });
+            .send({ from: address, gasPrice });
           return tx;
         }
       } catch (err) {
@@ -137,6 +153,12 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
           erc1155Abi,
           erc1155Address
         );
+        const isApproved = await erc1155Contract.methods
+          .isApprovedForAll(address, spender)
+          .call();
+        if (isApproved === true) {
+          return { approved: true };
+        }
         const gasPrice = await getGasPrice(web3, chainId);
         if (gasPrice) {
           const tx = await erc1155Contract.methods

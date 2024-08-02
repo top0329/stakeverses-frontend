@@ -48,6 +48,24 @@ function CreateInstanceRewardPage() {
     else router.push('/create-instance/create');
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (
+      !(
+        (event.key >= '0' && event.key <= '9') ||
+        event.key === 'Backspace' ||
+        event.key === 'Delete' ||
+        event.key === 'Tab' ||
+        event.key === 'ArrowLeft' ||
+        event.key === 'ArrowRight' ||
+        (event.key >= '0' &&
+          event.key <= '9' &&
+          event.getModifierState('NumLock'))
+      )
+    ) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <React.Fragment>
       <h1 className="mt-16 text-3xl text-center font-semibold lg:mt-24 lg:text-4xl xl:text-5xl 2xl:text-6xl">
@@ -68,8 +86,9 @@ function CreateInstanceRewardPage() {
               Base Amount :
             </label>
             <input
-              className="w-20 ml-2 px-2 bg-transparent border-b-2 border-black border-dashed xs:ml-4 dark:border-white"
+              className="w-20 ml-2 px-2 text-right bg-transparent border-b-2 border-black border-dashed xs:ml-4 dark:border-white"
               step={1}
+              onKeyDown={handleKeyDown}
               onChange={handleInputChange}
               value={baseAmount || ''}
             />

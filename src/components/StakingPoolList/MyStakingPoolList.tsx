@@ -30,7 +30,7 @@ function MyStakingPoolList({
         instanceAddress
       );
       const _remainingTime = await productStakingWeb3.methods
-        .devGetStakingEndTime()
+        .getStakingEndTime()
         .call();
       const _claimableReward = await productStakingWeb3.methods
         .getClaimableReward(account)
@@ -58,7 +58,9 @@ function MyStakingPoolList({
                 {stakingTokenInfo.filter(
                   (product) => product.consumable === true
                 ).length !== 0 && (
-                  <p className="text-3xl font-medium -mt-16 px-0.5">+</p>
+                  <p className="text-2xl font-medium -mt-16 px-0 sm:text-3xl sm:px-0.5">
+                    +
+                  </p>
                 )}
               </React.Fragment>
             ))}
@@ -94,7 +96,7 @@ function MyStakingPoolList({
                 &#41;
               </p>
               <p className="text-sm -mt-14 px-0.5 whitespace-nowrap lg:text-xl md:text-lg">
-                * 1min
+                * 1D
               </p>
             </React.Fragment>
           ) : null}
@@ -116,7 +118,7 @@ function MyStakingPoolList({
                 claimableReward={claimableReward[index]}
               />
               {index !== rewardTokenInfo.length - 1 && (
-                <p className="text-2xl font-medium -mt-16 px-0 -mx-1 2xl:-mx-0 xl:-mx-2 md:-mx-0 sm:text-3xl sm:px-0.5">
+                <p className="text-2xl font-medium -mt-16 px-0 sm:text-3xl sm:px-0.5">
                   +
                 </p>
               )}
@@ -149,7 +151,7 @@ function MyStakingPoolList({
         </div>
         <div className="flex flex-row justify-center w-full gap-14 lg:justify-end lg:gap-5 sm:gap-28">
           <Button
-            className="!w-[140px] xl:!w-[220px] !h-14"
+            className="!w-[140px] xl:!w-[220px]"
             text="Withdraw"
             variant="primary"
             onClick={() =>
@@ -157,7 +159,7 @@ function MyStakingPoolList({
             }
           />
           <Button
-            className="!w-[120px] xl:!w-[140px] !h-14"
+            className="!w-[120px] xl:!w-[140px]"
             text="Claim"
             variant="primary"
             onClick={() =>

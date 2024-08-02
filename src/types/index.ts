@@ -30,6 +30,7 @@ export interface IRewardTokenInfoForStakeListProps {
   tokenAddress: string;
   ratio: string;
   isERC1155?: boolean;
+  isApproved?: boolean;
   claimableReward?: string;
 }
 
@@ -86,6 +87,7 @@ export interface IRewardTokenListForCreate {
   amount: number;
   isERC1155?: boolean;
   isApproved?: boolean;
+  instanceAddress?: string;
 }
 
 export interface IAccordion {

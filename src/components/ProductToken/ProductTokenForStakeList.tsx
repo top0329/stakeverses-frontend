@@ -71,8 +71,8 @@ function ProductTokenForStakeList({
   }, [currentTokenDataUrl, isERC1155, library, tokenAddress, tokenId]);
 
   return (
-    <div className="flex flex-col gap-y-4">
-      <div className="flex flex-col justify-center items-center h-16 gap-1">
+    <div className="flex flex-col">
+      <div className="flex flex-col justify-center items-center h-full gap-1">
         <div className="text-[22px] rounded-full border border-black aspect-square min-w-[28px] text-center leading-6 dark:border-white">
           {Number(ratio)}
         </div>
@@ -91,9 +91,12 @@ function ProductTokenForStakeList({
       </div>
       <div className="relative flex flex-col items-center text-center pb-6">
         <div className="text-sm text-right lg:text-xl sm:text-lg xs:text-base">
+          {isERC1155 && `Id: ${tokenId}`}
+        </div>
+        <div className="text-sm text-right lg:text-xl sm:text-lg xs:text-base">
           {name}
         </div>
-        <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#c8dcff] rounded-xl px-1.5 py-1 border border-[#2F3A42] break-words sm:text-xs lg:text-sm xs:px-2 dark:bg-[#141D2D]">
+        <div className="flex flex-col text-[10px] text-center tracking-[-1px] bg-[#c8dcff] rounded-xl px-1 py-1 border border-[#2F3A42] break-words sm:text-xs lg:text-sm xs:px-1.5 dark:bg-[#141D2D]">
           <span>{tokenAddress.slice(0, 11)}</span>
           <span>{tokenAddress.slice(11, 22)}</span>
           <span>{tokenAddress.slice(22, 33)}</span>

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
+import { Address } from 'viem';
 
 import Button from '@/components/Buttons';
 import ProductTokenStakeList from '@/components/Lists/ProductTokenStakeList';
@@ -13,18 +14,18 @@ import ProductStakingAbi from '@/abi/ProductStakingAbi.json';
 import {
   currentPoolDataAtom,
   isProductApproveAvailableAtom,
-  productTokenInfoAtom,
   stakeBaseAmountAtom,
 } from '@/jotai/atoms';
+import getTokenData from '@/lib/getTokenData';
+import getERC1155Data from '@/lib/getERC1155Data';
 import { getGasPrice } from '@/lib/getGasPrice';
 
 function StakingPage() {
-  const { account, chainId, web3 } = useWeb3();
+  const { account, chainId, web3, library } = useWeb3();
   const { openSpin, closeSpin } = useSpinner();
   const { showToast } = useToast();
   const router = useRouter();
 
-  const [productTokenInfo] = useAtom(productTokenInfoAtom);
   const [currentPoolData] = useAtom(currentPoolDataAtom);
   const [stakeBaseAmount, setStakeBaseAmount] =
     useAtom<number>(stakeBaseAmountAtom);
@@ -33,6 +34,9 @@ function StakingPage() {
   );
 
   const [numberOfStakers, setNumberOfStakers] = useState<number>(0);
+  const [totalStakingBaseAmount, setTotalStakingBaseAmount] =
+    useState<number>(0);
+  const [totalValueStakedArray, setTotalValueStakedArray] = useState<any[]>([]);
 
   const productStakingWeb3: any = new web3.eth.Contract(
     ProductStakingAbi,
@@ -45,23 +49,86 @@ function StakingPage() {
         const _numberOfStakers = await productStakingWeb3.methods
           .getStakers()
           .call();
+        const _totalStakingBaseAmount = await productStakingWeb3.methods
+          .totalStakingBaseAmount()
+          .call();
         setNumberOfStakers(Number(_numberOfStakers.length));
+        setTotalStakingBaseAmount(Number(_totalStakingBaseAmount));
+        setTotalValueStakedArray(
+          await Promise.all(
+            currentPoolData.stakingTokenInfo.map(async (product, idx) => {
+              let _tokenName: string = '';
+              if (product.isERC1155) {
+                const erc1155Data = await getERC1155Data(
+                  product.tokenAddress as Address,
+                  Number(product.tokenId),
+                  library
+                );
+                if (erc1155Data) {
+                  const { name } = erc1155Data;
+                  _tokenName = name;
+                }
+              } else {
+                const erc20Data = await getTokenData(
+                  product.tokenAddress as Address,
+                  library
+                );
+                if (erc20Data) {
+                  const { tokenName } = erc20Data;
+                  _tokenName = tokenName;
+                }
+              }
+              return (
+                <div
+                  key={idx}
+                  className="flex flex-row justify-between items-center bg-[#47556e] rounded-[20px] px-8 py-8 text-xl font-semibold sm:text-2xl dark:bg-[#141D2D]/70"
+                >
+                  <p>{_tokenName}</p>
+                  <p>{Number(product.ratio) * totalStakingBaseAmount}</p>
+                </div>
+              );
+            })
+          )
+        );
       } catch (err) {
         console.log(err);
       }
     }
     fetchData();
-  }, [productStakingWeb3.methods]);
+  }, [
+    currentPoolData.stakingTokenInfo,
+    library,
+    productStakingWeb3.methods,
+    totalStakingBaseAmount,
+  ]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setStakeBaseAmount(Number(value));
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (
+      !(
+        (event.key >= '0' && event.key <= '9') ||
+        event.key === 'Backspace' ||
+        event.key === 'Delete' ||
+        event.key === 'Tab' ||
+        event.key === 'ArrowLeft' ||
+        event.key === 'ArrowRight' ||
+        (event.key >= '0' &&
+          event.key <= '9' &&
+          event.getModifierState('NumLock'))
+      )
+    ) {
+      event.preventDefault();
+    }
+  };
+
   const handleStake = async () => {
     if (
-      productTokenInfo.filter((token) => token.isApproved).length ===
-      productTokenInfo.length
+      currentPoolData.stakingTokenInfo.filter((token) => token.isApproved).length ===
+      currentPoolData.stakingTokenInfo.length
     ) {
       try {
         openSpin('Staking Product');
@@ -94,7 +161,8 @@ function StakingPage() {
           <div className="flex flex-row justify-end items-center text-base px-6 mb-6 2xl:px-12 xl:px-8 lg:text-xl sm:text-lg">
             <label className="font-semibold">Enter Base Amount :</label>
             <input
-              className="w-20 ml-4 px-2 bg-transparent border-b-2 border-black border-dashed dark:border-white"
+              className="w-20 ml-4 px-2 text-right bg-transparent border-b-2 border-black border-dashed dark:border-white"
+              onKeyDown={handleKeyDown}
               onChange={handleInputChange}
               value={stakeBaseAmount || ''}
             />
@@ -129,18 +197,7 @@ function StakingPage() {
               Total Value Staked
             </h3>
             <div className="flex flex-col text-white gap-4 px-2 sm:px-6 2xl:px-12 xl:px-8">
-              <div className="flex flex-row justify-between items-center bg-[#47556e] rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl dark:bg-[#141D2D]/70">
-                <p>Axe</p>
-                <p>19302</p>
-              </div>
-              <div className="flex flex-row justify-between items-center bg-[#47556e] rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl dark:bg-[#141D2D]/70">
-                <p>Axe</p>
-                <p>19302</p>
-              </div>
-              <div className="flex flex-row justify-between items-center bg-[#47556e] rounded-[20px] px-14 py-8 text-xl font-semibold lg:text-3xl sm:text-2xl dark:bg-[#141D2D]/70">
-                <p>Axe</p>
-                <p>19302</p>
-              </div>
+              {totalValueStakedArray}
             </div>
           </div>
           <div className="bg-[#d0e2fe] rounded-[20px] py-4 border-2 border-[#7a9acb]/50 dark:bg-[#053F40] dark:border-none sm:py-10">

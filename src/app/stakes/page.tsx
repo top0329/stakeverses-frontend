@@ -42,9 +42,9 @@ function StakesPage() {
         <Subtitle text="Stakes List" />
         <div className="flex flex-col gap-10 mx-2 pb-10 2xl:mx-16 md:mx-10 text-white">
           {stakingDataList.length > 0 ? (
-            stakingDataList.map((stakingData) => (
+            stakingDataList.map((stakingData, idx) => (
               <StakingPoolList
-                key={stakingData.instanceId}
+                key={idx}
                 instanceId={stakingData.instanceId}
                 creator={stakingData.creator}
                 instanceAddress={stakingData.instanceAddress}

@@ -30,7 +30,7 @@ function MyInstanceList({
         instanceAddress
       );
       const _remainingTime = await productStakingWeb3.methods
-        .devGetStakingEndTime()
+        .getStakingEndTime()
         .call();
       setRemainingTime(Number(_remainingTime));
     }
@@ -54,7 +54,9 @@ function MyInstanceList({
                 {stakingTokenInfo.filter(
                   (product) => product.consumable === true
                 ).length !== 0 && (
-                  <p className="text-3xl font-medium -mt-16 px-0.5">+</p>
+                  <p className="text-2xl font-medium -mt-16 px-0 sm:text-3xl sm:px-0.5">
+                    +
+                  </p>
                 )}
               </React.Fragment>
             ))}
@@ -90,7 +92,7 @@ function MyInstanceList({
                 &#41;
               </p>
               <p className="text-sm -mt-14 px-0.5 whitespace-nowrap lg:text-xl md:text-lg">
-                * 1min
+                * 1D
               </p>
             </React.Fragment>
           ) : null}
@@ -111,7 +113,7 @@ function MyInstanceList({
                 isERC1155={rewardToken.isERC1155}
               />
               {index !== rewardTokenInfo.length - 1 && (
-                <p className="text-2xl font-medium -mt-16 px-0 -mx-1 2xl:-mx-0 xl:-mx-2 md:-mx-0 sm:text-3xl sm:px-0.5">
+                <p className="text-2xl font-medium -mt-16 px-0 sm:text-3xl sm:px-0.5">
                   +
                 </p>
               )}

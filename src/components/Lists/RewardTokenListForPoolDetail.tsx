@@ -93,7 +93,7 @@ function RewardTokenListForPoolDetail({
             <p className="text-sm w-48 break-all">{tokenAddress || ''}</p>
           </div>
           {isERC1155 && (
-            <div className="hidden flex-col gap-2 2xl:flex xl:hidden sm:flex">
+            <div className="hidden flex-col gap-2 sm:flex">
               <p className="truncate tracking-[-1px]">Token Id</p>
               <p className="font-semibold">{tokenId}</p>
             </div>

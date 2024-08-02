@@ -87,11 +87,11 @@ function RewardTokenListForCreate({
     try {
       if (isConnected && library) {
         openSpin('Approving');
-        let receipt = null;
-        while (receipt === null || receipt.status === undefined) {
+        let receipt: { status?: boolean } = {};
+        while (receipt.status === undefined) {
           let res: any;
           if (isERC1155) {
-            res = erc1155Approve(
+            res = await erc1155Approve(
               tokenAddress!,
               currentProductStakingInstanceAddress,
               true
@@ -99,19 +99,23 @@ function RewardTokenListForCreate({
           } else {
             const contract = new web3.eth.Contract(ERC20Abi, tokenAddress);
             const decimals = await contract.methods.decimals().call();
-            res = erc20Approve(
+            res = await erc20Approve(
               tokenAddress!,
               currentProductStakingInstanceAddress,
               (amount * 10 ** Number(decimals)).toString()
             );
           }
-          receipt = await web3.eth.getTransactionReceipt(
-            (
-              await res
-            ).transactionHash
-          );
+          if (res.approved) {
+            receipt.status = true;
+          } else {
+            receipt = await web3.eth.getTransactionReceipt(
+              (
+                await res
+              ).transactionHash
+            );
+          }
         }
-        if (receipt && receipt.status !== undefined) {
+        if (receipt.status !== undefined) {
           if (receipt.status) {
             setRewardTokenInfo(
               rewardTokenInfo.map((token) => {
