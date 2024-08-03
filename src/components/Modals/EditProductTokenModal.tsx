@@ -337,22 +337,6 @@ function EditProductTokenModal() {
           (item) =>
             item === editProductTokenInfo
         )
-    // if (
-    //   (editProductTokenInfo.isERC1155 === false &&
-    //     editProductTokenInfo.tokenAddress &&
-    //     editProductTokenInfo.ratio &&
-    //     !productTokenInfo.some(
-    //       (item) => item.tokenAddress === editProductTokenInfo.tokenAddress
-    //     )) ||
-    //   (editProductTokenInfo.isERC1155 === true &&
-    //     editProductTokenInfo.tokenAddress &&
-    //     editProductTokenInfo.tokenId &&
-    //     editProductTokenInfo.ratio &&
-    //     !productTokenInfo.some(
-    //       (item) =>
-    //         item.tokenAddress === editProductTokenInfo.tokenAddress &&
-    //         item.tokenId === editProductTokenInfo.tokenId
-    //     ))
     ) {
       const tokenIndex = productTokenInfo.findIndex(
         (item) =>

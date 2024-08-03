@@ -327,26 +327,20 @@ function EditRewardTokenModal() {
 
   const handleEditProductTokenClicked = () => {
     if (
-      (editRewardTokenInfo.isERC1155 === false &&
-        editRewardTokenInfo.tokenAddress &&
-        editRewardTokenInfo.ratio &&
-        !rewardTokenInfo.some(
-          (item) => item.tokenAddress === editRewardTokenInfo.tokenAddress
-        )) ||
-      (editRewardTokenInfo.isERC1155 === true &&
-        editRewardTokenInfo.tokenAddress &&
-        editRewardTokenInfo.tokenId &&
-        editRewardTokenInfo.ratio &&
-        !rewardTokenInfo.some(
-          (item) =>
-            item.tokenAddress === editRewardTokenInfo.tokenAddress &&
-            item.tokenId === editRewardTokenInfo.tokenId
-        ))
+      !rewardTokenInfo.some((item) => item === editRewardTokenInfo)
     ) {
-      setRewardTokenInfo((prev) => [
-        ...prev,
-        { ...editRewardTokenInfo, isERC1155: editRewardTokenInfo.isERC1155 },
-      ]);
+      const tokenIndex = rewardTokenInfo.findIndex(
+        (item) =>
+          item.tokenAddress === initialRewardTokenAddress &&
+          item.tokenId === initialRewardTokenId
+      );
+      if (tokenIndex !== -1) {
+        setRewardTokenInfo((prev) => [
+          ...prev.slice(0, tokenIndex),
+          editRewardTokenInfo,
+          ...prev.slice(tokenIndex + 1),
+        ]);
+      }
       setEditRewardTokenInfo({
         tokenName: '',
         imageUri: '',
