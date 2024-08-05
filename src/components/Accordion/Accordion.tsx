@@ -42,7 +42,10 @@ const Accordion: FC<IAccordion> = ({ title, content }) => {
           isExpanded ? 'max-h-[500px] sm:max-h-[300px]' : 'max-h-[0px]'
         }`}
       >
-        <div className="pl-6 pb-5 pr-10">{content}</div>
+        <div
+          className="pl-6 pb-5 pr-10"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </div>
     </React.Fragment>
   );

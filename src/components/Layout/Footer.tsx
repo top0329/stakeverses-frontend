@@ -4,14 +4,11 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 import useWeb3 from '@/hooks/useWeb3';
 import useToast from '@/hooks/useToast';
 import StakeversesLogo from '@/assets/images/Stakeverses-logo.png';
-import FacebookFooterImage from '@/assets/images/facebook-footer.png';
-import InstagramFooterImage from '@/assets/images/instagram-footer.png';
-import TwitterFooterImage from '@/assets/images/twitter-footer.png';
-import LinkedinFooterImage from '@/assets/images/linkedin-footer.png';
 
 function Footer() {
   const { isConnected } = useWeb3();
@@ -24,9 +21,9 @@ function Footer() {
   };
 
   return (
-    <div className="relative h-[700px] px-[20px] bg-gradient-to-tr from-[#09B0B3] to-[#055F76] text-base xl:px-[100px] 2xl:px-[136px] xl:text-lg xl:h-[477px] lg:h-[450px] md:px-[70px] md:h-[600px] dark:bg-gradient-footer">
+    <div className="relative h-[650px] px-[20px] bg-gradient-to-tr from-[#09B0B3] to-[#055F76] text-base xl:px-[100px] 2xl:px-[136px] xl:text-lg xl:h-[477px] lg:h-[450px] md:px-[70px] md:h-[600px] dark:bg-gradient-footer">
       <div className="grid grid-cols-12 gap-6 xl:gap-10 2xl:gap-16">
-        <div className="grid col-span-12 gap-y-10 lg:col-span-3 lg:gap-y-20">
+        <div className="grid col-span-12 lg:col-span-4">
           <Link className="mt-9" href="/">
             <Image
               src={StakeversesLogo}
@@ -37,16 +34,7 @@ function Footer() {
               priority
             />
           </Link>
-          <div>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </p>
-            <p className="mt-6 lg:mt-16">@Lorem</p>
-          </div>
-        </div>
-        <div className="grid col-span-5 lg:col-span-2 md:col-span-3">
-          <h3 className="font-medium mt-6 lg:mt-28">Pages</h3>
+          <h3 className="font-medium">Pages</h3>
           <div className={`flex flex-col gap-4 ${isConnected && 'mt-10'}`}>
             <Link href={'/stakes'}>Stakes</Link>
             {isConnected && <Link href={'/my-portfolio'}>My Portfolio</Link>}
@@ -59,46 +47,45 @@ function Footer() {
             <Link href={'/faq'}>FAQ</Link>
           </div>
         </div>
-        <div className="grid col-span-7 lg:col-span-3 md:col-span-4">
+        <div className="grid col-span-7 lg:col-span-4 md:col-span-4">
           <h3 className="font-medium mt-6 lg:mt-28">Contact us</h3>
-          <div className="flex flex-col gap-8 mt-6">
-            <h5>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </h5>
-            <h5>+1 234 567 8900</h5>
+          <div className="flex flex-row items-center gap-2 mt-6">
+            <Icon icon="ic:round-mail" width="32" height="32" />
+            <a href="mailto:factorycenter1155@gmail.com">
+              factorycenter1155@gmail.com
+            </a>
           </div>
         </div>
-        <div className="grid col-span-12 lg:col-span-4 md:col-span-5">
+        <div className="grid col-span-12 lg:col-span-4 md:col-span-8">
           <div className="flex flex-row justify-start items-end gap-4 md:justify-end">
-            <Link href={'#'}>
-              <Image
-                className="min-w-[45px] max-w-[45px] h-[45px]"
-                src={FacebookFooterImage}
-                alt="facebook-icon"
+            <Link href="https://discord.com/invite/7aKVRegu3X" target="_blank">
+              <Icon
+                className="p-1.5 rounded-full border-2 border-black cursor-pointer dark:border-[#00cfc9]"
+                icon="bxl:discord-alt"
+                width="54"
+                height="54"
               />
             </Link>
-            <Link href={'#'}>
-              <Image
-                className="min-w-[45px] max-w-[45px] h-[45px]"
-                src={InstagramFooterImage}
-                alt="instagram-icon"
+            <Link href="https://twitter.com/factorygame_org" target="_blank">
+              <Icon
+                className="p-1.5 rounded-full border-2 border-black cursor-pointer dark:border-cyan"
+                icon="uil:twitter"
+                width="54"
+                height="54"
               />
             </Link>
-            <Link href={'#'}>
-              <Image
-                className="min-w-[45px] max-w-[45px] h-[45px]"
-                src={TwitterFooterImage}
-                alt="twitter-icon"
-              />
-            </Link>
-            <Link href={'#'}>
-              <Image
-                className="min-w-[45px] max-w-[45px] h-[45px]"
-                src={LinkedinFooterImage}
-                alt="linkedin-icon"
-              />
-            </Link>
+            <Icon
+              className="p-1.5 rounded-full border-2 border-black cursor-pointer dark:border-cyan"
+              icon="ri:telegram-2-fill"
+              width="54"
+              height="54"
+            />
+            <Icon
+              className="p-2.5 rounded-full border-2 border-black cursor-pointer dark:border-cyan"
+              icon="fa:book"
+              width="54"
+              height="54"
+            />
           </div>
         </div>
       </div>
