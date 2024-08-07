@@ -21,7 +21,15 @@ function Footer() {
   };
 
   return (
-    <div className="relative h-[650px] px-[20px] bg-gradient-to-tr from-[#09B0B3] to-[#055F76] text-base xl:px-[100px] 2xl:px-[136px] xl:text-lg xl:h-[477px] lg:h-[450px] md:px-[70px] md:h-[600px] dark:bg-gradient-footer">
+    <div
+      className={`relative ${
+        isConnected ? 'h-[650px]' : 'h-[600px]'
+      } px-[20px] bg-gradient-to-tr from-[#09B0B3] to-[#055F76] text-base xl:px-[100px] 2xl:px-[136px] xl:text-lg ${
+        isConnected ? 'xl:h-[477px]' : 'xl:h-[427px]'
+      } ${isConnected ? 'lg:h-[450px]' : 'lg:h-[400px]'} md:px-[70px] ${
+        isConnected ? 'md:h-[600px]' : 'md:h-[550px]'
+      } dark:bg-gradient-footer`}
+    >
       <div className="grid grid-cols-12 gap-6 xl:gap-10 2xl:gap-16">
         <div className="grid col-span-12 lg:col-span-4">
           <Link className="mt-9" href="/">
@@ -34,8 +42,8 @@ function Footer() {
               priority
             />
           </Link>
-          <h3 className="font-medium">Pages</h3>
           <div className={`flex flex-col gap-4 ${isConnected && 'mt-10'}`}>
+            <h3 className="font-medium">Pages</h3>
             <Link href={'/stakes'}>Stakes</Link>
             {isConnected && <Link href={'/my-portfolio'}>My Portfolio</Link>}
             <div
@@ -57,7 +65,7 @@ function Footer() {
           </div>
         </div>
         <div className="grid col-span-12 lg:col-span-4 md:col-span-8">
-          <div className="flex flex-row justify-start items-end gap-4 md:justify-end">
+          <div className="flex flex-row justify-start items-end gap-4 md:justify-end z-20">
             <Link href="https://discord.com/invite/7aKVRegu3X" target="_blank">
               <Icon
                 className="p-1.5 rounded-full border-2 border-black cursor-pointer dark:border-[#00cfc9]"
@@ -89,8 +97,8 @@ function Footer() {
           </div>
         </div>
       </div>
-      <hr className="absolute inset-x-0 bg-[#D2D2D2] w-full mb-[72px] bottom-0 xl:mb-[85px]" />
-      <p className="absolute inset-x-0 w-full text-center bottom-0 py-6 xl:py-8">
+      <hr className="absolute inset-x-0 bg-[#D2D2D2] w-full mb-[72px] bottom-0 xl:mb-[76px]" />
+      <p className="absolute inset-x-0 w-full text-center bottom-0 py-6">
         Copyright&copy; {new Date().getFullYear()} Stakeverses
       </p>
     </div>
